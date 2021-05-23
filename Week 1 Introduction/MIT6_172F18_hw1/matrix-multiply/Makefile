@@ -34,13 +34,13 @@ CFLAGS_DEBUG := -g -DDEBUG -O0
 CFLAGS_RELEASE := -O1 -DNDEBUG
 
 # These flags are used to invoke Clang's address sanitizer.
-CFLAGS_ASAN := -O1 -g -fsanitize=address
+CFLAGS_ASAN := -O3 -g -fsanitize=address
 
 # These flags are applied when linking object files together into your binary.
 # If you need to link against libraries, add the appropriate flags here.  By
 # default, your code is linked against the "rt" library with the flag -lrt;
 # this library is used by the timing code in the testbed.
-LDFLAGS := -lrt -flto -fuse-ld=gold
+LDFLAGS := 
 
 ################################################################################
 # You probably won't need to change anything below this line, but if you're

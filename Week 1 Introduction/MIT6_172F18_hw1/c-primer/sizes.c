@@ -17,6 +17,15 @@ int main() {
   // printf("size of %s : %zu bytes \n", "int", sizeof(int));
 
   PRINT_SIZE("int", sizeof(int));
+  PRINT_SIZE("short", sizeof(short));
+  PRINT_SIZE("long", sizeof(long));
+  PRINT_SIZE("char", sizeof(char));
+  PRINT_SIZE("float", sizeof(float));
+  PRINT_SIZE("double", sizeof(double));
+
+  PRINT_SIZE("unsigned int", sizeof(unsigned int));
+  PRINT_SIZE("long long", sizeof(long long));
+
   PRINT_SIZE("int8_t", sizeof(int8_t));
   PRINT_SIZE("int16_t", sizeof(int16_t));
   PRINT_SIZE("int32_t", sizeof(int32_t));
@@ -31,6 +40,11 @@ int main() {
   PRINT_SIZE("uint16_t", sizeof(uint16_t));
   PRINT_SIZE("uint32_t", sizeof(uint32_t));
   PRINT_SIZE("uint64_t", sizeof(uint64_t));
+
+  PRINT_SIZE("uint_fast8_t", sizeof(uint_fast8_t));
+  PRINT_SIZE("uint_fast16_t", sizeof(uint_fast16_t));
+  PRINT_SIZE("uint_fast32_t", sizeof(uint_fast32_t));
+  PRINT_SIZE("uint_fast64_t", sizeof(uint_fast64_t));
 
   // Alternatively, you can use stringification
   // (https://gcc.gnu.org/onlinedocs/cpp/Stringification.html) so that

@@ -20,12 +20,12 @@ pointer.o: pointer.c
 	$(CC) $(CFLAGS) -c pointer.c
 
 pointer: pointer.o
-	$(CC) -o pointer pointer.o $(LDFLAGS)
+	$(CC) -o pointer pointer.o 
 
 swap.o: swap.c
 	$(CC) $(CFLAGS) -c swap.c
 
 swap: swap.o
-	$(CC) -o swap swap.o $(LDFLAGS)
+	$(CC) -o swap swap.o 
 clean:
 	rm -f sizes pointer swap *.o *.gcda *.gcno *.gcov perf.data */perf.data cachegrind.out.*

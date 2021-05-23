@@ -14,7 +14,7 @@ sizes.o: sizes.c
 	$(CC) $(CFLAGS) -c sizes.c
 
 sizes: sizes.o
-	$(CC) -o sizes sizes.o $(LDFLAGS)
+	$(CC) -o sizes sizes.o 
 
 pointer.o: pointer.c
 	$(CC) $(CFLAGS) -c pointer.c

@@ -17,5 +17,5 @@ int e = MIN(c, d);
 // the macro NDEBUG is not defined.
 // Recall that if clang is passed -DNDEBUG on the command line,
 // then NDEBUG will be defined.
-  if (something) {}
+if (something) {}
 #endif

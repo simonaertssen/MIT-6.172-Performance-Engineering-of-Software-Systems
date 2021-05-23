@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+#define PRINT_SIZE(type, size) printf("size of %s : %zu bytes \n", type, size);
+
 int main() {
   // Please print the sizes of the following types:
   // int, short, long, char, float, double, unsigned int, long long
@@ -12,9 +14,23 @@ int main() {
 
   // Here's how to show the size of one type. See if you can define a macro
   // to avoid copy pasting this code.
-  printf("size of %s : %zu bytes \n", "int", sizeof(int));
-  // e.g. PRINT_SIZE("int", int);
-  //      PRINT_SIZE("short", short);
+  // printf("size of %s : %zu bytes \n", "int", sizeof(int));
+
+  PRINT_SIZE("int", sizeof(int));
+  PRINT_SIZE("int8_t", sizeof(int8_t));
+  PRINT_SIZE("int16_t", sizeof(int16_t));
+  PRINT_SIZE("int32_t", sizeof(int32_t));
+  PRINT_SIZE("int64_t", sizeof(int64_t));
+
+  PRINT_SIZE("int_fast8_t", sizeof(int_fast8_t));
+  PRINT_SIZE("int_fast16_t", sizeof(int_fast16_t));
+  PRINT_SIZE("int_fast32_t", sizeof(int_fast32_t));
+  PRINT_SIZE("int_fast64_t", sizeof(int_fast64_t));
+
+  PRINT_SIZE("uint8_t", sizeof(uint8_t));
+  PRINT_SIZE("uint16_t", sizeof(uint16_t));
+  PRINT_SIZE("uint32_t", sizeof(uint32_t));
+  PRINT_SIZE("uint64_t", sizeof(uint64_t));
 
   // Alternatively, you can use stringification
   // (https://gcc.gnu.org/onlinedocs/cpp/Stringification.html) so that
@@ -31,13 +47,11 @@ int main() {
   student you;
   you.id = 12345;
   you.year = 4;
-
+  PRINT_SIZE("student", sizeof(you));
 
   // Array declaration. Use your macro to print the size of this.
   int x[5];
-
-  // You can just use your macro here instead: PRINT_SIZE("student", you);
-  printf("size of %s : %zu bytes \n", "student", sizeof(you));
+  PRINT_SIZE("int array 4", sizeof(x));
 
   return 0;
 }

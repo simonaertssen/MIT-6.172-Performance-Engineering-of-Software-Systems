@@ -40,9 +40,9 @@ int main(int argc, char* argv[]) {  // What is the type of argv? It is of type '
 
   const char* const cpc = c;  // cpc is a const pointer to char const
   // For each of the following, why is the assignment:
-  cpc = *pcp;  // invalid? Because nothing can be altered after declaration.
-  cpc = argv[0];  // invalid? Because nothing can be altered after declaration.
-  *cpc = '@';  // invalid? Because nothing can be altered after declaration.
+  // cpc = *pcp;  // invalid? Because nothing can be altered after declaration.
+  // cpc = argv[0];  // invalid? Because nothing can be altered after declaration.
+  // *cpc = '@';  // invalid? Because nothing can be altered after declaration.
 
   return 0;
 }

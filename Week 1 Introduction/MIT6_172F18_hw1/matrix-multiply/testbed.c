@@ -21,11 +21,11 @@
  **/
 
 
-/**
- * testbed.c:
- *
- * This file runs your code, timing its execution and printing out the result.
- **/
+ /**
+  * testbed.c:
+  *
+  * This file runs your code, timing its execution and printing out the result.
+  **/
 
 #include <stdio.h>
 #include <unistd.h>
@@ -56,18 +56,18 @@ int main(int argc, char** argv) {
   // Parse command line arguments
   while ((optchar = getopt(argc, argv, "upz")) != -1) {
     switch (optchar) {
-      case 'u':
-        show_usec = 1;
-        break;
-      case 'p':
-        should_print = 1;
-        break;
-      case 'z':
-        use_zero_matrix = 1;
-        break;
-      default:
-        printf("Ignoring unrecognized option: %c\n", optchar);
-        continue;
+    case 'u':
+      show_usec = 1;
+      break;
+    case 'p':
+      should_print = 1;
+      break;
+    case 'z':
+      use_zero_matrix = 1;
+      break;
+    default:
+      printf("Ignoring unrecognized option: %c\n", optchar);
+      continue;
     }
   }
 
@@ -92,7 +92,7 @@ int main(int argc, char** argv) {
 
   fprintf(stderr, "Setup\n");
 
-  A = make_matrix(kMatrixSize, kMatrixSize+1);
+  A = make_matrix(kMatrixSize, kMatrixSize);
   B = make_matrix(kMatrixSize, kMatrixSize);
   C = make_matrix(kMatrixSize, kMatrixSize);
 
@@ -107,7 +107,8 @@ int main(int argc, char** argv) {
         B->values[i][j] = 0;
       }
     }
-  } else {
+  }
+  else {
     for (int i = 0; i < A->rows; i++) {
       for (int j = 0; j < A->cols; j++) {
         A->values[i][j] = rand_r(&randomSeed) % 10;
@@ -144,8 +145,9 @@ int main(int argc, char** argv) {
   if (show_usec) {
     double elapsed = tdiff(time1, time2);
     printf("Elapsed execution time: %f usec\n",
-           elapsed * (1000.0 * 1000.0));
-  } else {
+      elapsed * (1000.0 * 1000.0));
+  }
+  else {
     double elapsed = tdiff(time1, time2);
     printf("Elapsed execution time: %f sec\n", elapsed);
   }

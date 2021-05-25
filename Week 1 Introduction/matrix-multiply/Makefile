@@ -40,7 +40,7 @@ CFLAGS_ASAN := -O3 -g -fsanitize=address
 # If you need to link against libraries, add the appropriate flags here.  By
 # default, your code is linked against the "rt" library with the flag -lrt;
 # this library is used by the timing code in the testbed.
-LDFLAGS := 
+LDFLAGS := -flto
 
 ################################################################################
 # You probably won't need to change anything below this line, but if you're

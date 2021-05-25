@@ -91,5 +91,10 @@ size of student* : 8 bytes
 size of int array 4 : 20 bytes 
 
 
-# WRITEUP 4
+# WRITEUP 5
+When compiled with -O1, the binary is 9kB. When compiled with -O2 and -O3 it is 13kB.
+
+
+# WRITEUP 6
+It takes 1us to run the script, which is a tiny bit longer than before. There seems to be an overflow on all of the results. Otherwise, there is no output from AddressSanitizer as we would expect it, so no memory leak?
 

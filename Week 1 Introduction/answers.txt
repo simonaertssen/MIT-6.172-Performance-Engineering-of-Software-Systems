@@ -98,3 +98,38 @@ When compiled with -O1, the binary is 9kB. When compiled with -O2 and -O3 it is 
 # WRITEUP 6
 It takes 1us to run the script, which is a tiny bit longer than before. There seems to be an overflow on all of the results. Otherwise, there is no output from AddressSanitizer as we would expect it, so no memory leak?
 
+
+# WRITEUP 7:
+Matrix A: 
+------------
+    7      9      3      8  
+    0      2      4      8  
+    3      9      0      5  
+    2      2      7      3  
+------------
+Matrix B: 
+------------
+    7      9      0      2  
+    3      9      9      7  
+    0      3      9      8  
+    6      5      7      6  
+------------
+Matrix C: 
+------------
+    0      0      0      0  
+    0      0      0      0  
+    0      0      0      0  
+    0      0      0      0  
+------------
+---- RESULTS ----
+Result: 
+------------
+  124    193    164    149  
+   54     70    110     94  
+   78    133    116     99  
+   38     72    102     92  
+------------
+---- END RESULTS ----
+Elapsed execution time: 0.000000 sec
+
+

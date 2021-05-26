@@ -52,7 +52,6 @@ int main(int argc, char** argv) {
 
   const int kMatrixSize = 4;
 
-
   // Parse command line arguments
   while ((optchar = getopt(argc, argv, "upz")) != -1) {
     switch (optchar) {
@@ -121,12 +120,21 @@ int main(int argc, char** argv) {
     }
   }
 
+  for (int i = 0; i < B->rows; i++) {
+    for (int j = 0; j < B->cols; j++) {
+      C->values[i][j] = 0;
+    }
+  }
+
   if (should_print) {
     printf("Matrix A: \n");
     print_matrix(A);
 
     printf("Matrix B: \n");
     print_matrix(B);
+
+    printf("Matrix C: \n");
+    print_matrix(C);
   }
 
   fprintf(stderr, "Running matrix_multiply_run()...\n");
@@ -151,6 +159,10 @@ int main(int argc, char** argv) {
     double elapsed = tdiff(time1, time2);
     printf("Elapsed execution time: %f sec\n", elapsed);
   }
+
+  free_matrix(A);
+  free_matrix(B);
+  free_matrix(C);
 
   return 0;
 }

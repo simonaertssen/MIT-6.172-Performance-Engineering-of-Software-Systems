@@ -133,3 +133,29 @@ Result:
 Elapsed execution time: 0.000000 sec
 
 
+# WRITEUP 8:
+No Valgrind available on MacOS10.14
+
+
+# EXTRA: CODE COVERAGE:
+Compile the makefile with clang --coverage.
+Commands:
+make clean
+make DEBUG=1
+./matrix_multiply -p
+gcov matrix_multiply.c	
+
+
+# WRITEUP 9:
+1000x1000 matrix takes:
+8.803739 sec (naive)
+0.892479 sec (loops reversed)
+
+# WRITEUP 10:
+using RELEASE:
+4.137507 sec (-O0)
+
+using DEBUG
+4.821751 sec (-O0)
+0.861524 sec (-O3)
+

@@ -19,14 +19,14 @@ PRODUCT := matrix_multiply
 CC := clang
 
 # These flags will be applied to your code any time it is built.
-CFLAGS := -Wall -std=c99 -D_POSIX_C_SOURCE=200809L
+CFLAGS := -Wall -std=c99 -D_POSIX_C_SOURCE=200809L 
 
 # These flags are applied only if you build your code with "make DEBUG=1".  -g
 # generates debugging symbols, -DDEBUG defines the preprocessor symbol "DEBUG"
 # (so that you can use "#ifdef DEBUG" in your code), and -O0 disables compiler
 # optimizations, so that the binary generated more directly corresponds to your
 # source code.
-CFLAGS_DEBUG := -g -DDEBUG -O0
+CFLAGS_DEBUG := -g -DDEBUG -O3
 
 # In the release version, we ask for many optimizations; -O3 sets the
 # optimization level to three.  -DNDEBUG defines the NDEBUG macro,
@@ -40,7 +40,7 @@ CFLAGS_ASAN := -O3 -g -fsanitize=address
 # If you need to link against libraries, add the appropriate flags here.  By
 # default, your code is linked against the "rt" library with the flag -lrt;
 # this library is used by the timing code in the testbed.
-LDFLAGS := -flto
+LDFLAGS := -flto 
 
 ################################################################################
 # You probably won't need to change anything below this line, but if you're

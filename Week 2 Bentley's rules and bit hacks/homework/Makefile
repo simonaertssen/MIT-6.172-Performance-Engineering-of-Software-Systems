@@ -1,6 +1,6 @@
 # Copyright (c) 2012-2013 MIT License by 6.172 Staff
-CC := gcc
-CFLAGS := -g -Wall -std=gnu99 -gdwarf-3
+CC := clang
+CFLAGS := -g -Wall -Werror -std=gnu99 -gdwarf-3 
 LDFLAGS := -lm
 # You may add new files to the list of COMMON_SRC below
 COMMON_SRC := tests.c util.c isort.c sort_a.c sort_c.c sort_i.c sort_p.c sort_m.c sort_f.c
@@ -15,14 +15,17 @@ endif
 CFLAGS := $(CFLAGS)
 
 ifeq ($(PROFILE),1)
-CFLAGS := -lprofiler $(CFLAGS)
+CFLAGS := -lprofiler -Wl,-no_pie -fno-omit-frame-pointer -Wl,-export_dynamic $(CFLAGS)
 endif
 CFLAGS := $(CFLAGS)
 
 all: $(TARGET)
 
 sort: main.c $(COMMON_SRC) $(COMMON_HEADERS) Makefile
-	$(CC) main.c $(COMMON_SRC) $(CFLAGS) $(LDFLAGS) -o sort
+	$(CC) main.c $(COMMON_SRC) $(CFLAGS) $(LDFLAGS) -o sort.out
+	CPUPROFILE=out.prof ./sort.out
+	PPROF_BINARY_PATH=/Users/SimonAertssen/
+	pprof --text sort.out out.prof
 
 lint:
 	python clint.py *.[ch]

@@ -9,3 +9,6 @@ make clean
 make sort PROFILE=1
 CPUPROFILE=out.prof ./sort
 pprof --pdf ./sort out.prof > out.pdf
+
+Symbols not showing? See: https://users.rust-lang.org/t/pprof-wont-show-symbols/24241/2
+Problem is partially solved with flag -Wl,-no_pie

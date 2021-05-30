@@ -3,19 +3,23 @@ follow instructions listed on:
 https://gperftools.github.io/gperftools/cpuprofile.html
 https://codearcana.com/posts/2013/02/26/introduction-to-using-profiling-tools.html
 
-The main difference is using the -lprofiler flag during linking (DFLAGS), which works for both gcc and clang. This only seems to work when 'brew install gpperftools'. There is the bare pprof and also the go tool pprof. Added a dedicated section PROFILE in Makefile.
+The main difference is using the -lprofiler flag during linking (DFLAGS), 
+which works for both gcc and clang. This only seems to work when 'brew install gpperftools'. 
+There is the bare pprof and also the go tool pprof. 
+Added a dedicated section PROFILE in Makefile.
 
 Building:
-make clean
-make sort PROFILE=1
-CPUPROFILE=isort.prof ./isort 10000 10
-PPROF_BINARY_PATH=/Users/SimonAertssen/Desktop/Zelfstudie/6.172\ Performance\ Engineering\ of\ Software\ Systems/MIT-6.172-Performance-Engineering-of-Software-Systems/Week\ 2\ Bentleys\ rules\ and\ bit\ hacks
-pprof --text isort isort.prof
+$ make clean
+$ make sort PROFILE=1
+$ CPUPROFILE=isort.prof ./isort 10000 10
+$ PPROF_BINARY_PATH=/Users/SimonAertssen/Desktop/Zelfstudie/6.172\ Performance\ Engineering\ of\ Software\ Systems/MIT-6.172-Performance-Engineering-of-Software-Systems/Week\ 2\ Bentleys\ rules\ and\ bit\ hacks
+$ pprof --text isort isort.prof
 
 If a visual output is preferred, then use:
-pprof --pdf isort isort.prof > results.pdf
+$ pprof --pdf isort isort.prof > results.pdf
 
-Symbols not showing? See: https://users.rust-lang.org/t/pprof-wont-show-symbols/24241/2
+Symbols not showing? 
+See: https://users.rust-lang.org/t/pprof-wont-show-symbols/24241/2
 Problem is partially solved with flags -Wl,-no_pie -fno-omit-frame-pointer -Wl,-export_dynamic
 
 Despite everything, output is:
@@ -32,5 +36,62 @@ Total: 13 samples
        0   0.0% 100.0%       13 100.0% 0x00007fff69bda3d4
        0   0.0% 100.0%        1   7.7% __mh_execute_header
        0   0.0% 100.0%       12  92.3% _main
+These addresses are practically unreadable.
 
-These symbols are practically unreadable.
+When using the DTU cluster we can run perf (built in):
+$ make clean
+$ make isort DEBUG=1
+$ perf record ./isort 10000 10
+$ perf report
+# Overhead  Command  Shared Object     Symbol                
+# ........  .......  ................  ......................
+#
+    99.60%  isort    isort             [.] isort
+     0.25%  isort    [unknown]         [k] 0xffffffff9d18c4ef
+     0.07%  isort    libc-2.17.so      [.] rand_r
+     0.04%  isort    isort             [.] rand_r@plt
+     0.02%  isort    isort             [.] main
+     0.01%  isort    ld-2.17.so        [.] do_lookup_x
+This seems to give similar results but at least we can do more.
+
+
+# CHECKOFF ITEM 1:
+A good instructional reading can be found on 
+https://sandsoftwaresound.net/perf/perf-tutorial-hot-spots/
+
+-- Elapsed time and event counting:
+$ perf stat -e cpu-clock,faults ./isort 10000 10
+# Performance counter stats for './isort 10000 10':
+      929.74 msec cpu-clock:u          #    0.999 CPUs utilized          
+      178    faults:u                  #    0.191 K/sec  
+      0.938420000 seconds user
+      0.001000000 seconds sys
+
+-- Branch misses:
+$ perf stat -e branch-misses ./isort 10000 10
+# Performance counter stats for './isort 10000 10':
+      103,968      branch-misses:u                                             
+      0.862921126 seconds time elapsed
+      0.862432000 seconds user
+      0.000000000 seconds sys
+
+-- CPU instruction cycles:
+$ perf stat -e cpu-cycles,instructions ./isort 10000 10
+# Performance counter stats for './isort 10000 10':
+     2,270,497,213      cpu-cycles:u                                                
+     3,264,379,290      instructions:u            #1.44  insn per cycle         
+      1.009240766 seconds time elapsed
+      1.007062000 seconds user
+      0.001000000 seconds sys
+
+-- All at once:
+$ perf stat -e branch-misses,cycles,instructions ./isort 10000 10
+# Performance counter stats for './isort 10000 10':
+           103,955      branch-misses:u                                             
+     2,270,694,215      cycles:u                                                    
+     3,264,379,838      instructions:u            #1.44  insn per cycle         
+
+       0.956292825 seconds time elapsed
+       0.955825000 seconds user
+       0.000000000 seconds sys
+

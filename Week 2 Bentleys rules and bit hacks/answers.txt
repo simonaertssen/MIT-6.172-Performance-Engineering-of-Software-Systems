@@ -13,3 +13,5 @@ pprof --pdf ./sort out.prof > out.pdf
 
 Symbols not showing? See: https://users.rust-lang.org/t/pprof-wont-show-symbols/24241/2
 Problem is partially solved with flag -Wl,-no_pie
+
+-Wl,-no_pie -fno-omit-frame-pointer -Wl,-export_dynamic

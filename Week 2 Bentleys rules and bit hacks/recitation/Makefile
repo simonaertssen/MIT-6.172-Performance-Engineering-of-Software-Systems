@@ -8,7 +8,7 @@ endif
 
 LDFLAGS := -lm
 ifeq ($(PROFILE),1)
-LDFLAGS := -lprofiler -Wl,-no_pie -fno-omit-frame-pointer -Wl,-export_dynamic $(LDFLAGS)
+LDFLAGS := -lprofiler  $(LDFLAGS)
 endif
 LDFLAGS := $(LDFLAGS)
 
@@ -23,8 +23,8 @@ qsort.o: qsort.c
 isort: isort.o qsort.o
 	$(CC) -o isort isort.o qsort.o $(LDFLAGS)
 	CPUPROFILE=isort.prof ./isort 10000 10
-	PPROF_BINARY_PATH=/Users/SimonAertssen/
-	pprof --text --lines isort isort.prof
+	PPROF_BINARY_PATH=/Users/SimonAertssen/Desktop/Zelfstudie/6.172\ Performance\ Engineering\ of\ Software\ Systems/MIT-6.172-Performance-Engineering-of-Software-Systems/
+	pprof --text isort isort.prof
 
 sum.o: sum.c 
 	$(CC) $(CFLAGS) -c sum.c 

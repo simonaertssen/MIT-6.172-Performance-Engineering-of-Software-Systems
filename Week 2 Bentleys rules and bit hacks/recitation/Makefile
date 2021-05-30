@@ -1,14 +1,15 @@
 CC := gcc
+CFLAGS := -g -Wall -Werror -std=gnu99 -gdwarf-3 
 
 ifeq ($(DEBUG),1)
-	CFLAGS := -Wall -O0 -g
+	CFLAGS := -O0 -DDEBUG $(CFLAGS)
 else
-	CFLAGS := -Wall -O1 -DNDEBUG 
+	CFLAGS := -O2 -DNDEBUG $(CFLAGS)
 endif
 
 LDFLAGS := -lm
 ifeq ($(PROFILE),1)
-LDFLAGS := -lprofiler -Wl,-no_pie -fno-omit-frame-pointer -Wl,-export_dynamic $(LDFLAGS)
+LDFLAGS := -g -lprofiler -Wl,-no_pie -fno-omit-frame-pointer -Wl,-export_dynamic $(LDFLAGS)
 endif
 LDFLAGS := $(LDFLAGS)
 
@@ -23,7 +24,7 @@ qsort.o: qsort.c
 isort: isort.o qsort.o
 	$(CC) -o isort isort.o qsort.o $(LDFLAGS)
 	CPUPROFILE=isort.prof ./isort 10000 10
-	PPROF_BINARY_PATH=/Users/SimonAertssen/Desktop/Zelfstudie/6.172\ Performance\ Engineering\ of\ Software\ Systems/MIT-6.172-Performance-Engineering-of-Software-Systems/Week\ 2\ Bentleys\ rules\ and\ bit\ hacks
+	PPROF_BINARY_PATH=/Users/SimonAertssen/Desktop/Zelfstudie/6.172\ Performance\ Engineering\ of\ Software\ Systems/MIT-6.172-Performance-Engineering-of-Software-Systems/Week\ 2\ Bentleys\ rules\ and\ bit\ hacks/recitation/
 	pprof --text isort isort.prof
 
 sum.o: sum.c 

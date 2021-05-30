@@ -28,12 +28,12 @@
 #include "./fasttime.h"
 #include "./tests.h"
 
- // Extern variables
+// Extern variables
 extern test_case test_cases[];
 
 
 static void run_test_suite(int start_idx, int printFlag, int N, int R,
-  struct testFunc_t* testFunc, int numFunc) {
+                           struct testFunc_t* testFunc, int numFunc) {
   for (int i = 0; test_cases[i] != NULL; i++) {
     if (i < start_idx) {
       continue;
@@ -74,7 +74,7 @@ int main(int argc, char** argv) {
   while ((optchar = getopt(argc, argv, "s:p")) != -1) {
     switch (optchar) {
     case 's':
-      seed = (unsigned int)atoi(optarg);
+      seed = (unsigned int) atoi(optarg);
       printf("Using user-provided seed: %u\n", seed);
       srand(seed);
       break;
@@ -88,23 +88,20 @@ int main(int argc, char** argv) {
   }
 
   // shift remaining arguments over
-  // int remaining_args = argc - optind;
-  // for (int i = 1; i <= remaining_args; ++i) {
-  //   argv[i] = argv[i + optind - 1];
-  // }
+  int remaining_args = argc - optind;
+  for (int i = 1; i <= remaining_args; ++i) {
+    argv[i] = argv[i + optind - 1];
+  }
 
-  // // check to make sure number of arguments is correct
-  // if (remaining_args != 2) {
-  //   printf("Usage: %s [-p] <num_elements> <num_repeats>\n", argv[0]);
-  //   printf("-p : print before/after arrays\n");
-  //   exit(-1);
-  // }
+  // check to make sure number of arguments is correct
+  if (remaining_args != 2) {
+    printf("Usage: %s [-p] <num_elements> <num_repeats>\n", argv[0]);
+    printf("-p : print before/after arrays\n");
+    exit(-1);
+  }
 
-  // N = atoi(argv[1]);
-  // R = atoi(argv[2]);
-
-  N = 10000;
-  R = 10;
+  N = atoi(argv[1]);
+  R = atoi(argv[2]);
 
   run_test_suite(0, printFlag, N, R, testFunc, kNumOfFunc);
 

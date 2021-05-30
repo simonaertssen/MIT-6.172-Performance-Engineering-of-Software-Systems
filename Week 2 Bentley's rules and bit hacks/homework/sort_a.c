@@ -23,7 +23,7 @@
 
 #include "./util.h"
 
- // Function prototypes
+// Function prototypes
 static void merge_a(data_t* A, int p, int q, int r);
 static void copy_a(data_t* source, data_t* dest, int n);
 
@@ -68,8 +68,7 @@ static void merge_a(data_t* A, int p, int q, int r) {
     if (left[i] <= right[j]) {
       A[k] = left[i];
       i++;
-    }
-    else {
+    } else {
       A[k] = right[j];
       j++;
     }
@@ -82,7 +81,7 @@ static void copy_a(data_t* source, data_t* dest, int n) {
   assert(dest);
   assert(source);
 
-  for (int i = 0; i < n; i++) {
+  for (int i = 0 ; i < n ; i++) {
     dest[i] = source[i];
   }
 }

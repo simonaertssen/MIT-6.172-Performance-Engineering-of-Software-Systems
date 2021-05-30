@@ -1,10 +1,11 @@
 # RUNNING THE PROFILERS:
-follow instructions listed on 
+follow instructions listed on:
 https://gperftools.github.io/gperftools/cpuprofile.html
 https://codearcana.com/posts/2013/02/26/introduction-to-using-profiling-tools.html
 
-there is the bare pprof and also the go tool pprof
+The main difference is using the -lprofiler flag during linking (DFLAGS), which works for both gcc and clang. This only seems to work when 'brew install gpperftools'. There is the bare pprof and also the go tool pprof. 
 
+Building:
 make clean
 make sort PROFILE=1
 CPUPROFILE=out.prof ./sort

@@ -1,4 +1,5 @@
-# RUNNING THE PROFILERS:
+# RECITATION
+# RUNNING THE PROFILERS
 follow instructions listed on:
 https://gperftools.github.io/gperftools/cpuprofile.html
 https://codearcana.com/posts/2013/02/26/introduction-to-using-profiling-tools.html
@@ -165,3 +166,115 @@ Looking at the D1 and LLd miss rates, the first is pretty high.
 It seems that for higher U and N, the cache miss rates increase exponentially.
 However, we know that the L1d cache is about 32Kb. Setting U=1000 results in a 
 miss rate of 0% for both caches. 
+
+
+# HOMEWORK
+# WRITEUP 1
+For DEBUG=0 we get:
+==6231== I   refs:      299,521,008
+==6231== I1  misses:          1,392
+==6231== LLi misses:          1,318
+==6231== I1  miss rate:        0.00%
+==6231== LLi miss rate:        0.00%
+==6231== 
+==6231== D   refs:      101,043,738  (64,728,902 rd   + 36,314,836 wr)
+==6231== D1  misses:        300,773  (   163,057 rd   +    137,716 wr)
+==6231== LLd misses:          5,227  (     2,562 rd   +      2,665 wr)
+==6231== D1  miss rate:         0.3% (       0.3%     +        0.4%  )
+==6231== LLd miss rate:         0.0% (       0.0%     +        0.0%  )
+==6231== 
+==6231== LL refs:           302,165  (   164,449 rd   +    137,716 wr)
+==6231== LL misses:           6,545  (     3,880 rd   +      2,665 wr)
+==6231== LL miss rate:          0.0% (       0.0%     +        0.0%  )
+==6231== 
+==6231== Branches:       53,372,694  (51,671,645 cond +  1,701,049 ind)
+==6231== Mispredicts:     3,660,257  ( 3,660,012 cond +        245 ind)
+==6231== Mispred rate:          6.9% (       7.1%     +        0.0%   )
+
+For DEBUG=1 we get:
+==6351== I   refs:      531,387,884
+==6351== I1  misses:          1,382
+==6351== LLi misses:          1,319
+==6351== I1  miss rate:        0.00%
+==6351== LLi miss rate:        0.00%
+==6351== 
+==6351== D   refs:      256,903,415  (206,216,746 rd   + 50,686,669 wr)
+==6351== D1  misses:        308,609  (    171,178 rd   +    137,431 wr)
+==6351== LLd misses:          5,220  (      2,558 rd   +      2,662 wr)
+==6351== D1  miss rate:         0.1% (        0.1%     +        0.3%  )
+==6351== LLd miss rate:         0.0% (        0.0%     +        0.0%  )
+==6351== 
+==6351== LL refs:           309,991  (    172,560 rd   +    137,431 wr)
+==6351== LL misses:           6,539  (      3,877 rd   +      2,662 wr)
+==6351== LL miss rate:          0.0% (        0.0%     +        0.0%  )
+==6351== 
+==6351== Branches:       59,153,714  ( 57,452,793 cond +  1,700,921 ind)
+==6351== Mispredicts:     4,356,108  (  4,355,873 cond +        235 ind)
+==6351== Mispred rate:          7.4% (        7.6%     +        0.0%   )
+
+Result: in debug mode, we can see there are about twice as many references,
+but the miss counts stay approximately the same. Therefore the miss rate 
+increases for the optimised code. When only looking at instruction count, 
+we can learn how optimised a code is (less instrcutions = better). However, 
+we do not get any information on how efficient these instructions are executed
+as there is no time information. Also, the miss rates look better for
+unoptimised code, because there are many more instructions.
+
+$ perf stat -e branch-misses,cycles,instructions ./sort 10000 10
+Performance counter stats for './sort 10000 10':
+         1,391,220      branch-misses:u                                             
+       127,891,782      cycles:u                                                    
+       299,490,874      instructions:u            #    2.34  insn per cycle         
+
+       0.085810121 seconds time elapsed
+
+       0.083193000 seconds user
+       0.001980000 seconds sys
+
+
+# WRITEUP 2
+Another version of merge_i and copy_i were copied and inlined.
+
+$ perf stat -e branch-misses,cycles,instructions ./sort 10000 10
+Performance counter stats for './sort 10000 10':
+           705,434      branch-misses:u                                             
+        64,552,072      cycles:u                                                    
+       151,618,488      instructions:u            #    2.35  insn per cycle         
+
+       0.030237521 seconds time elapsed
+       0.027663000 seconds user
+       0.001975000 seconds sys
+A little faster and nearly half of the branch misses!
+
+==8893== I   refs:      151,650,605
+==8893== I1  misses:          1,401
+==8893== LLi misses:          1,313
+==8893== I1  miss rate:        0.00%
+==8893== LLi miss rate:        0.00%
+==8893== 
+==8893== D   refs:       50,968,066  (32,598,662 rd   + 18,369,404 wr)
+==8893== D1  misses:        167,920  (    85,954 rd   +     81,966 wr)
+==8893== LLd misses:          5,228  (     2,564 rd   +      2,664 wr)
+==8893== D1  miss rate:         0.3% (       0.3%     +        0.4%  )
+==8893== LLd miss rate:         0.0% (       0.0%     +        0.0%  )
+==8893== 
+==8893== LL refs:           169,321  (    87,355 rd   +     81,966 wr)
+==8893== LL misses:           6,541  (     3,877 rd   +      2,664 wr)
+==8893== LL miss rate:          0.0% (       0.0%     +        0.0%  )
+==8893== 
+==8893== Branches:       26,845,464  (25,944,519 cond +    900,945 ind)
+==8893== Mispredicts:     1,793,393  ( 1,793,152 cond +        241 ind)
+==8893== Mispred rate:          6.7% (       6.9%     +        0.0%   )
+There are many less references and branches, resulting in a faster execution.
+The miss rates are slightly higher.
+
+If we add an inlined version of the utils.c functions:
+
+# WRITEUP 3
+We can get the annotated assembly code with 
+$ objdump -lSb sort > annotated_ASM.txt
+Here it does not seem like the code is simply inlined.
+
+
+# WRITEUP 4
+

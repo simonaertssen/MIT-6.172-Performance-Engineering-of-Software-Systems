@@ -1,0 +1,2947 @@
+
+sort:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+0000000000400840 <_init>:
+_init():
+  400840:	48 83 ec 08          	sub    $0x8,%rsp
+  400844:	48 8b 05 ad 27 20 00 	mov    0x2027ad(%rip),%rax        # 602ff8 <__gmon_start__>
+  40084b:	48 85 c0             	test   %rax,%rax
+  40084e:	74 05                	je     400855 <_init+0x15>
+  400850:	e8 bb 00 00 00       	callq  400910 <__gmon_start__@plt>
+  400855:	48 83 c4 08          	add    $0x8,%rsp
+  400859:	c3                   	retq   
+
+Disassembly of section .plt:
+
+0000000000400860 <.plt>:
+  400860:	ff 35 a2 27 20 00    	pushq  0x2027a2(%rip)        # 603008 <_GLOBAL_OFFSET_TABLE_+0x8>
+  400866:	ff 25 a4 27 20 00    	jmpq   *0x2027a4(%rip)        # 603010 <_GLOBAL_OFFSET_TABLE_+0x10>
+  40086c:	0f 1f 40 00          	nopl   0x0(%rax)
+
+0000000000400870 <free@plt>:
+  400870:	ff 25 a2 27 20 00    	jmpq   *0x2027a2(%rip)        # 603018 <free@GLIBC_2.2.5>
+  400876:	68 00 00 00 00       	pushq  $0x0
+  40087b:	e9 e0 ff ff ff       	jmpq   400860 <.plt>
+
+0000000000400880 <putchar@plt>:
+  400880:	ff 25 9a 27 20 00    	jmpq   *0x20279a(%rip)        # 603020 <putchar@GLIBC_2.2.5>
+  400886:	68 01 00 00 00       	pushq  $0x1
+  40088b:	e9 d0 ff ff ff       	jmpq   400860 <.plt>
+
+0000000000400890 <puts@plt>:
+  400890:	ff 25 92 27 20 00    	jmpq   *0x202792(%rip)        # 603028 <puts@GLIBC_2.2.5>
+  400896:	68 02 00 00 00       	pushq  $0x2
+  40089b:	e9 c0 ff ff ff       	jmpq   400860 <.plt>
+
+00000000004008a0 <rand_r@plt>:
+  4008a0:	ff 25 8a 27 20 00    	jmpq   *0x20278a(%rip)        # 603030 <rand_r@GLIBC_2.2.5>
+  4008a6:	68 03 00 00 00       	pushq  $0x3
+  4008ab:	e9 b0 ff ff ff       	jmpq   400860 <.plt>
+
+00000000004008b0 <printf@plt>:
+  4008b0:	ff 25 82 27 20 00    	jmpq   *0x202782(%rip)        # 603038 <printf@GLIBC_2.2.5>
+  4008b6:	68 04 00 00 00       	pushq  $0x4
+  4008bb:	e9 a0 ff ff ff       	jmpq   400860 <.plt>
+
+00000000004008c0 <memset@plt>:
+  4008c0:	ff 25 7a 27 20 00    	jmpq   *0x20277a(%rip)        # 603040 <memset@GLIBC_2.2.5>
+  4008c6:	68 05 00 00 00       	pushq  $0x5
+  4008cb:	e9 90 ff ff ff       	jmpq   400860 <.plt>
+
+00000000004008d0 <fputc@plt>:
+  4008d0:	ff 25 72 27 20 00    	jmpq   *0x202772(%rip)        # 603048 <fputc@GLIBC_2.2.5>
+  4008d6:	68 06 00 00 00       	pushq  $0x6
+  4008db:	e9 80 ff ff ff       	jmpq   400860 <.plt>
+
+00000000004008e0 <__libc_start_main@plt>:
+  4008e0:	ff 25 6a 27 20 00    	jmpq   *0x20276a(%rip)        # 603050 <__libc_start_main@GLIBC_2.2.5>
+  4008e6:	68 07 00 00 00       	pushq  $0x7
+  4008eb:	e9 70 ff ff ff       	jmpq   400860 <.plt>
+
+00000000004008f0 <srand@plt>:
+  4008f0:	ff 25 62 27 20 00    	jmpq   *0x202762(%rip)        # 603058 <srand@GLIBC_2.2.5>
+  4008f6:	68 08 00 00 00       	pushq  $0x8
+  4008fb:	e9 60 ff ff ff       	jmpq   400860 <.plt>
+
+0000000000400900 <fprintf@plt>:
+  400900:	ff 25 5a 27 20 00    	jmpq   *0x20275a(%rip)        # 603060 <fprintf@GLIBC_2.2.5>
+  400906:	68 09 00 00 00       	pushq  $0x9
+  40090b:	e9 50 ff ff ff       	jmpq   400860 <.plt>
+
+0000000000400910 <__gmon_start__@plt>:
+  400910:	ff 25 52 27 20 00    	jmpq   *0x202752(%rip)        # 603068 <__gmon_start__>
+  400916:	68 0a 00 00 00       	pushq  $0xa
+  40091b:	e9 40 ff ff ff       	jmpq   400860 <.plt>
+
+0000000000400920 <strtol@plt>:
+  400920:	ff 25 4a 27 20 00    	jmpq   *0x20274a(%rip)        # 603070 <strtol@GLIBC_2.2.5>
+  400926:	68 0b 00 00 00       	pushq  $0xb
+  40092b:	e9 30 ff ff ff       	jmpq   400860 <.plt>
+
+0000000000400930 <memcpy@plt>:
+  400930:	ff 25 42 27 20 00    	jmpq   *0x202742(%rip)        # 603078 <memcpy@GLIBC_2.14>
+  400936:	68 0c 00 00 00       	pushq  $0xc
+  40093b:	e9 20 ff ff ff       	jmpq   400860 <.plt>
+
+0000000000400940 <malloc@plt>:
+  400940:	ff 25 3a 27 20 00    	jmpq   *0x20273a(%rip)        # 603080 <malloc@GLIBC_2.2.5>
+  400946:	68 0d 00 00 00       	pushq  $0xd
+  40094b:	e9 10 ff ff ff       	jmpq   400860 <.plt>
+
+0000000000400950 <clock_gettime@plt>:
+  400950:	ff 25 32 27 20 00    	jmpq   *0x202732(%rip)        # 603088 <clock_gettime@GLIBC_2.2.5>
+  400956:	68 0e 00 00 00       	pushq  $0xe
+  40095b:	e9 00 ff ff ff       	jmpq   400860 <.plt>
+
+0000000000400960 <getopt@plt>:
+  400960:	ff 25 2a 27 20 00    	jmpq   *0x20272a(%rip)        # 603090 <getopt@GLIBC_2.2.5>
+  400966:	68 0f 00 00 00       	pushq  $0xf
+  40096b:	e9 f0 fe ff ff       	jmpq   400860 <.plt>
+
+0000000000400970 <exit@plt>:
+  400970:	ff 25 22 27 20 00    	jmpq   *0x202722(%rip)        # 603098 <exit@GLIBC_2.2.5>
+  400976:	68 10 00 00 00       	pushq  $0x10
+  40097b:	e9 e0 fe ff ff       	jmpq   400860 <.plt>
+
+0000000000400980 <fwrite@plt>:
+  400980:	ff 25 1a 27 20 00    	jmpq   *0x20271a(%rip)        # 6030a0 <fwrite@GLIBC_2.2.5>
+  400986:	68 11 00 00 00       	pushq  $0x11
+  40098b:	e9 d0 fe ff ff       	jmpq   400860 <.plt>
+
+Disassembly of section .text:
+
+0000000000400990 <main>:
+main():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:55
+extern void sort_p(data_t*, int, int);
+extern void sort_c(data_t*, int, int);
+extern void sort_m(data_t*, int, int);
+extern void sort_f(data_t*, int, int);
+
+int main(int argc, char** argv) {
+  400990:	41 56                	push   %r14
+  400992:	41 55                	push   %r13
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:56
+  int N, R, optchar, printFlag = 0;
+  400994:	45 31 ed             	xor    %r13d,%r13d
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:55
+int main(int argc, char** argv) {
+  400997:	41 54                	push   %r12
+  400999:	55                   	push   %rbp
+  40099a:	89 fd                	mov    %edi,%ebp
+  40099c:	53                   	push   %rbx
+  40099d:	48 89 f3             	mov    %rsi,%rbx
+  4009a0:	48 83 ec 10          	sub    $0x10,%rsp
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:62
+  unsigned int seed = 0;
+
+  // an array of struct testFunc_t indicating the sort functions to test
+  // the struct contains two fields --- the function pointer to the sort function
+  // and its name (for printing)
+  struct testFunc_t testFunc[] = {
+  4009a4:	48 c7 04 24 50 1e 40 	movq   $0x401e50,(%rsp)
+  4009ab:	00 
+  4009ac:	48 c7 44 24 08 b0 21 	movq   $0x4021b0,0x8(%rsp)
+  4009b3:	40 00 
+  4009b5:	0f 1f 00             	nopl   (%rax)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:74 (discriminator 1)
+    //{&sort_f, "sort_f\t\t"},
+  };
+  const int kNumOfFunc = sizeof(testFunc) / sizeof(testFunc[0]);
+
+  // process command line options
+  while ((optchar = getopt(argc, argv, "s:p")) != -1) {
+  4009b8:	ba d7 21 40 00       	mov    $0x4021d7,%edx
+  4009bd:	48 89 de             	mov    %rbx,%rsi
+  4009c0:	89 ef                	mov    %ebp,%edi
+  4009c2:	e8 99 ff ff ff       	callq  400960 <getopt@plt>
+  4009c7:	83 f8 ff             	cmp    $0xffffffff,%eax
+  4009ca:	74 54                	je     400a20 <main+0x90>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:75
+    switch (optchar) {
+  4009cc:	83 f8 70             	cmp    $0x70,%eax
+  4009cf:	74 37                	je     400a08 <main+0x78>
+  4009d1:	83 f8 73             	cmp    $0x73,%eax
+  4009d4:	75 3a                	jne    400a10 <main+0x80>
+atoi():
+/usr/include/stdlib.h:280
+#ifdef __USE_EXTERN_INLINES
+__BEGIN_NAMESPACE_STD
+__extern_inline int
+__NTH (atoi (const char *__nptr))
+{
+  return (int) strtol (__nptr, (char **) NULL, 10);
+  4009d6:	48 8b 3d 6b 27 20 00 	mov    0x20276b(%rip),%rdi        # 603148 <optarg@@GLIBC_2.2.5>
+  4009dd:	ba 0a 00 00 00       	mov    $0xa,%edx
+  4009e2:	31 f6                	xor    %esi,%esi
+  4009e4:	e8 37 ff ff ff       	callq  400920 <strtol@plt>
+main():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:78
+    case 's':
+      seed = (unsigned int) atoi(optarg);
+      printf("Using user-provided seed: %u\n", seed);
+  4009e9:	bf b9 21 40 00       	mov    $0x4021b9,%edi
+atoi():
+/usr/include/stdlib.h:280
+  4009ee:	49 89 c4             	mov    %rax,%r12
+main():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:78
+  4009f1:	89 c6                	mov    %eax,%esi
+  4009f3:	31 c0                	xor    %eax,%eax
+  4009f5:	e8 b6 fe ff ff       	callq  4008b0 <printf@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:79
+      srand(seed);
+  4009fa:	44 89 e7             	mov    %r12d,%edi
+  4009fd:	e8 ee fe ff ff       	callq  4008f0 <srand@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:80
+      break;
+  400a02:	eb b4                	jmp    4009b8 <main+0x28>
+  400a04:	0f 1f 40 00          	nopl   0x0(%rax)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:82
+    case 'p':
+      printFlag = 1;
+  400a08:	41 bd 01 00 00 00    	mov    $0x1,%r13d
+  400a0e:	eb a8                	jmp    4009b8 <main+0x28>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:85
+      break;
+    default:
+      printf("Ignoring unrecognized option: %c\n", optchar);
+  400a10:	89 c6                	mov    %eax,%esi
+  400a12:	bf 00 22 40 00       	mov    $0x402200,%edi
+  400a17:	31 c0                	xor    %eax,%eax
+  400a19:	e8 92 fe ff ff       	callq  4008b0 <printf@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:86
+      continue;
+  400a1e:	eb 98                	jmp    4009b8 <main+0x28>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:91
+    }
+  }
+
+  // shift remaining arguments over
+  int remaining_args = argc - optind;
+  400a20:	48 63 0d 19 27 20 00 	movslq 0x202719(%rip),%rcx        # 603140 <optind@@GLIBC_2.2.5>
+  400a27:	29 cd                	sub    %ecx,%ebp
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:92
+  for (int i = 1; i <= remaining_args; ++i) {
+  400a29:	85 ed                	test   %ebp,%ebp
+  400a2b:	0f 8e c7 00 00 00    	jle    400af8 <main+0x168>
+  400a31:	8d 55 ff             	lea    -0x1(%rbp),%edx
+  400a34:	48 8d 43 08          	lea    0x8(%rbx),%rax
+  400a38:	48 8d 74 d3 10       	lea    0x10(%rbx,%rdx,8),%rsi
+  400a3d:	0f 1f 00             	nopl   (%rax)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:93 (discriminator 2)
+    argv[i] = argv[i + optind - 1];
+  400a40:	48 8b 54 c8 f8       	mov    -0x8(%rax,%rcx,8),%rdx
+  400a45:	48 83 c0 08          	add    $0x8,%rax
+  400a49:	48 89 50 f8          	mov    %rdx,-0x8(%rax)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:92 (discriminator 2)
+  for (int i = 1; i <= remaining_args; ++i) {
+  400a4d:	48 39 f0             	cmp    %rsi,%rax
+  400a50:	75 ee                	jne    400a40 <main+0xb0>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:97
+  }
+
+  // check to make sure number of arguments is correct
+  if (remaining_args != 2) {
+  400a52:	83 fd 02             	cmp    $0x2,%ebp
+  400a55:	0f 85 9d 00 00 00    	jne    400af8 <main+0x168>
+atoi():
+/usr/include/stdlib.h:280
+  400a5b:	48 8b 7b 08          	mov    0x8(%rbx),%rdi
+  400a5f:	31 f6                	xor    %esi,%esi
+  400a61:	ba 0a 00 00 00       	mov    $0xa,%edx
+  400a66:	e8 b5 fe ff ff       	callq  400920 <strtol@plt>
+  400a6b:	48 8b 7b 10          	mov    0x10(%rbx),%rdi
+  400a6f:	31 f6                	xor    %esi,%esi
+  400a71:	ba 0a 00 00 00       	mov    $0xa,%edx
+  400a76:	41 89 c4             	mov    %eax,%r12d
+  400a79:	e8 a2 fe ff ff       	callq  400920 <strtol@plt>
+run_test_suite():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:37
+  for (int i = 0; test_cases[i] != NULL; i++) {
+  400a7e:	48 83 3d 5a 26 20 00 	cmpq   $0x0,0x20265a(%rip)        # 6030e0 <test_cases>
+  400a85:	00 
+atoi():
+/usr/include/stdlib.h:280
+  400a86:	41 89 c6             	mov    %eax,%r14d
+run_test_suite():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:37
+  400a89:	74 43                	je     400ace <main+0x13e>
+  400a8b:	31 db                	xor    %ebx,%ebx
+  400a8d:	31 ed                	xor    %ebp,%ebp
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:41
+    fprintf(stderr, "\nRunning test #%d...\n", i);
+  400a8f:	48 8b 3d ba 26 20 00 	mov    0x2026ba(%rip),%rdi        # 603150 <stderr@@GLIBC_2.2.5>
+  400a96:	89 da                	mov    %ebx,%edx
+  400a98:	be ea 21 40 00       	mov    $0x4021ea,%esi
+  400a9d:	31 c0                	xor    %eax,%eax
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:37
+  for (int i = 0; test_cases[i] != NULL; i++) {
+  400a9f:	83 c3 01             	add    $0x1,%ebx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:41
+    fprintf(stderr, "\nRunning test #%d...\n", i);
+  400aa2:	e8 59 fe ff ff       	callq  400900 <fprintf@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:42
+    (*test_cases[i])(printFlag, N, R, testFunc, numFunc);
+  400aa7:	41 b8 01 00 00 00    	mov    $0x1,%r8d
+  400aad:	48 89 e1             	mov    %rsp,%rcx
+  400ab0:	44 89 f2             	mov    %r14d,%edx
+  400ab3:	44 89 e6             	mov    %r12d,%esi
+  400ab6:	44 89 ef             	mov    %r13d,%edi
+  400ab9:	ff 14 ed e0 30 60 00 	callq  *0x6030e0(,%rbp,8)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:37
+  for (int i = 0; test_cases[i] != NULL; i++) {
+  400ac0:	48 63 eb             	movslq %ebx,%rbp
+  400ac3:	48 83 3c ed e0 30 60 	cmpq   $0x0,0x6030e0(,%rbp,8)
+  400aca:	00 00 
+  400acc:	75 c1                	jne    400a8f <main+0xff>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:44
+  fprintf(stderr, "Done testing.\n");
+  400ace:	48 8b 0d 7b 26 20 00 	mov    0x20267b(%rip),%rcx        # 603150 <stderr@@GLIBC_2.2.5>
+  400ad5:	ba 0e 00 00 00       	mov    $0xe,%edx
+  400ada:	be 01 00 00 00       	mov    $0x1,%esi
+  400adf:	bf db 21 40 00       	mov    $0x4021db,%edi
+  400ae4:	e8 97 fe ff ff       	callq  400980 <fwrite@plt>
+main():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:109
+  R = atoi(argv[2]);
+
+  run_test_suite(0, printFlag, N, R, testFunc, kNumOfFunc);
+
+  return 0;
+}
+  400ae9:	48 83 c4 10          	add    $0x10,%rsp
+  400aed:	31 c0                	xor    %eax,%eax
+  400aef:	5b                   	pop    %rbx
+  400af0:	5d                   	pop    %rbp
+  400af1:	41 5c                	pop    %r12
+  400af3:	41 5d                	pop    %r13
+  400af5:	41 5e                	pop    %r14
+  400af7:	c3                   	retq   
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:98
+    printf("Usage: %s [-p] <num_elements> <num_repeats>\n", argv[0]);
+  400af8:	48 8b 33             	mov    (%rbx),%rsi
+  400afb:	bf 28 22 40 00       	mov    $0x402228,%edi
+  400b00:	31 c0                	xor    %eax,%eax
+  400b02:	e8 a9 fd ff ff       	callq  4008b0 <printf@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:99
+    printf("-p : print before/after arrays\n");
+  400b07:	bf 58 22 40 00       	mov    $0x402258,%edi
+  400b0c:	e8 7f fd ff ff       	callq  400890 <puts@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/main.c:100
+    exit(-1);
+  400b11:	83 cf ff             	or     $0xffffffff,%edi
+  400b14:	e8 57 fe ff ff       	callq  400970 <exit@plt>
+
+0000000000400b19 <_start>:
+_start():
+  400b19:	31 ed                	xor    %ebp,%ebp
+  400b1b:	49 89 d1             	mov    %rdx,%r9
+  400b1e:	5e                   	pop    %rsi
+  400b1f:	48 89 e2             	mov    %rsp,%rdx
+  400b22:	48 83 e4 f0          	and    $0xfffffffffffffff0,%rsp
+  400b26:	50                   	push   %rax
+  400b27:	54                   	push   %rsp
+  400b28:	49 c7 c0 90 21 40 00 	mov    $0x402190,%r8
+  400b2f:	48 c7 c1 20 21 40 00 	mov    $0x402120,%rcx
+  400b36:	48 c7 c7 90 09 40 00 	mov    $0x400990,%rdi
+  400b3d:	e8 9e fd ff ff       	callq  4008e0 <__libc_start_main@plt>
+  400b42:	f4                   	hlt    
+  400b43:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)
+  400b4a:	00 00 00 
+  400b4d:	0f 1f 00             	nopl   (%rax)
+
+0000000000400b50 <deregister_tm_clones>:
+deregister_tm_clones():
+  400b50:	b8 2f 31 60 00       	mov    $0x60312f,%eax
+  400b55:	55                   	push   %rbp
+  400b56:	48 2d 28 31 60 00    	sub    $0x603128,%rax
+  400b5c:	48 83 f8 0e          	cmp    $0xe,%rax
+  400b60:	48 89 e5             	mov    %rsp,%rbp
+  400b63:	77 02                	ja     400b67 <deregister_tm_clones+0x17>
+  400b65:	5d                   	pop    %rbp
+  400b66:	c3                   	retq   
+  400b67:	b8 00 00 00 00       	mov    $0x0,%eax
+  400b6c:	48 85 c0             	test   %rax,%rax
+  400b6f:	74 f4                	je     400b65 <deregister_tm_clones+0x15>
+  400b71:	5d                   	pop    %rbp
+  400b72:	bf 28 31 60 00       	mov    $0x603128,%edi
+  400b77:	ff e0                	jmpq   *%rax
+  400b79:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+
+0000000000400b80 <register_tm_clones>:
+register_tm_clones():
+  400b80:	b8 28 31 60 00       	mov    $0x603128,%eax
+  400b85:	55                   	push   %rbp
+  400b86:	48 2d 28 31 60 00    	sub    $0x603128,%rax
+  400b8c:	48 c1 f8 03          	sar    $0x3,%rax
+  400b90:	48 89 e5             	mov    %rsp,%rbp
+  400b93:	48 89 c2             	mov    %rax,%rdx
+  400b96:	48 c1 ea 3f          	shr    $0x3f,%rdx
+  400b9a:	48 01 d0             	add    %rdx,%rax
+  400b9d:	48 d1 f8             	sar    %rax
+  400ba0:	75 02                	jne    400ba4 <register_tm_clones+0x24>
+  400ba2:	5d                   	pop    %rbp
+  400ba3:	c3                   	retq   
+  400ba4:	ba 00 00 00 00       	mov    $0x0,%edx
+  400ba9:	48 85 d2             	test   %rdx,%rdx
+  400bac:	74 f4                	je     400ba2 <register_tm_clones+0x22>
+  400bae:	5d                   	pop    %rbp
+  400baf:	48 89 c6             	mov    %rax,%rsi
+  400bb2:	bf 28 31 60 00       	mov    $0x603128,%edi
+  400bb7:	ff e2                	jmpq   *%rdx
+  400bb9:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+
+0000000000400bc0 <__do_global_dtors_aux>:
+__do_global_dtors_aux():
+  400bc0:	80 3d 91 25 20 00 00 	cmpb   $0x0,0x202591(%rip)        # 603158 <completed.6355>
+  400bc7:	75 11                	jne    400bda <__do_global_dtors_aux+0x1a>
+  400bc9:	55                   	push   %rbp
+  400bca:	48 89 e5             	mov    %rsp,%rbp
+  400bcd:	e8 7e ff ff ff       	callq  400b50 <deregister_tm_clones>
+  400bd2:	5d                   	pop    %rbp
+  400bd3:	c6 05 7e 25 20 00 01 	movb   $0x1,0x20257e(%rip)        # 603158 <completed.6355>
+  400bda:	f3 c3                	repz retq 
+  400bdc:	0f 1f 40 00          	nopl   0x0(%rax)
+
+0000000000400be0 <frame_dummy>:
+frame_dummy():
+  400be0:	48 83 3d 18 22 20 00 	cmpq   $0x0,0x202218(%rip)        # 602e00 <__JCR_END__>
+  400be7:	00 
+  400be8:	74 1e                	je     400c08 <frame_dummy+0x28>
+  400bea:	b8 00 00 00 00       	mov    $0x0,%eax
+  400bef:	48 85 c0             	test   %rax,%rax
+  400bf2:	74 14                	je     400c08 <frame_dummy+0x28>
+  400bf4:	55                   	push   %rbp
+  400bf5:	bf 00 2e 60 00       	mov    $0x602e00,%edi
+  400bfa:	48 89 e5             	mov    %rsp,%rbp
+  400bfd:	ff d0                	callq  *%rax
+  400bff:	5d                   	pop    %rbp
+  400c00:	e9 7b ff ff ff       	jmpq   400b80 <register_tm_clones>
+  400c05:	0f 1f 00             	nopl   (%rax)
+  400c08:	e9 73 ff ff ff       	jmpq   400b80 <register_tm_clones>
+  400c0d:	0f 1f 00             	nopl   (%rax)
+
+0000000000400c10 <test_one_element>:
+test_one_element():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:252
+    TEST_FAIL("Sorting array with zero element failed");
+  }
+}
+
+static void test_one_element(int printFlag, int N, int R,
+                             struct testFunc_t* testFunc, int numFunc) {
+  400c10:	41 54                	push   %r12
+  400c12:	55                   	push   %rbp
+  400c13:	53                   	push   %rbx
+  400c14:	48 83 ec 10          	sub    $0x10,%rsp
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:254
+  int success = 1;
+  for (int i = 0; i < numFunc; i++) {
+  400c18:	45 85 c0             	test   %r8d,%r8d
+  400c1b:	0f 8e df 00 00 00    	jle    400d00 <test_one_element+0xf0>
+  400c21:	41 8d 40 ff          	lea    -0x1(%r8),%eax
+  400c25:	48 89 cb             	mov    %rcx,%rbx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:253
+  int success = 1;
+  400c28:	41 bc 01 00 00 00    	mov    $0x1,%r12d
+  400c2e:	48 c1 e0 04          	shl    $0x4,%rax
+  400c32:	48 8d 6c 01 10       	lea    0x10(%rcx,%rax,1),%rbp
+  400c37:	eb 10                	jmp    400c49 <test_one_element+0x39>
+  400c39:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+  400c40:	48 83 c3 10          	add    $0x10,%rbx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:254
+  for (int i = 0; i < numFunc; i++) {
+  400c44:	48 39 eb             	cmp    %rbp,%rbx
+  400c47:	74 57                	je     400ca0 <test_one_element+0x90>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:256
+    data_t data[] = {0, 1, 0};
+    testFunc[i].func(&data[1], 0, 0);
+  400c49:	31 d2                	xor    %edx,%edx
+  400c4b:	31 f6                	xor    %esi,%esi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:255
+    data_t data[] = {0, 1, 0};
+  400c4d:	c7 04 24 00 00 00 00 	movl   $0x0,(%rsp)
+  400c54:	c7 44 24 04 01 00 00 	movl   $0x1,0x4(%rsp)
+  400c5b:	00 
+  400c5c:	c7 44 24 08 00 00 00 	movl   $0x0,0x8(%rsp)
+  400c63:	00 
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:256
+    testFunc[i].func(&data[1], 0, 0);
+  400c64:	48 8d 7c 24 04       	lea    0x4(%rsp),%rdi
+  400c69:	ff 13                	callq  *(%rbx)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:257
+    if (data[0] != 0 && data[2] != 0) {
+  400c6b:	8b 14 24             	mov    (%rsp),%edx
+  400c6e:	85 d2                	test   %edx,%edx
+  400c70:	74 ce                	je     400c40 <test_one_element+0x30>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:257 (discriminator 1)
+  400c72:	8b 44 24 08          	mov    0x8(%rsp),%eax
+  400c76:	85 c0                	test   %eax,%eax
+  400c78:	74 c6                	je     400c40 <test_one_element+0x30>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:259
+      // Can't test data[1] == 1 because of final part of homework.
+      printf("Error: %s failed to sort array with one element\n",
+  400c7a:	48 8b 73 08          	mov    0x8(%rbx),%rsi
+  400c7e:	31 c0                	xor    %eax,%eax
+  400c80:	bf 48 23 40 00       	mov    $0x402348,%edi
+  400c85:	48 83 c3 10          	add    $0x10,%rbx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:261
+             testFunc[i].name);
+      success = 0;
+  400c89:	45 31 e4             	xor    %r12d,%r12d
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:259
+      printf("Error: %s failed to sort array with one element\n",
+  400c8c:	e8 1f fc ff ff       	callq  4008b0 <printf@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:254
+  for (int i = 0; i < numFunc; i++) {
+  400c91:	48 39 eb             	cmp    %rbp,%rbx
+  400c94:	75 b3                	jne    400c49 <test_one_element+0x39>
+  400c96:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)
+  400c9d:	00 00 00 
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:265
+    }
+  }
+
+  if (success) {
+  400ca0:	45 85 e4             	test   %r12d,%r12d
+  400ca3:	75 5b                	jne    400d00 <test_one_element+0xf0>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:268
+    TEST_PASS();
+  } else {
+    TEST_FAIL("Sorting array with one element failed");
+  400ca5:	48 8b 3d a4 24 20 00 	mov    0x2024a4(%rip),%rdi        # 603150 <stderr@@GLIBC_2.2.5>
+  400cac:	b9 0c 01 00 00       	mov    $0x10c,%ecx
+  400cb1:	ba f0 24 40 00       	mov    $0x4024f0,%edx
+  400cb6:	be 80 23 40 00       	mov    $0x402380,%esi
+  400cbb:	31 c0                	xor    %eax,%eax
+  400cbd:	e8 3e fc ff ff       	callq  400900 <fprintf@plt>
+  400cc2:	48 8b 0d 87 24 20 00 	mov    0x202487(%rip),%rcx        # 603150 <stderr@@GLIBC_2.2.5>
+  400cc9:	ba 25 00 00 00       	mov    $0x25,%edx
+  400cce:	be 01 00 00 00       	mov    $0x1,%esi
+  400cd3:	bf a8 23 40 00       	mov    $0x4023a8,%edi
+  400cd8:	e8 a3 fc ff ff       	callq  400980 <fwrite@plt>
+  400cdd:	48 8b 35 6c 24 20 00 	mov    0x20246c(%rip),%rsi        # 603150 <stderr@@GLIBC_2.2.5>
+  400ce4:	bf 0a 00 00 00       	mov    $0xa,%edi
+  400ce9:	e8 e2 fb ff ff       	callq  4008d0 <fputc@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:270
+  }
+}
+  400cee:	48 83 c4 10          	add    $0x10,%rsp
+  400cf2:	5b                   	pop    %rbx
+  400cf3:	5d                   	pop    %rbp
+  400cf4:	41 5c                	pop    %r12
+  400cf6:	c3                   	retq   
+  400cf7:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+  400cfe:	00 00 
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:266
+    TEST_PASS();
+  400d00:	48 8b 3d 49 24 20 00 	mov    0x202449(%rip),%rdi        # 603150 <stderr@@GLIBC_2.2.5>
+  400d07:	b9 0a 01 00 00       	mov    $0x10a,%ecx
+  400d0c:	ba f0 24 40 00       	mov    $0x4024f0,%edx
+  400d11:	be 77 22 40 00       	mov    $0x402277,%esi
+  400d16:	31 c0                	xor    %eax,%eax
+  400d18:	e8 e3 fb ff ff       	callq  400900 <fprintf@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:270
+}
+  400d1d:	48 83 c4 10          	add    $0x10,%rsp
+  400d21:	5b                   	pop    %rbx
+  400d22:	5d                   	pop    %rbp
+  400d23:	41 5c                	pop    %r12
+  400d25:	c3                   	retq   
+  400d26:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)
+  400d2d:	00 00 00 
+
+0000000000400d30 <test_zero_element>:
+test_zero_element():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:232
+                              struct testFunc_t* testFunc, int numFunc) {
+  400d30:	41 54                	push   %r12
+  400d32:	55                   	push   %rbp
+  400d33:	53                   	push   %rbx
+  400d34:	48 83 ec 10          	sub    $0x10,%rsp
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:234
+  for (int i = 0; i < numFunc; i++) {
+  400d38:	45 85 c0             	test   %r8d,%r8d
+  400d3b:	0f 8e d7 00 00 00    	jle    400e18 <test_zero_element+0xe8>
+  400d41:	41 8d 40 ff          	lea    -0x1(%r8),%eax
+  400d45:	48 89 cb             	mov    %rcx,%rbx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:233
+  int success = 1;
+  400d48:	41 bc 01 00 00 00    	mov    $0x1,%r12d
+  400d4e:	48 c1 e0 04          	shl    $0x4,%rax
+  400d52:	48 8d 6c 01 10       	lea    0x10(%rcx,%rax,1),%rbp
+  400d57:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+  400d5e:	00 00 
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:236
+    testFunc[i].func(&data[1], 0, 0);
+  400d60:	31 d2                	xor    %edx,%edx
+  400d62:	31 f6                	xor    %esi,%esi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:235
+    data_t data[] = {0, 0, 0};
+  400d64:	c7 04 24 00 00 00 00 	movl   $0x0,(%rsp)
+  400d6b:	c7 44 24 04 00 00 00 	movl   $0x0,0x4(%rsp)
+  400d72:	00 
+  400d73:	c7 44 24 08 00 00 00 	movl   $0x0,0x8(%rsp)
+  400d7a:	00 
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:236
+    testFunc[i].func(&data[1], 0, 0);
+  400d7b:	48 8d 7c 24 04       	lea    0x4(%rsp),%rdi
+  400d80:	ff 13                	callq  *(%rbx)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:237
+    if (data[0] != 0 && data[1] != 0 && data[2] != 0) {
+  400d82:	8b 0c 24             	mov    (%rsp),%ecx
+  400d85:	85 c9                	test   %ecx,%ecx
+  400d87:	74 17                	je     400da0 <test_zero_element+0x70>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:237 (discriminator 1)
+  400d89:	8b 54 24 04          	mov    0x4(%rsp),%edx
+  400d8d:	85 d2                	test   %edx,%edx
+  400d8f:	74 0f                	je     400da0 <test_zero_element+0x70>
+  400d91:	8b 44 24 08          	mov    0x8(%rsp),%eax
+  400d95:	85 c0                	test   %eax,%eax
+  400d97:	75 67                	jne    400e00 <test_zero_element+0xd0>
+  400d99:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+  400da0:	48 83 c3 10          	add    $0x10,%rbx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:234
+  for (int i = 0; i < numFunc; i++) {
+  400da4:	48 39 eb             	cmp    %rbp,%rbx
+  400da7:	75 b7                	jne    400d60 <test_zero_element+0x30>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:244
+  if (success) {
+  400da9:	45 85 e4             	test   %r12d,%r12d
+  400dac:	75 6a                	jne    400e18 <test_zero_element+0xe8>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:247
+    TEST_FAIL("Sorting array with zero element failed");
+  400dae:	48 8b 3d 9b 23 20 00 	mov    0x20239b(%rip),%rdi        # 603150 <stderr@@GLIBC_2.2.5>
+  400db5:	b9 f7 00 00 00       	mov    $0xf7,%ecx
+  400dba:	ba d0 24 40 00       	mov    $0x4024d0,%edx
+  400dbf:	be 80 23 40 00       	mov    $0x402380,%esi
+  400dc4:	31 c0                	xor    %eax,%eax
+  400dc6:	e8 35 fb ff ff       	callq  400900 <fprintf@plt>
+  400dcb:	48 8b 0d 7e 23 20 00 	mov    0x20237e(%rip),%rcx        # 603150 <stderr@@GLIBC_2.2.5>
+  400dd2:	ba 26 00 00 00       	mov    $0x26,%edx
+  400dd7:	be 01 00 00 00       	mov    $0x1,%esi
+  400ddc:	bf 08 24 40 00       	mov    $0x402408,%edi
+  400de1:	e8 9a fb ff ff       	callq  400980 <fwrite@plt>
+  400de6:	48 8b 35 63 23 20 00 	mov    0x202363(%rip),%rsi        # 603150 <stderr@@GLIBC_2.2.5>
+  400ded:	bf 0a 00 00 00       	mov    $0xa,%edi
+  400df2:	e8 d9 fa ff ff       	callq  4008d0 <fputc@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:249
+}
+  400df7:	48 83 c4 10          	add    $0x10,%rsp
+  400dfb:	5b                   	pop    %rbx
+  400dfc:	5d                   	pop    %rbp
+  400dfd:	41 5c                	pop    %r12
+  400dff:	c3                   	retq   
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:238
+      printf("Error: %s failed to sort array with zero element\n",
+  400e00:	48 8b 73 08          	mov    0x8(%rbx),%rsi
+  400e04:	bf d0 23 40 00       	mov    $0x4023d0,%edi
+  400e09:	31 c0                	xor    %eax,%eax
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:240
+      success = 0;
+  400e0b:	45 31 e4             	xor    %r12d,%r12d
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:238
+      printf("Error: %s failed to sort array with zero element\n",
+  400e0e:	e8 9d fa ff ff       	callq  4008b0 <printf@plt>
+  400e13:	eb 8b                	jmp    400da0 <test_zero_element+0x70>
+  400e15:	0f 1f 00             	nopl   (%rax)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:245
+    TEST_PASS();
+  400e18:	48 8b 3d 31 23 20 00 	mov    0x202331(%rip),%rdi        # 603150 <stderr@@GLIBC_2.2.5>
+  400e1f:	b9 f5 00 00 00       	mov    $0xf5,%ecx
+  400e24:	ba d0 24 40 00       	mov    $0x4024d0,%edx
+  400e29:	be 77 22 40 00       	mov    $0x402277,%esi
+  400e2e:	31 c0                	xor    %eax,%eax
+  400e30:	e8 cb fa ff ff       	callq  400900 <fprintf@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:249
+}
+  400e35:	48 83 c4 10          	add    $0x10,%rsp
+  400e39:	5b                   	pop    %rbx
+  400e3a:	5d                   	pop    %rbp
+  400e3b:	41 5c                	pop    %r12
+  400e3d:	c3                   	retq   
+  400e3e:	66 90                	xchg   %ax,%ax
+
+0000000000400e40 <all_inverted>:
+init_data():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:127
+  for (int i = randomPrefix; i < N; i++) {
+  400e40:	85 f6                	test   %esi,%esi
+  400e42:	0f 8e 80 01 00 00    	jle    400fc8 <all_inverted+0x188>
+  400e48:	48 89 f8             	mov    %rdi,%rax
+  400e4b:	89 f2                	mov    %esi,%edx
+  400e4d:	83 e0 0f             	and    $0xf,%eax
+  400e50:	48 c1 e8 02          	shr    $0x2,%rax
+  400e54:	48 f7 d8             	neg    %rax
+  400e57:	83 e0 03             	and    $0x3,%eax
+  400e5a:	39 f0                	cmp    %esi,%eax
+  400e5c:	0f 47 c6             	cmova  %esi,%eax
+  400e5f:	83 fe 05             	cmp    $0x5,%esi
+  400e62:	0f 87 70 01 00 00    	ja     400fd8 <all_inverted+0x198>
+  400e68:	83 fa 01             	cmp    $0x1,%edx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:129
+      data[i] = (N - i) % RANGE;         // inverted
+  400e6b:	89 37                	mov    %esi,(%rdi)
+  400e6d:	0f 86 85 01 00 00    	jbe    400ff8 <all_inverted+0x1b8>
+  400e73:	8d 46 ff             	lea    -0x1(%rsi),%eax
+  400e76:	83 fa 02             	cmp    $0x2,%edx
+  400e79:	89 47 04             	mov    %eax,0x4(%rdi)
+  400e7c:	0f 86 86 01 00 00    	jbe    401008 <all_inverted+0x1c8>
+  400e82:	8d 46 fe             	lea    -0x2(%rsi),%eax
+  400e85:	25 ff ff ff 7f       	and    $0x7fffffff,%eax
+  400e8a:	83 fa 03             	cmp    $0x3,%edx
+  400e8d:	89 47 08             	mov    %eax,0x8(%rdi)
+  400e90:	0f 86 82 01 00 00    	jbe    401018 <all_inverted+0x1d8>
+  400e96:	8d 46 fd             	lea    -0x3(%rsi),%eax
+  400e99:	25 ff ff ff 7f       	and    $0x7fffffff,%eax
+  400e9e:	83 fa 04             	cmp    $0x4,%edx
+  400ea1:	89 47 0c             	mov    %eax,0xc(%rdi)
+  400ea4:	0f 86 7e 01 00 00    	jbe    401028 <all_inverted+0x1e8>
+  400eaa:	8d 46 fc             	lea    -0x4(%rsi),%eax
+  400ead:	25 ff ff ff 7f       	and    $0x7fffffff,%eax
+  400eb2:	89 47 10             	mov    %eax,0x10(%rdi)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:127
+  for (int i = randomPrefix; i < N; i++) {
+  400eb5:	b8 05 00 00 00       	mov    $0x5,%eax
+  400eba:	39 d6                	cmp    %edx,%esi
+  400ebc:	0f 84 0e 01 00 00    	je     400fd0 <all_inverted+0x190>
+  400ec2:	41 89 f2             	mov    %esi,%r10d
+  400ec5:	89 d1                	mov    %edx,%ecx
+  400ec7:	41 29 d2             	sub    %edx,%r10d
+  400eca:	45 89 d0             	mov    %r10d,%r8d
+  400ecd:	41 c1 e8 02          	shr    $0x2,%r8d
+  400ed1:	46 8d 0c 85 00 00 00 	lea    0x0(,%r8,4),%r9d
+  400ed8:	00 
+  400ed9:	45 85 c9             	test   %r9d,%r9d
+  400edc:	0f 84 9e 00 00 00    	je     400f80 <all_inverted+0x140>
+  400ee2:	8d 50 01             	lea    0x1(%rax),%edx
+  400ee5:	66 0f 6f 1d 33 16 00 	movdqa 0x1633(%rip),%xmm3        # 402520 <__func__.4002+0x12>
+  400eec:	00 
+  400eed:	48 8d 0c 8f          	lea    (%rdi,%rcx,4),%rcx
+  400ef1:	89 54 24 ec          	mov    %edx,-0x14(%rsp)
+  400ef5:	8d 50 02             	lea    0x2(%rax),%edx
+  400ef8:	66 0f 6e 7c 24 ec    	movd   -0x14(%rsp),%xmm7
+  400efe:	89 74 24 ec          	mov    %esi,-0x14(%rsp)
+  400f02:	89 54 24 f0          	mov    %edx,-0x10(%rsp)
+  400f06:	8d 50 03             	lea    0x3(%rax),%edx
+  400f09:	66 0f 6e 4c 24 f0    	movd   -0x10(%rsp),%xmm1
+  400f0f:	89 44 24 f0          	mov    %eax,-0x10(%rsp)
+  400f13:	89 54 24 f4          	mov    %edx,-0xc(%rsp)
+  400f17:	66 0f 6e 44 24 f0    	movd   -0x10(%rsp),%xmm0
+  400f1d:	31 d2                	xor    %edx,%edx
+  400f1f:	66 0f 6e 74 24 f4    	movd   -0xc(%rsp),%xmm6
+  400f25:	66 0f 62 c7          	punpckldq %xmm7,%xmm0
+  400f29:	66 0f 62 ce          	punpckldq %xmm6,%xmm1
+  400f2d:	66 0f 6e 74 24 ec    	movd   -0x14(%rsp),%xmm6
+  400f33:	66 0f 70 d6 00       	pshufd $0x0,%xmm6,%xmm2
+  400f38:	66 0f 6c c1          	punpcklqdq %xmm1,%xmm0
+  400f3c:	66 0f 6f 0d ec 15 00 	movdqa 0x15ec(%rip),%xmm1        # 402530 <__func__.4002+0x22>
+  400f43:	00 
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:129
+      data[i] = (N - i) % RANGE;         // inverted
+  400f44:	66 0f 6f ea          	movdqa %xmm2,%xmm5
+  400f48:	83 c2 01             	add    $0x1,%edx
+  400f4b:	66 0f 6f e0          	movdqa %xmm0,%xmm4
+  400f4f:	48 83 c1 10          	add    $0x10,%rcx
+  400f53:	66 0f fa e8          	psubd  %xmm0,%xmm5
+  400f57:	66 0f 6f c5          	movdqa %xmm5,%xmm0
+  400f5b:	66 0f fe e3          	paddd  %xmm3,%xmm4
+  400f5f:	66 0f db c1          	pand   %xmm1,%xmm0
+  400f63:	66 0f 7f 41 f0       	movdqa %xmm0,-0x10(%rcx)
+  400f68:	41 39 d0             	cmp    %edx,%r8d
+  400f6b:	76 0b                	jbe    400f78 <all_inverted+0x138>
+  400f6d:	66 0f 6f c4          	movdqa %xmm4,%xmm0
+  400f71:	eb d1                	jmp    400f44 <all_inverted+0x104>
+  400f73:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+  400f78:	44 01 c8             	add    %r9d,%eax
+  400f7b:	45 39 ca             	cmp    %r9d,%r10d
+  400f7e:	74 48                	je     400fc8 <all_inverted+0x188>
+  400f80:	89 f2                	mov    %esi,%edx
+  400f82:	48 63 c8             	movslq %eax,%rcx
+  400f85:	29 c2                	sub    %eax,%edx
+  400f87:	81 e2 ff ff ff 7f    	and    $0x7fffffff,%edx
+  400f8d:	89 14 8f             	mov    %edx,(%rdi,%rcx,4)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:127
+  for (int i = randomPrefix; i < N; i++) {
+  400f90:	8d 50 01             	lea    0x1(%rax),%edx
+  400f93:	39 d6                	cmp    %edx,%esi
+  400f95:	7e 31                	jle    400fc8 <all_inverted+0x188>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:129
+      data[i] = (N - i) % RANGE;         // inverted
+  400f97:	41 89 f3             	mov    %esi,%r11d
+  400f9a:	48 63 ca             	movslq %edx,%rcx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:127
+  for (int i = randomPrefix; i < N; i++) {
+  400f9d:	83 c0 02             	add    $0x2,%eax
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:129
+      data[i] = (N - i) % RANGE;         // inverted
+  400fa0:	41 29 d3             	sub    %edx,%r11d
+  400fa3:	44 89 da             	mov    %r11d,%edx
+  400fa6:	81 e2 ff ff ff 7f    	and    $0x7fffffff,%edx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:127
+  for (int i = randomPrefix; i < N; i++) {
+  400fac:	39 c6                	cmp    %eax,%esi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:129
+      data[i] = (N - i) % RANGE;         // inverted
+  400fae:	89 14 8f             	mov    %edx,(%rdi,%rcx,4)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:127
+  for (int i = randomPrefix; i < N; i++) {
+  400fb1:	7e 3d                	jle    400ff0 <all_inverted+0x1b0>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:129
+      data[i] = (N - i) % RANGE;         // inverted
+  400fb3:	29 c6                	sub    %eax,%esi
+  400fb5:	48 63 d0             	movslq %eax,%rdx
+  400fb8:	81 e6 ff ff ff 7f    	and    $0x7fffffff,%esi
+  400fbe:	89 34 97             	mov    %esi,(%rdi,%rdx,4)
+  400fc1:	c3                   	retq   
+  400fc2:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+  400fc8:	f3 c3                	repz retq 
+  400fca:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+  400fd0:	f3 c3                	repz retq 
+  400fd2:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+  400fd8:	85 c0                	test   %eax,%eax
+  400fda:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+  400fe0:	75 50                	jne    401032 <all_inverted+0x1f2>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:127
+  for (int i = randomPrefix; i < N; i++) {
+  400fe2:	31 d2                	xor    %edx,%edx
+  400fe4:	31 c0                	xor    %eax,%eax
+  400fe6:	e9 d7 fe ff ff       	jmpq   400ec2 <all_inverted+0x82>
+  400feb:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+  400ff0:	f3 c3                	repz retq 
+  400ff2:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+  400ff8:	b8 01 00 00 00       	mov    $0x1,%eax
+  400ffd:	e9 b8 fe ff ff       	jmpq   400eba <all_inverted+0x7a>
+  401002:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+  401008:	b8 02 00 00 00       	mov    $0x2,%eax
+  40100d:	e9 a8 fe ff ff       	jmpq   400eba <all_inverted+0x7a>
+  401012:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+  401018:	b8 03 00 00 00       	mov    $0x3,%eax
+  40101d:	e9 98 fe ff ff       	jmpq   400eba <all_inverted+0x7a>
+  401022:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+  401028:	b8 04 00 00 00       	mov    $0x4,%eax
+  40102d:	e9 88 fe ff ff       	jmpq   400eba <all_inverted+0x7a>
+  401032:	89 c2                	mov    %eax,%edx
+  401034:	e9 2f fe ff ff       	jmpq   400e68 <all_inverted+0x28>
+all_inverted():
+  401039:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+
+0000000000401040 <all_random>:
+init_data():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:123
+  for (int i = 0; i < randomPrefix; i++) {
+  401040:	85 f6                	test   %esi,%esi
+  401042:	7e 35                	jle    401079 <all_random+0x39>
+all_random():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:142
+void all_random(data_t* data, int N) {
+  401044:	55                   	push   %rbp
+  401045:	8d 46 ff             	lea    -0x1(%rsi),%eax
+  401048:	53                   	push   %rbx
+  401049:	48 8d 6c 87 04       	lea    0x4(%rdi,%rax,4),%rbp
+  40104e:	48 89 fb             	mov    %rdi,%rbx
+  401051:	48 83 ec 08          	sub    $0x8,%rsp
+  401055:	0f 1f 00             	nopl   (%rax)
+init_data():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:124
+    data[i] = rand_r(&randomSeed) % RANGE;
+  401058:	bf 20 31 60 00       	mov    $0x603120,%edi
+  40105d:	48 83 c3 04          	add    $0x4,%rbx
+  401061:	e8 3a f8 ff ff       	callq  4008a0 <rand_r@plt>
+  401066:	25 ff ff ff 7f       	and    $0x7fffffff,%eax
+  40106b:	89 43 fc             	mov    %eax,-0x4(%rbx)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:123
+  for (int i = 0; i < randomPrefix; i++) {
+  40106e:	48 39 eb             	cmp    %rbp,%rbx
+  401071:	75 e5                	jne    401058 <all_random+0x18>
+all_random():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:144
+}
+  401073:	48 83 c4 08          	add    $0x8,%rsp
+  401077:	5b                   	pop    %rbx
+  401078:	5d                   	pop    %rbp
+  401079:	f3 c3                	repz retq 
+  40107b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+
+0000000000401080 <test_correctness>:
+test_correctness():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:156
+                             struct testFunc_t* testFunc, int numFunc) {
+  401080:	55                   	push   %rbp
+  401081:	48 89 e5             	mov    %rsp,%rbp
+  401084:	41 57                	push   %r15
+  401086:	41 89 f7             	mov    %esi,%r15d
+  401089:	41 56                	push   %r14
+  40108b:	41 55                	push   %r13
+  40108d:	41 54                	push   %r12
+  40108f:	53                   	push   %rbx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:161
+  float* sum_time = (float*) alloca(numFunc * sizeof(float));
+  401090:	49 63 d8             	movslq %r8d,%rbx
+  401093:	48 c1 e3 02          	shl    $0x2,%rbx
+  401097:	48 8d 43 1e          	lea    0x1e(%rbx),%rax
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:156
+                             struct testFunc_t* testFunc, int numFunc) {
+  40109b:	48 81 ec 88 00 00 00 	sub    $0x88,%rsp
+  4010a2:	89 7d ac             	mov    %edi,-0x54(%rbp)
+  4010a5:	89 75 b4             	mov    %esi,-0x4c(%rbp)
+  4010a8:	89 95 6c ff ff ff    	mov    %edx,-0x94(%rbp)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:161
+  float* sum_time = (float*) alloca(numFunc * sizeof(float));
+  4010ae:	48 83 e0 f0          	and    $0xfffffffffffffff0,%rax
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:156
+                             struct testFunc_t* testFunc, int numFunc) {
+  4010b2:	48 89 8d 60 ff ff ff 	mov    %rcx,-0xa0(%rbp)
+  4010b9:	44 89 85 68 ff ff ff 	mov    %r8d,-0x98(%rbp)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:161
+  float* sum_time = (float*) alloca(numFunc * sizeof(float));
+  4010c0:	48 29 c4             	sub    %rax,%rsp
+  4010c3:	48 8d 44 24 0f       	lea    0xf(%rsp),%rax
+  4010c8:	48 89 85 78 ff ff ff 	mov    %rax,-0x88(%rbp)
+  4010cf:	48 83 a5 78 ff ff ff 	andq   $0xfffffffffffffff0,-0x88(%rbp)
+  4010d6:	f0 
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:162
+  for (int i = 0; i < numFunc; i++) {
+  4010d7:	45 85 c0             	test   %r8d,%r8d
+  4010da:	0f 8e 6d 04 00 00    	jle    40154d <test_correctness+0x4cd>
+  4010e0:	48 8b bd 78 ff ff ff 	mov    -0x88(%rbp),%rdi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:167
+  data = (data_t*) malloc(N * sizeof(data_t));
+  4010e7:	4d 63 e7             	movslq %r15d,%r12
+  4010ea:	31 f6                	xor    %esi,%esi
+  4010ec:	48 89 da             	mov    %rbx,%rdx
+  4010ef:	49 c1 e4 02          	shl    $0x2,%r12
+  4010f3:	e8 c8 f7 ff ff       	callq  4008c0 <memset@plt>
+  4010f8:	4c 89 e7             	mov    %r12,%rdi
+  4010fb:	e8 40 f8 ff ff       	callq  400940 <malloc@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:168
+  data_bcup = (data_t*) malloc(N * sizeof(data_t));
+  401100:	4c 89 e7             	mov    %r12,%rdi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:167
+  data = (data_t*) malloc(N * sizeof(data_t));
+  401103:	49 89 c7             	mov    %rax,%r15
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:168
+  data_bcup = (data_t*) malloc(N * sizeof(data_t));
+  401106:	e8 35 f8 ff ff       	callq  400940 <malloc@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:170
+  if (data == NULL || data_bcup == NULL) {
+  40110b:	48 85 c0             	test   %rax,%rax
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:168
+  data_bcup = (data_t*) malloc(N * sizeof(data_t));
+  40110e:	48 89 45 a0          	mov    %rax,-0x60(%rbp)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:170
+  if (data == NULL || data_bcup == NULL) {
+  401112:	0f 84 62 04 00 00    	je     40157a <test_correctness+0x4fa>
+  401118:	4d 85 ff             	test   %r15,%r15
+  40111b:	0f 84 59 04 00 00    	je     40157a <test_correctness+0x4fa>
+  401121:	48 8b bd 78 ff ff ff 	mov    -0x88(%rbp),%rdi
+  401128:	48 89 da             	mov    %rbx,%rdx
+  40112b:	31 f6                	xor    %esi,%esi
+  40112d:	e8 8e f7 ff ff       	callq  4008c0 <memset@plt>
+  401132:	8b 7d b4             	mov    -0x4c(%rbp),%edi
+  401135:	48 c7 85 70 ff ff ff 	movq   $0x603108,-0x90(%rbp)
+  40113c:	08 31 60 00 
+  401140:	4d 89 fd             	mov    %r15,%r13
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:198
+        data_bcup[i] = data[i];
+  401143:	c7 45 b0 01 00 00 00 	movl   $0x1,-0x50(%rbp)
+  40114a:	44 8d 67 ff          	lea    -0x1(%rdi),%r12d
+  40114e:	44 89 e0             	mov    %r12d,%eax
+  401151:	49 8d 44 87 04       	lea    0x4(%r15,%rax,4),%rax
+  401156:	48 89 45 80          	mov    %rax,-0x80(%rbp)
+  40115a:	89 f8                	mov    %edi,%eax
+  40115c:	48 8b bd 60 ff ff ff 	mov    -0xa0(%rbp),%rdi
+  401163:	48 c1 e0 02          	shl    $0x2,%rax
+  401167:	48 89 45 98          	mov    %rax,-0x68(%rbp)
+  40116b:	8b 85 68 ff ff ff    	mov    -0x98(%rbp),%eax
+  401171:	83 e8 01             	sub    $0x1,%eax
+  401174:	48 89 c2             	mov    %rax,%rdx
+  401177:	48 8d 04 85 04 00 00 	lea    0x4(,%rax,4),%rax
+  40117e:	00 
+  40117f:	48 c1 e2 04          	shl    $0x4,%rdx
+  401183:	48 8d 7c 17 10       	lea    0x10(%rdi,%rdx,1),%rdi
+  401188:	48 89 85 58 ff ff ff 	mov    %rax,-0xa8(%rbp)
+  40118f:	48 89 7d 90          	mov    %rdi,-0x70(%rbp)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:186
+    printf("Generating %s array of %d elements\n",
+  401193:	48 8b 85 70 ff ff ff 	mov    -0x90(%rbp),%rax
+  40119a:	8b 55 b4             	mov    -0x4c(%rbp),%edx
+  40119d:	bf 30 24 40 00       	mov    $0x402430,%edi
+  4011a2:	48 8b 30             	mov    (%rax),%rsi
+  4011a5:	31 c0                	xor    %eax,%eax
+  4011a7:	e8 04 f7 ff ff       	callq  4008b0 <printf@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:189
+    for (int j = 0; j < R; j++) {
+  4011ac:	44 8b b5 6c ff ff ff 	mov    -0x94(%rbp),%r14d
+  4011b3:	45 85 f6             	test   %r14d,%r14d
+  4011b6:	0f 8e 6f 01 00 00    	jle    40132b <test_correctness+0x2ab>
+  4011bc:	c7 45 a8 00 00 00 00 	movl   $0x0,-0x58(%rbp)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:191
+      dataGen[gen].generate(data, N);
+  4011c3:	48 8b 85 70 ff ff ff 	mov    -0x90(%rbp),%rax
+  4011ca:	8b 75 b4             	mov    -0x4c(%rbp),%esi
+  4011cd:	4c 89 ef             	mov    %r13,%rdi
+  4011d0:	ff 50 f8             	callq  *-0x8(%rax)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:193
+      if (printFlag) {
+  4011d3:	8b 5d ac             	mov    -0x54(%rbp),%ebx
+  4011d6:	85 db                	test   %ebx,%ebx
+  4011d8:	0f 85 6b 02 00 00    	jne    401449 <test_correctness+0x3c9>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:197 (discriminator 1)
+      for (int i = 0; i < N; i++) {
+  4011de:	44 8b 55 b4          	mov    -0x4c(%rbp),%r10d
+  4011e2:	45 85 d2             	test   %r10d,%r10d
+  4011e5:	7e 10                	jle    4011f7 <test_correctness+0x177>
+  4011e7:	48 8b 55 98          	mov    -0x68(%rbp),%rdx
+  4011eb:	48 8b 7d a0          	mov    -0x60(%rbp),%rdi
+  4011ef:	4c 89 ee             	mov    %r13,%rsi
+  4011f2:	e8 39 f7 ff ff       	callq  400930 <memcpy@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:201
+      for (int k = 0; k < numFunc; k++) {
+  4011f7:	44 8b 8d 68 ff ff ff 	mov    -0x98(%rbp),%r9d
+  4011fe:	48 8b 85 78 ff ff ff 	mov    -0x88(%rbp),%rax
+  401205:	48 8b 9d 60 ff ff ff 	mov    -0xa0(%rbp),%rbx
+  40120c:	45 85 c9             	test   %r9d,%r9d
+  40120f:	48 89 45 b8          	mov    %rax,-0x48(%rbp)
+  401213:	0f 8e ff 00 00 00    	jle    401318 <test_correctness+0x298>
+  401219:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+gettime():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/./fasttime.h:72
+
+// Return the current time.
+static inline fasttime_t gettime(void) {
+  struct timespec s;
+#ifdef NDEBUG
+  clock_gettime(CLOCK_MONOTONIC, &s);
+  401220:	48 8d 75 c0          	lea    -0x40(%rbp),%rsi
+  401224:	bf 01 00 00 00       	mov    $0x1,%edi
+  401229:	e8 22 f7 ff ff       	callq  400950 <clock_gettime@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/./fasttime.h:77
+#else
+  int r = clock_gettime(CLOCK_MONOTONIC, &s);
+  assert(r == 0);
+#endif
+  return s;
+  40122e:	4c 8b 75 c8          	mov    -0x38(%rbp),%r14
+test_correctness():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:203
+        testFunc[k].func(data, 0, N - 1);
+  401232:	44 89 e2             	mov    %r12d,%edx
+  401235:	31 f6                	xor    %esi,%esi
+gettime():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/./fasttime.h:77
+  401237:	4c 8b 7d c0          	mov    -0x40(%rbp),%r15
+test_correctness():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:203
+  40123b:	4c 89 ef             	mov    %r13,%rdi
+  40123e:	ff 13                	callq  *(%rbx)
+gettime():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/./fasttime.h:72
+  clock_gettime(CLOCK_MONOTONIC, &s);
+  401240:	48 8d 75 c0          	lea    -0x40(%rbp),%rsi
+  401244:	bf 01 00 00 00       	mov    $0x1,%edi
+  401249:	e8 02 f7 ff ff       	callq  400950 <clock_gettime@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/./fasttime.h:77
+  return s;
+  40124e:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+  401252:	48 8b 55 c0          	mov    -0x40(%rbp),%rdx
+test_correctness():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:206
+        sum_time[k] += tdiff(time1, time2);
+  401256:	48 8b 75 b8          	mov    -0x48(%rbp),%rsi
+post_process():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:78
+  if (printFlag) {
+  40125a:	44 8b 45 ac          	mov    -0x54(%rbp),%r8d
+tdiff():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/./fasttime.h:83
+}
+
+// Return the time different between the start and the end, as a float
+// in units of seconds.  This function does not need to be fast.
+static inline double tdiff(fasttime_t start, fasttime_t end) {
+  return end.tv_sec - start.tv_sec + 1e-9 * (end.tv_nsec - start.tv_nsec);
+  40125e:	4c 29 f0             	sub    %r14,%rax
+  401261:	4c 29 fa             	sub    %r15,%rdx
+test_correctness():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:207
+        success &= post_process(data, data_bcup, N, printFlag, testFunc[k].name, 0, N - 1);
+  401264:	4c 8b 73 08          	mov    0x8(%rbx),%r14
+tdiff():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/./fasttime.h:83
+  401268:	f2 48 0f 2a d0       	cvtsi2sd %rax,%xmm2
+test_correctness():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:206
+        sum_time[k] += tdiff(time1, time2);
+  40126d:	f3 0f 10 06          	movss  (%rsi),%xmm0
+tdiff():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/./fasttime.h:83
+  401271:	f2 48 0f 2a ca       	cvtsi2sd %rdx,%xmm1
+post_process():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:78
+  if (printFlag) {
+  401276:	45 85 c0             	test   %r8d,%r8d
+test_correctness():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:206
+        sum_time[k] += tdiff(time1, time2);
+  401279:	0f 5a c0             	cvtps2pd %xmm0,%xmm0
+tdiff():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/./fasttime.h:83
+  40127c:	f2 0f 59 15 bc 12 00 	mulsd  0x12bc(%rip),%xmm2        # 402540 <__func__.4002+0x32>
+  401283:	00 
+  401284:	f2 0f 58 ca          	addsd  %xmm2,%xmm1
+test_correctness():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:206
+  401288:	f2 0f 58 c1          	addsd  %xmm1,%xmm0
+  40128c:	66 0f 14 c0          	unpcklpd %xmm0,%xmm0
+  401290:	66 0f 5a d8          	cvtpd2ps %xmm0,%xmm3
+  401294:	f3 0f 11 1e          	movss  %xmm3,(%rsi)
+post_process():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:78
+  if (printFlag) {
+  401298:	0f 85 32 01 00 00    	jne    4013d0 <test_correctness+0x350>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:95
+  for (int i = begin + 1 ; i < end + 1 ; i++) {
+  40129e:	45 85 e4             	test   %r12d,%r12d
+  4012a1:	7e 33                	jle    4012d6 <test_correctness+0x256>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:96
+    if (data[i - 1] > data[i]) {
+  4012a3:	41 8b 45 00          	mov    0x0(%r13),%eax
+  4012a7:	41 39 45 04          	cmp    %eax,0x4(%r13)
+  4012ab:	0f 82 bf 00 00 00    	jb     401370 <test_correctness+0x2f0>
+  4012b1:	49 8d 45 04          	lea    0x4(%r13),%rax
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:95
+  for (int i = begin + 1 ; i < end + 1 ; i++) {
+  4012b5:	ba 01 00 00 00       	mov    $0x1,%edx
+  4012ba:	eb 12                	jmp    4012ce <test_correctness+0x24e>
+  4012bc:	0f 1f 40 00          	nopl   0x0(%rax)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:96
+    if (data[i - 1] > data[i]) {
+  4012c0:	8b 08                	mov    (%rax),%ecx
+  4012c2:	48 83 c0 04          	add    $0x4,%rax
+  4012c6:	3b 08                	cmp    (%rax),%ecx
+  4012c8:	0f 87 a2 00 00 00    	ja     401370 <test_correctness+0x2f0>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:95
+  for (int i = begin + 1 ; i < end + 1 ; i++) {
+  4012ce:	83 c2 01             	add    $0x1,%edx
+  4012d1:	41 39 d4             	cmp    %edx,%r12d
+  4012d4:	7d ea                	jge    4012c0 <test_correctness+0x240>
+  4012d6:	44 8b 75 b0          	mov    -0x50(%rbp),%r14d
+  4012da:	41 83 e6 01          	and    $0x1,%r14d
+copy_data():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:70
+  for (int i = 0 ; i < N ; i++) {
+  4012de:	8b 75 b4             	mov    -0x4c(%rbp),%esi
+  4012e1:	85 f6                	test   %esi,%esi
+  4012e3:	7e 10                	jle    4012f5 <test_correctness+0x275>
+  4012e5:	48 8b 55 98          	mov    -0x68(%rbp),%rdx
+  4012e9:	48 8b 75 a0          	mov    -0x60(%rbp),%rsi
+  4012ed:	4c 89 ef             	mov    %r13,%rdi
+  4012f0:	e8 3b f6 ff ff       	callq  400930 <memcpy@plt>
+test_correctness():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:209
+        if (!success) {
+  4012f5:	45 85 f6             	test   %r14d,%r14d
+  4012f8:	0f 84 2c 01 00 00    	je     40142a <test_correctness+0x3aa>
+  4012fe:	48 83 c3 10          	add    $0x10,%rbx
+  401302:	48 83 45 b8 04       	addq   $0x4,-0x48(%rbp)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:201
+      for (int k = 0; k < numFunc; k++) {
+  401307:	48 3b 5d 90          	cmp    -0x70(%rbp),%rbx
+  40130b:	c7 45 b0 01 00 00 00 	movl   $0x1,-0x50(%rbp)
+  401312:	0f 85 08 ff ff ff    	jne    401220 <test_correctness+0x1a0>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:189
+    for (int j = 0; j < R; j++) {
+  401318:	83 45 a8 01          	addl   $0x1,-0x58(%rbp)
+  40131c:	8b 85 6c ff ff ff    	mov    -0x94(%rbp),%eax
+  401322:	39 45 a8             	cmp    %eax,-0x58(%rbp)
+  401325:	0f 85 98 fe ff ff    	jne    4011c3 <test_correctness+0x143>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:215
+    if (success) {
+  40132b:	8b 4d b0             	mov    -0x50(%rbp),%ecx
+  40132e:	85 c9                	test   %ecx,%ecx
+  401330:	0f 85 58 01 00 00    	jne    40148e <test_correctness+0x40e>
+  401336:	48 83 85 70 ff ff ff 	addq   $0x10,-0x90(%rbp)
+  40133d:	10 
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:183
+  for (int gen = 0;
+  40133e:	48 81 bd 70 ff ff ff 	cmpq   $0x603128,-0x90(%rbp)
+  401345:	28 31 60 00 
+  401349:	0f 85 44 fe ff ff    	jne    401193 <test_correctness+0x113>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:226
+  free(data);
+  40134f:	4c 89 ef             	mov    %r13,%rdi
+  401352:	e8 19 f5 ff ff       	callq  400870 <free@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:227
+  free(data_bcup);
+  401357:	48 8b 7d a0          	mov    -0x60(%rbp),%rdi
+  40135b:	e8 10 f5 ff ff       	callq  400870 <free@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:229
+}
+  401360:	48 8d 65 d8          	lea    -0x28(%rbp),%rsp
+  401364:	5b                   	pop    %rbx
+  401365:	41 5c                	pop    %r12
+  401367:	41 5d                	pop    %r13
+  401369:	41 5e                	pop    %r14
+  40136b:	41 5f                	pop    %r15
+  40136d:	5d                   	pop    %rbp
+  40136e:	c3                   	retq   
+  40136f:	90                   	nop
+post_process():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:97
+      printf("%s: ", name);
+  401370:	4c 89 f6             	mov    %r14,%rsi
+  401373:	bf bf 22 40 00       	mov    $0x4022bf,%edi
+  401378:	31 c0                	xor    %eax,%eax
+  40137a:	e8 31 f5 ff ff       	callq  4008b0 <printf@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:98
+      TEST_FAIL("Arrays are sorted: NO!\n");
+  40137f:	48 8b 3d ca 1d 20 00 	mov    0x201dca(%rip),%rdi        # 603150 <stderr@@GLIBC_2.2.5>
+  401386:	b9 62 00 00 00       	mov    $0x62,%ecx
+  40138b:	ba 01 25 40 00       	mov    $0x402501,%edx
+  401390:	be 80 23 40 00       	mov    $0x402380,%esi
+  401395:	31 c0                	xor    %eax,%eax
+  401397:	45 31 f6             	xor    %r14d,%r14d
+  40139a:	e8 61 f5 ff ff       	callq  400900 <fprintf@plt>
+  40139f:	48 8b 0d aa 1d 20 00 	mov    0x201daa(%rip),%rcx        # 603150 <stderr@@GLIBC_2.2.5>
+  4013a6:	ba 17 00 00 00       	mov    $0x17,%edx
+  4013ab:	be 01 00 00 00       	mov    $0x1,%esi
+  4013b0:	bf d4 22 40 00       	mov    $0x4022d4,%edi
+  4013b5:	e8 c6 f5 ff ff       	callq  400980 <fwrite@plt>
+  4013ba:	48 8b 35 8f 1d 20 00 	mov    0x201d8f(%rip),%rsi        # 603150 <stderr@@GLIBC_2.2.5>
+  4013c1:	bf 0a 00 00 00       	mov    $0xa,%edi
+  4013c6:	e8 05 f5 ff ff       	callq  4008d0 <fputc@plt>
+  4013cb:	e9 0e ff ff ff       	jmpq   4012de <test_correctness+0x25e>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:79
+    printf("%s: ", name);
+  4013d0:	4c 89 f6             	mov    %r14,%rsi
+  4013d3:	bf bf 22 40 00       	mov    $0x4022bf,%edi
+  4013d8:	31 c0                	xor    %eax,%eax
+  4013da:	e8 d1 f4 ff ff       	callq  4008b0 <printf@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:80
+    printf("Data after sort\n");
+  4013df:	bf c4 22 40 00       	mov    $0x4022c4,%edi
+  4013e4:	e8 a7 f4 ff ff       	callq  400890 <puts@plt>
+display_array():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:62
+  for (int i = 0; i < N; i++) {
+  4013e9:	8b 7d b4             	mov    -0x4c(%rbp),%edi
+  4013ec:	85 ff                	test   %edi,%edi
+  4013ee:	7e 2b                	jle    40141b <test_correctness+0x39b>
+  4013f0:	4c 8b 7d 80          	mov    -0x80(%rbp),%r15
+  4013f4:	48 89 5d 88          	mov    %rbx,-0x78(%rbp)
+  4013f8:	4c 89 eb             	mov    %r13,%rbx
+  4013fb:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:63
+    printf("%d ", data[i]);
+  401400:	8b 33                	mov    (%rbx),%esi
+  401402:	31 c0                	xor    %eax,%eax
+  401404:	bf bb 22 40 00       	mov    $0x4022bb,%edi
+  401409:	48 83 c3 04          	add    $0x4,%rbx
+  40140d:	e8 9e f4 ff ff       	callq  4008b0 <printf@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:62
+  for (int i = 0; i < N; i++) {
+  401412:	4c 39 fb             	cmp    %r15,%rbx
+  401415:	75 e9                	jne    401400 <test_correctness+0x380>
+  401417:	48 8b 5d 88          	mov    -0x78(%rbp),%rbx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:65
+  printf("\n");
+  40141b:	bf 0a 00 00 00       	mov    $0xa,%edi
+  401420:	e8 5b f4 ff ff       	callq  400880 <putchar@plt>
+  401425:	e9 74 fe ff ff       	jmpq   40129e <test_correctness+0x21e>
+test_correctness():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:189
+    for (int j = 0; j < R; j++) {
+  40142a:	83 45 a8 01          	addl   $0x1,-0x58(%rbp)
+  40142e:	8b 85 6c ff ff ff    	mov    -0x94(%rbp),%eax
+  401434:	39 45 a8             	cmp    %eax,-0x58(%rbp)
+  401437:	c7 45 b0 00 00 00 00 	movl   $0x0,-0x50(%rbp)
+  40143e:	0f 85 7f fd ff ff    	jne    4011c3 <test_correctness+0x143>
+  401444:	e9 e2 fe ff ff       	jmpq   40132b <test_correctness+0x2ab>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:194
+        printf("Data before sort\n");
+  401449:	bf aa 22 40 00       	mov    $0x4022aa,%edi
+display_array():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:62
+  for (int i = 0; i < N; i++) {
+  40144e:	4c 89 eb             	mov    %r13,%rbx
+test_correctness():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:194
+        printf("Data before sort\n");
+  401451:	e8 3a f4 ff ff       	callq  400890 <puts@plt>
+display_array():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:62
+  for (int i = 0; i < N; i++) {
+  401456:	44 8b 5d b4          	mov    -0x4c(%rbp),%r11d
+  40145a:	4c 8b 75 80          	mov    -0x80(%rbp),%r14
+  40145e:	45 85 db             	test   %r11d,%r11d
+  401461:	7e 1c                	jle    40147f <test_correctness+0x3ff>
+  401463:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:63
+    printf("%d ", data[i]);
+  401468:	8b 33                	mov    (%rbx),%esi
+  40146a:	31 c0                	xor    %eax,%eax
+  40146c:	bf bb 22 40 00       	mov    $0x4022bb,%edi
+  401471:	48 83 c3 04          	add    $0x4,%rbx
+  401475:	e8 36 f4 ff ff       	callq  4008b0 <printf@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:62
+  for (int i = 0; i < N; i++) {
+  40147a:	4c 39 f3             	cmp    %r14,%rbx
+  40147d:	75 e9                	jne    401468 <test_correctness+0x3e8>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:65
+  printf("\n");
+  40147f:	bf 0a 00 00 00       	mov    $0xa,%edi
+  401484:	e8 f7 f3 ff ff       	callq  400880 <putchar@plt>
+  401489:	e9 50 fd ff ff       	jmpq   4011de <test_correctness+0x15e>
+test_correctness():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:216
+      printf("Arrays are sorted: yes\n");
+  40148e:	bf ec 22 40 00       	mov    $0x4022ec,%edi
+  401493:	e8 f8 f3 ff ff       	callq  400890 <puts@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:217
+      TEST_PASS();
+  401498:	48 8b 3d b1 1c 20 00 	mov    0x201cb1(%rip),%rdi        # 603150 <stderr@@GLIBC_2.2.5>
+  40149f:	ba b0 24 40 00       	mov    $0x4024b0,%edx
+  4014a4:	31 c0                	xor    %eax,%eax
+  4014a6:	b9 d9 00 00 00       	mov    $0xd9,%ecx
+  4014ab:	be 77 22 40 00       	mov    $0x402277,%esi
+  4014b0:	e8 4b f4 ff ff       	callq  400900 <fprintf@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:219
+      for (int k = 0; k < numFunc; k++) {
+  4014b5:	8b 95 68 ff ff ff    	mov    -0x98(%rbp),%edx
+  4014bb:	85 d2                	test   %edx,%edx
+  4014bd:	0f 8e 73 fe ff ff    	jle    401336 <test_correctness+0x2b6>
+  4014c3:	8b 85 6c ff ff ff    	mov    -0x94(%rbp),%eax
+  4014c9:	85 c0                	test   %eax,%eax
+  4014cb:	7e 53                	jle    401520 <test_correctness+0x4a0>
+  4014cd:	4c 8b b5 60 ff ff ff 	mov    -0xa0(%rbp),%r14
+  4014d4:	f3 0f 2a a5 6c ff ff 	cvtsi2ssl -0x94(%rbp),%xmm4
+  4014db:	ff 
+  4014dc:	f3 0f 11 65 b8       	movss  %xmm4,-0x48(%rbp)
+  4014e1:	31 db                	xor    %ebx,%ebx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:220
+        float avgRuntime = R > 0 ? sum_time[k] / R : 0;
+  4014e3:	48 8b 85 78 ff ff ff 	mov    -0x88(%rbp),%rax
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:221
+        printf("%s: Elapsed execution time: %f sec\n", testFunc[k].name, avgRuntime);
+  4014ea:	bf 58 24 40 00       	mov    $0x402458,%edi
+  4014ef:	49 8b 74 9e 08       	mov    0x8(%r14,%rbx,4),%rsi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:220
+        float avgRuntime = R > 0 ? sum_time[k] / R : 0;
+  4014f4:	f3 0f 10 04 18       	movss  (%rax,%rbx,1),%xmm0
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:221
+        printf("%s: Elapsed execution time: %f sec\n", testFunc[k].name, avgRuntime);
+  4014f9:	b8 01 00 00 00       	mov    $0x1,%eax
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:220
+        float avgRuntime = R > 0 ? sum_time[k] / R : 0;
+  4014fe:	f3 0f 5e 45 b8       	divss  -0x48(%rbp),%xmm0
+  401503:	48 83 c3 04          	add    $0x4,%rbx
+  401507:	0f 14 c0             	unpcklps %xmm0,%xmm0
+  40150a:	0f 5a c0             	cvtps2pd %xmm0,%xmm0
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:221
+        printf("%s: Elapsed execution time: %f sec\n", testFunc[k].name, avgRuntime);
+  40150d:	e8 9e f3 ff ff       	callq  4008b0 <printf@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:219
+      for (int k = 0; k < numFunc; k++) {
+  401512:	48 3b 9d 58 ff ff ff 	cmp    -0xa8(%rbp),%rbx
+  401519:	75 c8                	jne    4014e3 <test_correctness+0x463>
+  40151b:	e9 16 fe ff ff       	jmpq   401336 <test_correctness+0x2b6>
+  401520:	48 8b 9d 60 ff ff ff 	mov    -0xa0(%rbp),%rbx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:221
+        printf("%s: Elapsed execution time: %f sec\n", testFunc[k].name, avgRuntime);
+  401527:	48 8b 73 08          	mov    0x8(%rbx),%rsi
+  40152b:	66 0f 57 c0          	xorpd  %xmm0,%xmm0
+  40152f:	bf 58 24 40 00       	mov    $0x402458,%edi
+  401534:	b8 01 00 00 00       	mov    $0x1,%eax
+  401539:	48 83 c3 10          	add    $0x10,%rbx
+  40153d:	e8 6e f3 ff ff       	callq  4008b0 <printf@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:219
+      for (int k = 0; k < numFunc; k++) {
+  401542:	48 3b 5d 90          	cmp    -0x70(%rbp),%rbx
+  401546:	75 df                	jne    401527 <test_correctness+0x4a7>
+  401548:	e9 e9 fd ff ff       	jmpq   401336 <test_correctness+0x2b6>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:167
+  data = (data_t*) malloc(N * sizeof(data_t));
+  40154d:	48 63 5d b4          	movslq -0x4c(%rbp),%rbx
+  401551:	48 c1 e3 02          	shl    $0x2,%rbx
+  401555:	48 89 df             	mov    %rbx,%rdi
+  401558:	e8 e3 f3 ff ff       	callq  400940 <malloc@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:168
+  data_bcup = (data_t*) malloc(N * sizeof(data_t));
+  40155d:	48 89 df             	mov    %rbx,%rdi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:167
+  data = (data_t*) malloc(N * sizeof(data_t));
+  401560:	49 89 c7             	mov    %rax,%r15
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:168
+  data_bcup = (data_t*) malloc(N * sizeof(data_t));
+  401563:	e8 d8 f3 ff ff       	callq  400940 <malloc@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:170
+  if (data == NULL || data_bcup == NULL) {
+  401568:	48 85 c0             	test   %rax,%rax
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:168
+  data_bcup = (data_t*) malloc(N * sizeof(data_t));
+  40156b:	48 89 45 a0          	mov    %rax,-0x60(%rbp)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:170
+  if (data == NULL || data_bcup == NULL) {
+  40156f:	74 09                	je     40157a <test_correctness+0x4fa>
+  401571:	4d 85 ff             	test   %r15,%r15
+  401574:	0f 85 b8 fb ff ff    	jne    401132 <test_correctness+0xb2>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:171
+    printf("Error: not enough memory\n");
+  40157a:	bf 91 22 40 00       	mov    $0x402291,%edi
+  40157f:	e8 0c f3 ff ff       	callq  400890 <puts@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:172
+    free(data);
+  401584:	4c 89 ff             	mov    %r15,%rdi
+  401587:	e8 e4 f2 ff ff       	callq  400870 <free@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:173
+    free(data_bcup);
+  40158c:	48 8b 7d a0          	mov    -0x60(%rbp),%rdi
+  401590:	e8 db f2 ff ff       	callq  400870 <free@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:174
+    exit(-1);
+  401595:	bf ff ff ff ff       	mov    $0xffffffff,%edi
+  40159a:	e8 d1 f3 ff ff       	callq  400970 <exit@plt>
+  40159f:	90                   	nop
+
+00000000004015a0 <test_subarray>:
+test_subarray():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:273
+
+void test_subarray(int printFlag, int N, int R,
+                   struct testFunc_t* testFunc, int numFunc) {
+  4015a0:	41 57                	push   %r15
+  4015a2:	41 89 f7             	mov    %esi,%r15d
+  4015a5:	41 56                	push   %r14
+  4015a7:	41 55                	push   %r13
+  4015a9:	41 54                	push   %r12
+  4015ab:	55                   	push   %rbp
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:278
+  data_t* data, *data_bcup;
+  int success = 1;
+
+  // allocate memory
+  data = (data_t*) malloc(N * sizeof(data_t));
+  4015ac:	48 63 ee             	movslq %esi,%rbp
+  4015af:	48 c1 e5 02          	shl    $0x2,%rbp
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:273
+                   struct testFunc_t* testFunc, int numFunc) {
+  4015b3:	53                   	push   %rbx
+  4015b4:	48 83 ec 78          	sub    $0x78,%rsp
+  4015b8:	89 7c 24 20          	mov    %edi,0x20(%rsp)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:278
+  data = (data_t*) malloc(N * sizeof(data_t));
+  4015bc:	48 89 ef             	mov    %rbp,%rdi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:273
+                   struct testFunc_t* testFunc, int numFunc) {
+  4015bf:	89 74 24 14          	mov    %esi,0x14(%rsp)
+  4015c3:	48 89 0c 24          	mov    %rcx,(%rsp)
+  4015c7:	44 89 44 24 08       	mov    %r8d,0x8(%rsp)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:278
+  data = (data_t*) malloc(N * sizeof(data_t));
+  4015cc:	e8 6f f3 ff ff       	callq  400940 <malloc@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:279
+  data_bcup = (data_t*) malloc(N * sizeof(data_t));
+  4015d1:	48 89 ef             	mov    %rbp,%rdi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:278
+  data = (data_t*) malloc(N * sizeof(data_t));
+  4015d4:	48 89 c3             	mov    %rax,%rbx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:279
+  data_bcup = (data_t*) malloc(N * sizeof(data_t));
+  4015d7:	e8 64 f3 ff ff       	callq  400940 <malloc@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:281
+
+  if (data == NULL || data_bcup == NULL) {
+  4015dc:	48 85 c0             	test   %rax,%rax
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:279
+  data_bcup = (data_t*) malloc(N * sizeof(data_t));
+  4015df:	48 89 c5             	mov    %rax,%rbp
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:281
+  if (data == NULL || data_bcup == NULL) {
+  4015e2:	0f 84 e0 04 00 00    	je     401ac8 <test_subarray+0x528>
+  4015e8:	48 85 db             	test   %rbx,%rbx
+  4015eb:	0f 84 d7 04 00 00    	je     401ac8 <test_subarray+0x528>
+  4015f1:	8b 44 24 14          	mov    0x14(%rsp),%eax
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:289 (discriminator 1)
+    free(data_bcup);
+    exit(-1);
+  }
+
+  // initialize data with random numbers
+  for (int i = 0; i < N; i++) {
+  4015f5:	45 85 ff             	test   %r15d,%r15d
+  4015f8:	44 8d 78 ff          	lea    -0x1(%rax),%r15d
+  4015fc:	7e 2e                	jle    40162c <test_subarray+0x8c>
+  4015fe:	44 89 f8             	mov    %r15d,%eax
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:289
+  401601:	45 31 ed             	xor    %r13d,%r13d
+  401604:	4c 8d 24 85 04 00 00 	lea    0x4(,%rax,4),%r12
+  40160b:	00 
+  40160c:	0f 1f 40 00          	nopl   0x0(%rax)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:290 (discriminator 2)
+    data[i] = rand_r(&randomSeed);
+  401610:	bf 20 31 60 00       	mov    $0x603120,%edi
+  401615:	e8 86 f2 ff ff       	callq  4008a0 <rand_r@plt>
+  40161a:	42 89 04 2b          	mov    %eax,(%rbx,%r13,1)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:291 (discriminator 2)
+    data_bcup[i] = data[i];
+  40161e:	42 89 44 2d 00       	mov    %eax,0x0(%rbp,%r13,1)
+  401623:	49 83 c5 04          	add    $0x4,%r13
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:289 (discriminator 2)
+  for (int i = 0; i < N; i++) {
+  401627:	4d 39 e5             	cmp    %r12,%r13
+  40162a:	75 e4                	jne    401610 <test_subarray+0x70>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:293
+  }
+  if (printFlag) {
+  40162c:	44 8b 54 24 20       	mov    0x20(%rsp),%r10d
+  401631:	45 85 d2             	test   %r10d,%r10d
+  401634:	0f 85 42 04 00 00    	jne    401a7c <test_subarray+0x4dc>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:297
+    printf("Data before sort\n");
+    display_array(data, N);
+  }
+  int begin = rand_r(&randomSeed) % N;
+  40163a:	bf 20 31 60 00       	mov    $0x603120,%edi
+  40163f:	e8 5c f2 ff ff       	callq  4008a0 <rand_r@plt>
+  401644:	99                   	cltd   
+  401645:	f7 7c 24 14          	idivl  0x14(%rsp)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:298
+  int end = N - 1 - begin;
+  401649:	44 89 f8             	mov    %r15d,%eax
+  40164c:	29 d0                	sub    %edx,%eax
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:297
+  int begin = rand_r(&randomSeed) % N;
+  40164e:	41 89 d6             	mov    %edx,%r14d
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:299
+  if (begin > end) {
+  401651:	39 c2                	cmp    %eax,%edx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:298
+  int end = N - 1 - begin;
+  401653:	89 44 24 18          	mov    %eax,0x18(%rsp)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:299
+  if (begin > end) {
+  401657:	7f 07                	jg     401660 <test_subarray+0xc0>
+  401659:	89 54 24 18          	mov    %edx,0x18(%rsp)
+  40165d:	41 89 c6             	mov    %eax,%r14d
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:305
+    int temp = begin;
+    begin = end;
+    end = temp;
+  }
+
+  printf("Sorting subarray A[%d..%d]\n", begin, end);
+  401660:	8b 74 24 18          	mov    0x18(%rsp),%esi
+  401664:	31 c0                	xor    %eax,%eax
+  401666:	44 89 f2             	mov    %r14d,%edx
+  401669:	bf 03 23 40 00       	mov    $0x402303,%edi
+  40166e:	e8 3d f2 ff ff       	callq  4008b0 <printf@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:306
+  for (int i = 0; i < numFunc; i++) {
+  401673:	44 8b 44 24 08       	mov    0x8(%rsp),%r8d
+  401678:	45 85 c0             	test   %r8d,%r8d
+  40167b:	0f 8e cf 03 00 00    	jle    401a50 <test_subarray+0x4b0>
+  401681:	8b 7c 24 18          	mov    0x18(%rsp),%edi
+  401685:	41 8d 76 01          	lea    0x1(%r14),%esi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:275
+  int success = 1;
+  401689:	c7 44 24 24 01 00 00 	movl   $0x1,0x24(%rsp)
+  401690:	00 
+post_process():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:106
+    if (data[i] != data_bcup[i]) {
+  401691:	4c 63 e6             	movslq %esi,%r12
+  401694:	89 74 24 58          	mov    %esi,0x58(%rsp)
+  401698:	89 f8                	mov    %edi,%eax
+  40169a:	49 c1 e4 02          	shl    $0x2,%r12
+  40169e:	83 c0 01             	add    $0x1,%eax
+  4016a1:	4e 8d 2c 23          	lea    (%rbx,%r12,1),%r13
+  4016a5:	49 01 ec             	add    %rbp,%r12
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:96
+    if (data[i - 1] > data[i]) {
+  4016a8:	48 63 d0             	movslq %eax,%rdx
+  4016ab:	89 44 24 1c          	mov    %eax,0x1c(%rsp)
+  4016af:	48 8d 04 95 00 00 00 	lea    0x0(,%rdx,4),%rax
+  4016b6:	00 
+  4016b7:	48 8d 4c 03 fc       	lea    -0x4(%rbx,%rax,1),%rcx
+  4016bc:	48 01 d8             	add    %rbx,%rax
+  4016bf:	48 89 44 24 38       	mov    %rax,0x38(%rsp)
+  4016c4:	48 8b 04 24          	mov    (%rsp),%rax
+  4016c8:	48 89 4c 24 30       	mov    %rcx,0x30(%rsp)
+  4016cd:	48 89 c6             	mov    %rax,%rsi
+  4016d0:	8b 44 24 08          	mov    0x8(%rsp),%eax
+  4016d4:	83 e8 01             	sub    $0x1,%eax
+  4016d7:	48 c1 e0 04          	shl    $0x4,%rax
+  4016db:	48 8d 44 06 10       	lea    0x10(%rsi,%rax,1),%rax
+  4016e0:	48 89 44 24 28       	mov    %rax,0x28(%rsp)
+  4016e5:	44 89 f8             	mov    %r15d,%eax
+  4016e8:	44 8d 7f ff          	lea    -0x1(%rdi),%r15d
+  4016ec:	48 8d 44 83 04       	lea    0x4(%rbx,%rax,4),%rax
+  4016f1:	8b 7c 24 14          	mov    0x14(%rsp),%edi
+  4016f5:	49 c1 e7 02          	shl    $0x2,%r15
+  4016f9:	48 89 44 24 68       	mov    %rax,0x68(%rsp)
+  4016fe:	48 8d 04 93          	lea    (%rbx,%rdx,4),%rax
+  401702:	48 89 44 24 48       	mov    %rax,0x48(%rsp)
+  401707:	89 f8                	mov    %edi,%eax
+  401709:	83 e8 02             	sub    $0x2,%eax
+  40170c:	44 29 f0             	sub    %r14d,%eax
+  40170f:	48 c1 e0 02          	shl    $0x2,%rax
+  401713:	48 89 44 24 50       	mov    %rax,0x50(%rsp)
+copy_data():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:71
+    *data++ = *data_bcup++;
+  401718:	89 f8                	mov    %edi,%eax
+  40171a:	48 c1 e0 02          	shl    $0x2,%rax
+  40171e:	48 89 44 24 40       	mov    %rax,0x40(%rsp)
+  401723:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+test_subarray():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:307 (discriminator 2)
+    testFunc[i].func(data, begin, end);
+  401728:	48 8b 04 24          	mov    (%rsp),%rax
+  40172c:	48 89 df             	mov    %rbx,%rdi
+  40172f:	44 89 f2             	mov    %r14d,%edx
+  401732:	8b 74 24 18          	mov    0x18(%rsp),%esi
+  401736:	ff 10                	callq  *(%rax)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:308 (discriminator 2)
+    success &= post_process(data, data_bcup, N, printFlag, testFunc[i].name, begin, end);
+  401738:	48 8b 04 24          	mov    (%rsp),%rax
+post_process():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:78 (discriminator 2)
+  if (printFlag) {
+  40173c:	8b 7c 24 20          	mov    0x20(%rsp),%edi
+test_subarray():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:308 (discriminator 2)
+    success &= post_process(data, data_bcup, N, printFlag, testFunc[i].name, begin, end);
+  401740:	48 8b 40 08          	mov    0x8(%rax),%rax
+post_process():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:78 (discriminator 2)
+  if (printFlag) {
+  401744:	85 ff                	test   %edi,%edi
+test_subarray():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:308 (discriminator 2)
+    success &= post_process(data, data_bcup, N, printFlag, testFunc[i].name, begin, end);
+  401746:	48 89 44 24 08       	mov    %rax,0x8(%rsp)
+post_process():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:78 (discriminator 2)
+  if (printFlag) {
+  40174b:	0f 85 9f 02 00 00    	jne    4019f0 <test_subarray+0x450>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:85
+  for (int i = 0 ; i < begin ; i++) {
+  401751:	8b 4c 24 18          	mov    0x18(%rsp),%ecx
+  401755:	85 c9                	test   %ecx,%ecx
+  401757:	7e 2e                	jle    401787 <test_subarray+0x1e7>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:86
+    if (data[i] != data_bcup[i]) {
+  401759:	8b 45 00             	mov    0x0(%rbp),%eax
+  40175c:	39 03                	cmp    %eax,(%rbx)
+  40175e:	0f 85 4c 01 00 00    	jne    4018b0 <test_subarray+0x310>
+  401764:	31 c0                	xor    %eax,%eax
+  401766:	eb 1a                	jmp    401782 <test_subarray+0x1e2>
+  401768:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
+  40176f:	00 
+  401770:	8b 54 03 04          	mov    0x4(%rbx,%rax,1),%edx
+  401774:	48 83 c0 04          	add    $0x4,%rax
+  401778:	3b 54 05 00          	cmp    0x0(%rbp,%rax,1),%edx
+  40177c:	0f 85 2e 01 00 00    	jne    4018b0 <test_subarray+0x310>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:85
+  for (int i = 0 ; i < begin ; i++) {
+  401782:	4c 39 f8             	cmp    %r15,%rax
+  401785:	75 e9                	jne    401770 <test_subarray+0x1d0>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:77
+  int result = 1;
+  401787:	be 01 00 00 00       	mov    $0x1,%esi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:95
+  for (int i = begin + 1 ; i < end + 1 ; i++) {
+  40178c:	44 3b 74 24 1c       	cmp    0x1c(%rsp),%r14d
+  401791:	7c 3b                	jl     4017ce <test_subarray+0x22e>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:96
+    if (data[i - 1] > data[i]) {
+  401793:	48 8b 44 24 30       	mov    0x30(%rsp),%rax
+  401798:	48 8b 7c 24 38       	mov    0x38(%rsp),%rdi
+  40179d:	8b 3f                	mov    (%rdi),%edi
+  40179f:	39 38                	cmp    %edi,(%rax)
+  4017a1:	0f 87 71 01 00 00    	ja     401918 <test_subarray+0x378>
+  4017a7:	48 8b 44 24 48       	mov    0x48(%rsp),%rax
+  4017ac:	8b 54 24 1c          	mov    0x1c(%rsp),%edx
+  4017b0:	eb 14                	jmp    4017c6 <test_subarray+0x226>
+  4017b2:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+  4017b8:	8b 08                	mov    (%rax),%ecx
+  4017ba:	48 83 c0 04          	add    $0x4,%rax
+  4017be:	3b 08                	cmp    (%rax),%ecx
+  4017c0:	0f 87 52 01 00 00    	ja     401918 <test_subarray+0x378>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:95
+  for (int i = begin + 1 ; i < end + 1 ; i++) {
+  4017c6:	83 c2 01             	add    $0x1,%edx
+  4017c9:	41 39 d6             	cmp    %edx,%r14d
+  4017cc:	7d ea                	jge    4017b8 <test_subarray+0x218>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:105
+  for (int i = end + 1 ; i < N ; i++) {
+  4017ce:	8b 44 24 58          	mov    0x58(%rsp),%eax
+  4017d2:	39 44 24 14          	cmp    %eax,0x14(%rsp)
+  4017d6:	7e 30                	jle    401808 <test_subarray+0x268>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:106
+    if (data[i] != data_bcup[i]) {
+  4017d8:	41 8b 04 24          	mov    (%r12),%eax
+  4017dc:	41 39 45 00          	cmp    %eax,0x0(%r13)
+  4017e0:	0f 85 9a 01 00 00    	jne    401980 <test_subarray+0x3e0>
+  4017e6:	31 c0                	xor    %eax,%eax
+  4017e8:	48 8b 4c 24 50       	mov    0x50(%rsp),%rcx
+  4017ed:	eb 14                	jmp    401803 <test_subarray+0x263>
+  4017ef:	90                   	nop
+  4017f0:	41 8b 54 05 04       	mov    0x4(%r13,%rax,1),%edx
+  4017f5:	48 83 c0 04          	add    $0x4,%rax
+  4017f9:	41 3b 14 04          	cmp    (%r12,%rax,1),%edx
+  4017fd:	0f 85 7d 01 00 00    	jne    401980 <test_subarray+0x3e0>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:105
+  for (int i = end + 1 ; i < N ; i++) {
+  401803:	48 39 c8             	cmp    %rcx,%rax
+  401806:	75 e8                	jne    4017f0 <test_subarray+0x250>
+  401808:	21 74 24 24          	and    %esi,0x24(%rsp)
+copy_data():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:70
+  for (int i = 0 ; i < N ; i++) {
+  40180c:	8b 54 24 14          	mov    0x14(%rsp),%edx
+  401810:	85 d2                	test   %edx,%edx
+  401812:	7e 10                	jle    401824 <test_subarray+0x284>
+  401814:	48 8b 54 24 40       	mov    0x40(%rsp),%rdx
+  401819:	48 89 ee             	mov    %rbp,%rsi
+  40181c:	48 89 df             	mov    %rbx,%rdi
+  40181f:	e8 0c f1 ff ff       	callq  400930 <memcpy@plt>
+  401824:	48 83 04 24 10       	addq   $0x10,(%rsp)
+test_subarray():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:306
+  for (int i = 0; i < numFunc; i++) {
+  401829:	48 8b 44 24 28       	mov    0x28(%rsp),%rax
+  40182e:	48 39 04 24          	cmp    %rax,(%rsp)
+  401832:	0f 85 f0 fe ff ff    	jne    401728 <test_subarray+0x188>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:311
+  }
+
+  if (success) {
+  401838:	8b 44 24 24          	mov    0x24(%rsp),%eax
+  40183c:	85 c0                	test   %eax,%eax
+  40183e:	0f 85 0c 02 00 00    	jne    401a50 <test_subarray+0x4b0>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:315
+    printf("Arrays are sorted: yes\n");
+    TEST_PASS();
+  } else {
+    TEST_FAIL("Sorting subarray failed");
+  401844:	48 8b 3d 05 19 20 00 	mov    0x201905(%rip),%rdi        # 603150 <stderr@@GLIBC_2.2.5>
+  40184b:	b9 3b 01 00 00       	mov    $0x13b,%ecx
+  401850:	ba 0e 25 40 00       	mov    $0x40250e,%edx
+  401855:	be 80 23 40 00       	mov    $0x402380,%esi
+  40185a:	31 c0                	xor    %eax,%eax
+  40185c:	e8 9f f0 ff ff       	callq  400900 <fprintf@plt>
+  401861:	48 8b 0d e8 18 20 00 	mov    0x2018e8(%rip),%rcx        # 603150 <stderr@@GLIBC_2.2.5>
+  401868:	be 01 00 00 00       	mov    $0x1,%esi
+  40186d:	bf 1f 23 40 00       	mov    $0x40231f,%edi
+  401872:	ba 17 00 00 00       	mov    $0x17,%edx
+  401877:	e8 04 f1 ff ff       	callq  400980 <fwrite@plt>
+  40187c:	48 8b 35 cd 18 20 00 	mov    0x2018cd(%rip),%rsi        # 603150 <stderr@@GLIBC_2.2.5>
+  401883:	bf 0a 00 00 00       	mov    $0xa,%edi
+  401888:	e8 43 f0 ff ff       	callq  4008d0 <fputc@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:318
+  }
+
+  free(data);
+  40188d:	48 89 df             	mov    %rbx,%rdi
+  401890:	e8 db ef ff ff       	callq  400870 <free@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:321
+  free(data_bcup);
+  return;
+}
+  401895:	48 83 c4 78          	add    $0x78,%rsp
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:319
+  free(data_bcup);
+  401899:	48 89 ef             	mov    %rbp,%rdi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:321
+}
+  40189c:	5b                   	pop    %rbx
+  40189d:	5d                   	pop    %rbp
+  40189e:	41 5c                	pop    %r12
+  4018a0:	41 5d                	pop    %r13
+  4018a2:	41 5e                	pop    %r14
+  4018a4:	41 5f                	pop    %r15
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:319
+  free(data_bcup);
+  4018a6:	e9 c5 ef ff ff       	jmpq   400870 <free@plt>
+  4018ab:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+post_process():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:87
+      printf("%s: ", name);
+  4018b0:	48 8b 74 24 08       	mov    0x8(%rsp),%rsi
+  4018b5:	bf bf 22 40 00       	mov    $0x4022bf,%edi
+  4018ba:	31 c0                	xor    %eax,%eax
+  4018bc:	e8 ef ef ff ff       	callq  4008b0 <printf@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:88
+      TEST_FAIL("Array outside sort boundary changed!\n");
+  4018c1:	48 8b 3d 88 18 20 00 	mov    0x201888(%rip),%rdi        # 603150 <stderr@@GLIBC_2.2.5>
+  4018c8:	b9 58 00 00 00       	mov    $0x58,%ecx
+  4018cd:	ba 01 25 40 00       	mov    $0x402501,%edx
+  4018d2:	be 80 23 40 00       	mov    $0x402380,%esi
+  4018d7:	31 c0                	xor    %eax,%eax
+  4018d9:	e8 22 f0 ff ff       	callq  400900 <fprintf@plt>
+  4018de:	48 8b 0d 6b 18 20 00 	mov    0x20186b(%rip),%rcx        # 603150 <stderr@@GLIBC_2.2.5>
+  4018e5:	ba 25 00 00 00       	mov    $0x25,%edx
+  4018ea:	be 01 00 00 00       	mov    $0x1,%esi
+  4018ef:	bf 80 24 40 00       	mov    $0x402480,%edi
+  4018f4:	e8 87 f0 ff ff       	callq  400980 <fwrite@plt>
+  4018f9:	48 8b 35 50 18 20 00 	mov    0x201850(%rip),%rsi        # 603150 <stderr@@GLIBC_2.2.5>
+  401900:	bf 0a 00 00 00       	mov    $0xa,%edi
+  401905:	e8 c6 ef ff ff       	callq  4008d0 <fputc@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:89
+      result = 0;
+  40190a:	31 f6                	xor    %esi,%esi
+  40190c:	e9 7b fe ff ff       	jmpq   40178c <test_subarray+0x1ec>
+  401911:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:97
+      printf("%s: ", name);
+  401918:	48 8b 74 24 08       	mov    0x8(%rsp),%rsi
+  40191d:	bf bf 22 40 00       	mov    $0x4022bf,%edi
+  401922:	31 c0                	xor    %eax,%eax
+  401924:	e8 87 ef ff ff       	callq  4008b0 <printf@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:98
+      TEST_FAIL("Arrays are sorted: NO!\n");
+  401929:	48 8b 3d 20 18 20 00 	mov    0x201820(%rip),%rdi        # 603150 <stderr@@GLIBC_2.2.5>
+  401930:	b9 62 00 00 00       	mov    $0x62,%ecx
+  401935:	ba 01 25 40 00       	mov    $0x402501,%edx
+  40193a:	be 80 23 40 00       	mov    $0x402380,%esi
+  40193f:	31 c0                	xor    %eax,%eax
+  401941:	e8 ba ef ff ff       	callq  400900 <fprintf@plt>
+  401946:	48 8b 0d 03 18 20 00 	mov    0x201803(%rip),%rcx        # 603150 <stderr@@GLIBC_2.2.5>
+  40194d:	ba 17 00 00 00       	mov    $0x17,%edx
+  401952:	be 01 00 00 00       	mov    $0x1,%esi
+  401957:	bf d4 22 40 00       	mov    $0x4022d4,%edi
+  40195c:	e8 1f f0 ff ff       	callq  400980 <fwrite@plt>
+  401961:	48 8b 35 e8 17 20 00 	mov    0x2017e8(%rip),%rsi        # 603150 <stderr@@GLIBC_2.2.5>
+  401968:	bf 0a 00 00 00       	mov    $0xa,%edi
+  40196d:	e8 5e ef ff ff       	callq  4008d0 <fputc@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:99
+      result = 0;
+  401972:	31 f6                	xor    %esi,%esi
+  401974:	e9 55 fe ff ff       	jmpq   4017ce <test_subarray+0x22e>
+  401979:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:107
+      printf("%s: ", name);
+  401980:	48 8b 74 24 08       	mov    0x8(%rsp),%rsi
+  401985:	bf bf 22 40 00       	mov    $0x4022bf,%edi
+  40198a:	31 c0                	xor    %eax,%eax
+  40198c:	e8 1f ef ff ff       	callq  4008b0 <printf@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:108
+      TEST_FAIL("Array outside sort boundary changed!\n");
+  401991:	48 8b 3d b8 17 20 00 	mov    0x2017b8(%rip),%rdi        # 603150 <stderr@@GLIBC_2.2.5>
+  401998:	b9 6c 00 00 00       	mov    $0x6c,%ecx
+  40199d:	ba 01 25 40 00       	mov    $0x402501,%edx
+  4019a2:	be 80 23 40 00       	mov    $0x402380,%esi
+  4019a7:	31 c0                	xor    %eax,%eax
+  4019a9:	e8 52 ef ff ff       	callq  400900 <fprintf@plt>
+  4019ae:	48 8b 0d 9b 17 20 00 	mov    0x20179b(%rip),%rcx        # 603150 <stderr@@GLIBC_2.2.5>
+  4019b5:	ba 25 00 00 00       	mov    $0x25,%edx
+  4019ba:	be 01 00 00 00       	mov    $0x1,%esi
+  4019bf:	bf 80 24 40 00       	mov    $0x402480,%edi
+  4019c4:	e8 b7 ef ff ff       	callq  400980 <fwrite@plt>
+  4019c9:	48 8b 35 80 17 20 00 	mov    0x201780(%rip),%rsi        # 603150 <stderr@@GLIBC_2.2.5>
+  4019d0:	bf 0a 00 00 00       	mov    $0xa,%edi
+  4019d5:	e8 f6 ee ff ff       	callq  4008d0 <fputc@plt>
+  4019da:	c7 44 24 24 00 00 00 	movl   $0x0,0x24(%rsp)
+  4019e1:	00 
+  4019e2:	e9 25 fe ff ff       	jmpq   40180c <test_subarray+0x26c>
+  4019e7:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+  4019ee:	00 00 
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:79
+    printf("%s: ", name);
+  4019f0:	48 89 c6             	mov    %rax,%rsi
+  4019f3:	bf bf 22 40 00       	mov    $0x4022bf,%edi
+  4019f8:	31 c0                	xor    %eax,%eax
+  4019fa:	e8 b1 ee ff ff       	callq  4008b0 <printf@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:80
+    printf("Data after sort\n");
+  4019ff:	bf c4 22 40 00       	mov    $0x4022c4,%edi
+  401a04:	e8 87 ee ff ff       	callq  400890 <puts@plt>
+display_array():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:62
+  for (int i = 0; i < N; i++) {
+  401a09:	8b 74 24 14          	mov    0x14(%rsp),%esi
+  401a0d:	85 f6                	test   %esi,%esi
+  401a0f:	7e 30                	jle    401a41 <test_subarray+0x4a1>
+  401a11:	44 89 74 24 5c       	mov    %r14d,0x5c(%rsp)
+  401a16:	4c 8b 74 24 68       	mov    0x68(%rsp),%r14
+  401a1b:	48 89 5c 24 60       	mov    %rbx,0x60(%rsp)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:63
+    printf("%d ", data[i]);
+  401a20:	8b 33                	mov    (%rbx),%esi
+  401a22:	31 c0                	xor    %eax,%eax
+  401a24:	bf bb 22 40 00       	mov    $0x4022bb,%edi
+  401a29:	48 83 c3 04          	add    $0x4,%rbx
+  401a2d:	e8 7e ee ff ff       	callq  4008b0 <printf@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:62
+  for (int i = 0; i < N; i++) {
+  401a32:	4c 39 f3             	cmp    %r14,%rbx
+  401a35:	75 e9                	jne    401a20 <test_subarray+0x480>
+  401a37:	44 8b 74 24 5c       	mov    0x5c(%rsp),%r14d
+  401a3c:	48 8b 5c 24 60       	mov    0x60(%rsp),%rbx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:65
+  printf("\n");
+  401a41:	bf 0a 00 00 00       	mov    $0xa,%edi
+  401a46:	e8 35 ee ff ff       	callq  400880 <putchar@plt>
+  401a4b:	e9 01 fd ff ff       	jmpq   401751 <test_subarray+0x1b1>
+test_subarray():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:312
+    printf("Arrays are sorted: yes\n");
+  401a50:	bf ec 22 40 00       	mov    $0x4022ec,%edi
+  401a55:	e8 36 ee ff ff       	callq  400890 <puts@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:313
+    TEST_PASS();
+  401a5a:	48 8b 3d ef 16 20 00 	mov    0x2016ef(%rip),%rdi        # 603150 <stderr@@GLIBC_2.2.5>
+  401a61:	b9 39 01 00 00       	mov    $0x139,%ecx
+  401a66:	ba 0e 25 40 00       	mov    $0x40250e,%edx
+  401a6b:	be 77 22 40 00       	mov    $0x402277,%esi
+  401a70:	31 c0                	xor    %eax,%eax
+  401a72:	e8 89 ee ff ff       	callq  400900 <fprintf@plt>
+  401a77:	e9 11 fe ff ff       	jmpq   40188d <test_subarray+0x2ed>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:294
+    printf("Data before sort\n");
+  401a7c:	bf aa 22 40 00       	mov    $0x4022aa,%edi
+  401a81:	49 89 dd             	mov    %rbx,%r13
+  401a84:	e8 07 ee ff ff       	callq  400890 <puts@plt>
+display_array():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:62
+  for (int i = 0; i < N; i++) {
+  401a89:	44 8b 4c 24 14       	mov    0x14(%rsp),%r9d
+  401a8e:	44 89 f8             	mov    %r15d,%eax
+  401a91:	4c 8d 64 83 04       	lea    0x4(%rbx,%rax,4),%r12
+  401a96:	45 85 c9             	test   %r9d,%r9d
+  401a99:	7e 1e                	jle    401ab9 <test_subarray+0x519>
+  401a9b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:63
+    printf("%d ", data[i]);
+  401aa0:	41 8b 75 00          	mov    0x0(%r13),%esi
+  401aa4:	31 c0                	xor    %eax,%eax
+  401aa6:	bf bb 22 40 00       	mov    $0x4022bb,%edi
+  401aab:	49 83 c5 04          	add    $0x4,%r13
+  401aaf:	e8 fc ed ff ff       	callq  4008b0 <printf@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:62
+  for (int i = 0; i < N; i++) {
+  401ab4:	4d 39 e5             	cmp    %r12,%r13
+  401ab7:	75 e7                	jne    401aa0 <test_subarray+0x500>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:65
+  printf("\n");
+  401ab9:	bf 0a 00 00 00       	mov    $0xa,%edi
+  401abe:	e8 bd ed ff ff       	callq  400880 <putchar@plt>
+  401ac3:	e9 72 fb ff ff       	jmpq   40163a <test_subarray+0x9a>
+test_subarray():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:282
+    printf("Error: not enough memory\n");
+  401ac8:	bf 91 22 40 00       	mov    $0x402291,%edi
+  401acd:	e8 be ed ff ff       	callq  400890 <puts@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:283
+    free(data);
+  401ad2:	48 89 df             	mov    %rbx,%rdi
+  401ad5:	e8 96 ed ff ff       	callq  400870 <free@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:284
+    free(data_bcup);
+  401ada:	48 89 ef             	mov    %rbp,%rdi
+  401add:	e8 8e ed ff ff       	callq  400870 <free@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/tests.c:285
+    exit(-1);
+  401ae2:	bf ff ff ff ff       	mov    $0xffffffff,%edi
+  401ae7:	e8 84 ee ff ff       	callq  400970 <exit@plt>
+  401aec:	0f 1f 40 00          	nopl   0x0(%rax)
+
+0000000000401af0 <mem_alloc>:
+mem_alloc():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/util.c:27
+
+
+#include "./util.h"
+
+
+void mem_alloc(data_t** space, int size) {
+  401af0:	53                   	push   %rbx
+  401af1:	48 89 fb             	mov    %rdi,%rbx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/util.c:28
+  *space = (data_t*) malloc(sizeof(data_t) * size);
+  401af4:	48 63 fe             	movslq %esi,%rdi
+  401af7:	48 c1 e7 02          	shl    $0x2,%rdi
+  401afb:	e8 40 ee ff ff       	callq  400940 <malloc@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/util.c:29
+  if (*space == NULL) {
+  401b00:	48 85 c0             	test   %rax,%rax
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/util.c:28
+  *space = (data_t*) malloc(sizeof(data_t) * size);
+  401b03:	48 89 03             	mov    %rax,(%rbx)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/util.c:29
+  if (*space == NULL) {
+  401b06:	74 08                	je     401b10 <mem_alloc+0x20>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/util.c:32
+    printf("out of memory...\n");
+  }
+}
+  401b08:	5b                   	pop    %rbx
+  401b09:	c3                   	retq   
+  401b0a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+  401b10:	5b                   	pop    %rbx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/util.c:30
+    printf("out of memory...\n");
+  401b11:	bf 48 25 40 00       	mov    $0x402548,%edi
+  401b16:	e9 75 ed ff ff       	jmpq   400890 <puts@plt>
+  401b1b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+
+0000000000401b20 <mem_free>:
+mem_free():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/util.c:34
+
+void mem_free(data_t** space) {
+  401b20:	53                   	push   %rbx
+  401b21:	48 89 fb             	mov    %rdi,%rbx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/util.c:35
+  free(*space);
+  401b24:	48 8b 3f             	mov    (%rdi),%rdi
+  401b27:	e8 44 ed ff ff       	callq  400870 <free@plt>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/util.c:36
+  *space = 0;
+  401b2c:	48 c7 03 00 00 00 00 	movq   $0x0,(%rbx)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/util.c:37
+}
+  401b33:	5b                   	pop    %rbx
+  401b34:	c3                   	retq   
+  401b35:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)
+  401b3c:	00 00 00 
+  401b3f:	90                   	nop
+
+0000000000401b40 <isort>:
+isort():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/isort.c:32
+// Typedefs
+typedef uint32_t data_t;
+
+// Insertion sort, sorting the array between begin and end, inclusive
+void isort(data_t* begin, data_t* end) {
+  data_t* cur = begin + 1;
+  401b40:	48 8d 57 04          	lea    0x4(%rdi),%rdx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/isort.c:33
+  while (cur <= end) {
+  401b44:	48 39 d6             	cmp    %rdx,%rsi
+  401b47:	72 4d                	jb     401b96 <isort+0x56>
+  401b49:	48 8d 46 fc          	lea    -0x4(%rsi),%rax
+  401b4d:	49 89 f8             	mov    %rdi,%r8
+  401b50:	48 29 f8             	sub    %rdi,%rax
+  401b53:	48 83 e0 fc          	and    $0xfffffffffffffffc,%rax
+  401b57:	48 8d 34 02          	lea    (%rdx,%rax,1),%rsi
+  401b5b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/isort.c:37
+    data_t val = *cur;
+    data_t* index = cur - 1;
+
+    while (index >= begin && *index > val) {
+  401b60:	4c 39 c7             	cmp    %r8,%rdi
+  401b63:	4c 89 c0             	mov    %r8,%rax
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/isort.c:34
+    data_t val = *cur;
+  401b66:	41 8b 48 04          	mov    0x4(%r8),%ecx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/isort.c:37
+    while (index >= begin && *index > val) {
+  401b6a:	77 1e                	ja     401b8a <isort+0x4a>
+  401b6c:	41 8b 10             	mov    (%r8),%edx
+  401b6f:	39 d1                	cmp    %edx,%ecx
+  401b71:	72 0b                	jb     401b7e <isort+0x3e>
+  401b73:	eb 15                	jmp    401b8a <isort+0x4a>
+  401b75:	0f 1f 00             	nopl   (%rax)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/isort.c:37 (discriminator 2)
+  401b78:	8b 10                	mov    (%rax),%edx
+  401b7a:	39 d1                	cmp    %edx,%ecx
+  401b7c:	73 0c                	jae    401b8a <isort+0x4a>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/isort.c:38
+      *(index + 1) = *index;
+  401b7e:	89 50 04             	mov    %edx,0x4(%rax)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/isort.c:39
+      index--;
+  401b81:	48 83 e8 04          	sub    $0x4,%rax
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/isort.c:37
+    while (index >= begin && *index > val) {
+  401b85:	48 39 c7             	cmp    %rax,%rdi
+  401b88:	76 ee                	jbe    401b78 <isort+0x38>
+  401b8a:	49 83 c0 04          	add    $0x4,%r8
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/isort.c:42
+    }
+
+    *(index + 1) = val;
+  401b8e:	89 48 04             	mov    %ecx,0x4(%rax)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/isort.c:33
+  while (cur <= end) {
+  401b91:	49 39 f0             	cmp    %rsi,%r8
+  401b94:	75 ca                	jne    401b60 <isort+0x20>
+  401b96:	f3 c3                	repz retq 
+  401b98:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
+  401b9f:	00 
+
+0000000000401ba0 <sort_a>:
+sort_a():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:31
+// Function prototypes
+static void merge_a(data_t* A, int p, int q, int r);
+static void copy_a(data_t* source, data_t* dest, int n);
+
+// A basic merge sort routine that sorts the subarray A[p..r]
+void sort_a(data_t* A, int p, int r) {
+  401ba0:	41 57                	push   %r15
+  401ba2:	41 56                	push   %r14
+  401ba4:	41 55                	push   %r13
+  401ba6:	41 54                	push   %r12
+  401ba8:	55                   	push   %rbp
+  401ba9:	89 d5                	mov    %edx,%ebp
+  401bab:	53                   	push   %rbx
+  401bac:	89 f3                	mov    %esi,%ebx
+  401bae:	48 83 ec 18          	sub    $0x18,%rsp
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:33
+  assert(A);
+  if (p < r) {
+  401bb2:	39 d6                	cmp    %edx,%esi
+  401bb4:	7c 12                	jl     401bc8 <sort_a+0x28>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:39
+    int q = (p + r) / 2;
+    sort_a(A, p, q);
+    sort_a(A, q + 1, r);
+    merge_a(A, p, q, r);
+  }
+}
+  401bb6:	48 83 c4 18          	add    $0x18,%rsp
+  401bba:	5b                   	pop    %rbx
+  401bbb:	5d                   	pop    %rbp
+  401bbc:	41 5c                	pop    %r12
+  401bbe:	41 5d                	pop    %r13
+  401bc0:	41 5e                	pop    %r14
+  401bc2:	41 5f                	pop    %r15
+  401bc4:	c3                   	retq   
+  401bc5:	0f 1f 00             	nopl   (%rax)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:34
+    int q = (p + r) / 2;
+  401bc8:	8d 04 16             	lea    (%rsi,%rdx,1),%eax
+  401bcb:	49 89 fc             	mov    %rdi,%r12
+merge_a():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:48
+static void merge_a(data_t* A, int p, int q, int r) {
+  assert(A);
+  assert(p <= q);
+  assert((q + 1) <= r);
+  int n1 = q - p + 1;
+  int n2 = r - q;
+  401bce:	41 89 ed             	mov    %ebp,%r13d
+sort_a():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:34
+    int q = (p + r) / 2;
+  401bd1:	41 89 c6             	mov    %eax,%r14d
+  401bd4:	41 c1 ee 1f          	shr    $0x1f,%r14d
+  401bd8:	41 01 c6             	add    %eax,%r14d
+  401bdb:	41 d1 fe             	sar    %r14d
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:35
+    sort_a(A, p, q);
+  401bde:	44 89 f2             	mov    %r14d,%edx
+merge_a():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:48
+  int n2 = r - q;
+  401be1:	45 29 f5             	sub    %r14d,%r13d
+sort_a():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:35
+    sort_a(A, p, q);
+  401be4:	e8 b7 ff ff ff       	callq  401ba0 <sort_a>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:36
+    sort_a(A, q + 1, r);
+  401be9:	41 8d 76 01          	lea    0x1(%r14),%esi
+  401bed:	89 ea                	mov    %ebp,%edx
+  401bef:	4c 89 e7             	mov    %r12,%rdi
+  401bf2:	e8 a9 ff ff ff       	callq  401ba0 <sort_a>
+merge_a():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:47
+  int n1 = q - p + 1;
+  401bf7:	44 89 f6             	mov    %r14d,%esi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:51
+
+  data_t* left = 0, * right = 0;
+  mem_alloc(&left, n1 + 1);
+  401bfa:	48 8d 7c 24 08       	lea    0x8(%rsp),%rdi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:50
+  data_t* left = 0, * right = 0;
+  401bff:	48 c7 44 24 08 00 00 	movq   $0x0,0x8(%rsp)
+  401c06:	00 00 
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:47
+  int n1 = q - p + 1;
+  401c08:	29 de                	sub    %ebx,%esi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:50
+  data_t* left = 0, * right = 0;
+  401c0a:	48 c7 04 24 00 00 00 	movq   $0x0,(%rsp)
+  401c11:	00 
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:47
+  int n1 = q - p + 1;
+  401c12:	44 8d 7e 01          	lea    0x1(%rsi),%r15d
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:51
+  mem_alloc(&left, n1 + 1);
+  401c16:	83 c6 02             	add    $0x2,%esi
+  401c19:	e8 d2 fe ff ff       	callq  401af0 <mem_alloc>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:52
+  mem_alloc(&right, n2 + 1);
+  401c1e:	41 8d 75 01          	lea    0x1(%r13),%esi
+  401c22:	48 89 e7             	mov    %rsp,%rdi
+  401c25:	e8 c6 fe ff ff       	callq  401af0 <mem_alloc>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:53
+  if (left == NULL || right == NULL) {
+  401c2a:	4c 8b 44 24 08       	mov    0x8(%rsp),%r8
+  401c2f:	4d 85 c0             	test   %r8,%r8
+  401c32:	0f 84 a6 01 00 00    	je     401dde <sort_a+0x23e>
+  401c38:	4c 8b 0c 24          	mov    (%rsp),%r9
+  401c3c:	4d 85 c9             	test   %r9,%r9
+  401c3f:	0f 84 99 01 00 00    	je     401dde <sort_a+0x23e>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:59
+    mem_free(&left);
+    mem_free(&right);
+    return;
+  }
+
+  copy_a(&(A[p]), left, n1);
+  401c45:	48 63 f3             	movslq %ebx,%rsi
+copy_a():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:84
+
+static void copy_a(data_t* source, data_t* dest, int n) {
+  assert(dest);
+  assert(source);
+
+  for (int i = 0 ; i < n ; i++) {
+  401c48:	45 85 ff             	test   %r15d,%r15d
+merge_a():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:59
+  copy_a(&(A[p]), left, n1);
+  401c4b:	49 8d 04 b4          	lea    (%r12,%rsi,4),%rax
+copy_a():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:84
+  for (int i = 0 ; i < n ; i++) {
+  401c4f:	0f 8e 83 00 00 00    	jle    401cd8 <sort_a+0x138>
+  401c55:	48 8d 50 10          	lea    0x10(%rax),%rdx
+  401c59:	49 39 d0             	cmp    %rdx,%r8
+  401c5c:	49 8d 50 10          	lea    0x10(%r8),%rdx
+  401c60:	0f 93 c1             	setae  %cl
+  401c63:	48 39 d0             	cmp    %rdx,%rax
+  401c66:	0f 93 c2             	setae  %dl
+  401c69:	08 d1                	or     %dl,%cl
+  401c6b:	0f 84 af 01 00 00    	je     401e20 <sort_a+0x280>
+  401c71:	41 83 ff 0b          	cmp    $0xb,%r15d
+  401c75:	0f 86 a5 01 00 00    	jbe    401e20 <sort_a+0x280>
+  401c7b:	45 89 fa             	mov    %r15d,%r10d
+  401c7e:	31 d2                	xor    %edx,%edx
+  401c80:	31 c9                	xor    %ecx,%ecx
+  401c82:	41 c1 ea 02          	shr    $0x2,%r10d
+  401c86:	42 8d 3c 95 00 00 00 	lea    0x0(,%r10,4),%edi
+  401c8d:	00 
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:85
+    dest[i] = source[i];
+  401c8e:	f3 0f 6f 04 10       	movdqu (%rax,%rdx,1),%xmm0
+  401c93:	83 c1 01             	add    $0x1,%ecx
+  401c96:	f3 41 0f 7f 04 10    	movdqu %xmm0,(%r8,%rdx,1)
+  401c9c:	48 83 c2 10          	add    $0x10,%rdx
+  401ca0:	44 39 d1             	cmp    %r10d,%ecx
+  401ca3:	72 e9                	jb     401c8e <sort_a+0xee>
+  401ca5:	41 39 ff             	cmp    %edi,%r15d
+  401ca8:	74 2e                	je     401cd8 <sort_a+0x138>
+  401caa:	48 63 d7             	movslq %edi,%rdx
+  401cad:	8b 0c 90             	mov    (%rax,%rdx,4),%ecx
+  401cb0:	41 89 0c 90          	mov    %ecx,(%r8,%rdx,4)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:84
+  for (int i = 0 ; i < n ; i++) {
+  401cb4:	8d 57 01             	lea    0x1(%rdi),%edx
+  401cb7:	41 39 d7             	cmp    %edx,%r15d
+  401cba:	7e 1c                	jle    401cd8 <sort_a+0x138>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:85
+    dest[i] = source[i];
+  401cbc:	48 63 d2             	movslq %edx,%rdx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:84
+  for (int i = 0 ; i < n ; i++) {
+  401cbf:	83 c7 02             	add    $0x2,%edi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:85
+    dest[i] = source[i];
+  401cc2:	8b 0c 90             	mov    (%rax,%rdx,4),%ecx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:84
+  for (int i = 0 ; i < n ; i++) {
+  401cc5:	41 39 ff             	cmp    %edi,%r15d
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:85
+    dest[i] = source[i];
+  401cc8:	41 89 0c 90          	mov    %ecx,(%r8,%rdx,4)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:84
+  for (int i = 0 ; i < n ; i++) {
+  401ccc:	7e 0a                	jle    401cd8 <sort_a+0x138>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:85
+    dest[i] = source[i];
+  401cce:	48 63 ff             	movslq %edi,%rdi
+  401cd1:	8b 14 b8             	mov    (%rax,%rdi,4),%edx
+  401cd4:	41 89 14 b8          	mov    %edx,(%r8,%rdi,4)
+merge_a():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:60
+  copy_a(&(A[q + 1]), right, n2);
+  401cd8:	4d 63 f6             	movslq %r14d,%r14
+copy_a():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:84
+  for (int i = 0 ; i < n ; i++) {
+  401cdb:	45 85 ed             	test   %r13d,%r13d
+merge_a():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:60
+  copy_a(&(A[q + 1]), right, n2);
+  401cde:	4a 8d 14 b5 04 00 00 	lea    0x4(,%r14,4),%rdx
+  401ce5:	00 
+  401ce6:	49 8d 0c 14          	lea    (%r12,%rdx,1),%rcx
+copy_a():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:84
+  for (int i = 0 ; i < n ; i++) {
+  401cea:	0f 8e 94 00 00 00    	jle    401d84 <sort_a+0x1e4>
+  401cf0:	49 8d 7c 14 fc       	lea    -0x4(%r12,%rdx,1),%rdi
+  401cf5:	4d 8d 59 10          	lea    0x10(%r9),%r11
+  401cf9:	48 8d 57 14          	lea    0x14(%rdi),%rdx
+  401cfd:	49 39 d1             	cmp    %rdx,%r9
+  401d00:	48 8d 57 04          	lea    0x4(%rdi),%rdx
+  401d04:	41 0f 93 c2          	setae  %r10b
+  401d08:	49 39 d3             	cmp    %rdx,%r11
+  401d0b:	0f 96 c2             	setbe  %dl
+  401d0e:	41 08 d2             	or     %dl,%r10b
+  401d11:	0f 84 e9 00 00 00    	je     401e00 <sort_a+0x260>
+  401d17:	41 83 fd 0b          	cmp    $0xb,%r13d
+  401d1b:	0f 86 df 00 00 00    	jbe    401e00 <sort_a+0x260>
+  401d21:	45 89 ee             	mov    %r13d,%r14d
+  401d24:	31 d2                	xor    %edx,%edx
+  401d26:	45 31 d2             	xor    %r10d,%r10d
+  401d29:	41 c1 ee 02          	shr    $0x2,%r14d
+  401d2d:	46 8d 1c b5 00 00 00 	lea    0x0(,%r14,4),%r11d
+  401d34:	00 
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:85
+    dest[i] = source[i];
+  401d35:	f3 0f 6f 44 17 04    	movdqu 0x4(%rdi,%rdx,1),%xmm0
+  401d3b:	41 83 c2 01          	add    $0x1,%r10d
+  401d3f:	f3 41 0f 7f 04 11    	movdqu %xmm0,(%r9,%rdx,1)
+  401d45:	48 83 c2 10          	add    $0x10,%rdx
+  401d49:	45 39 d6             	cmp    %r10d,%r14d
+  401d4c:	77 e7                	ja     401d35 <sort_a+0x195>
+  401d4e:	45 39 eb             	cmp    %r13d,%r11d
+  401d51:	74 31                	je     401d84 <sort_a+0x1e4>
+  401d53:	49 63 d3             	movslq %r11d,%rdx
+  401d56:	8b 3c 91             	mov    (%rcx,%rdx,4),%edi
+  401d59:	41 89 3c 91          	mov    %edi,(%r9,%rdx,4)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:84
+  for (int i = 0 ; i < n ; i++) {
+  401d5d:	41 8d 53 01          	lea    0x1(%r11),%edx
+  401d61:	41 39 d5             	cmp    %edx,%r13d
+  401d64:	7e 1e                	jle    401d84 <sort_a+0x1e4>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:85
+    dest[i] = source[i];
+  401d66:	48 63 d2             	movslq %edx,%rdx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:84
+  for (int i = 0 ; i < n ; i++) {
+  401d69:	41 83 c3 02          	add    $0x2,%r11d
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:85
+    dest[i] = source[i];
+  401d6d:	8b 3c 91             	mov    (%rcx,%rdx,4),%edi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:84
+  for (int i = 0 ; i < n ; i++) {
+  401d70:	45 39 dd             	cmp    %r11d,%r13d
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:85
+    dest[i] = source[i];
+  401d73:	41 89 3c 91          	mov    %edi,(%r9,%rdx,4)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:84
+  for (int i = 0 ; i < n ; i++) {
+  401d77:	7e 0b                	jle    401d84 <sort_a+0x1e4>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:85
+    dest[i] = source[i];
+  401d79:	4d 63 db             	movslq %r11d,%r11
+  401d7c:	42 8b 14 99          	mov    (%rcx,%r11,4),%edx
+  401d80:	43 89 14 99          	mov    %edx,(%r9,%r11,4)
+  401d84:	29 dd                	sub    %ebx,%ebp
+merge_a():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:61
+  left[n1] = UINT_MAX;
+  401d86:	4d 63 ff             	movslq %r15d,%r15
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:62
+  right[n2] = UINT_MAX;
+  401d89:	4d 63 ed             	movslq %r13d,%r13
+  401d8c:	48 01 ee             	add    %rbp,%rsi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:61
+  left[n1] = UINT_MAX;
+  401d8f:	43 c7 04 b8 ff ff ff 	movl   $0xffffffff,(%r8,%r15,4)
+  401d96:	ff 
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:65
+  int j = 0;
+  401d97:	31 ff                	xor    %edi,%edi
+  401d99:	4d 8d 54 b4 04       	lea    0x4(%r12,%rsi,4),%r10
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:62
+  right[n2] = UINT_MAX;
+  401d9e:	43 c7 04 a9 ff ff ff 	movl   $0xffffffff,(%r9,%r13,4)
+  401da5:	ff 
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:64
+  int i = 0;
+  401da6:	31 f6                	xor    %esi,%esi
+  401da8:	eb 14                	jmp    401dbe <sort_a+0x21e>
+  401daa:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:69
+      A[k] = left[i];
+  401db0:	89 08                	mov    %ecx,(%rax)
+  401db2:	48 83 c0 04          	add    $0x4,%rax
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:70
+      i++;
+  401db6:	83 c6 01             	add    $0x1,%esi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:67
+  for (int k = p; k <= r; k++) {
+  401db9:	4c 39 d0             	cmp    %r10,%rax
+  401dbc:	74 20                	je     401dde <sort_a+0x23e>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:68
+    if (left[i] <= right[j]) {
+  401dbe:	48 63 d6             	movslq %esi,%rdx
+  401dc1:	41 8b 0c 90          	mov    (%r8,%rdx,4),%ecx
+  401dc5:	48 63 d7             	movslq %edi,%rdx
+  401dc8:	41 8b 14 91          	mov    (%r9,%rdx,4),%edx
+  401dcc:	39 d1                	cmp    %edx,%ecx
+  401dce:	76 e0                	jbe    401db0 <sort_a+0x210>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:72
+      A[k] = right[j];
+  401dd0:	89 10                	mov    %edx,(%rax)
+  401dd2:	48 83 c0 04          	add    $0x4,%rax
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:73
+      j++;
+  401dd6:	83 c7 01             	add    $0x1,%edi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:67
+  for (int k = p; k <= r; k++) {
+  401dd9:	4c 39 d0             	cmp    %r10,%rax
+  401ddc:	75 e0                	jne    401dbe <sort_a+0x21e>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:76
+  mem_free(&left);
+  401dde:	48 8d 7c 24 08       	lea    0x8(%rsp),%rdi
+  401de3:	e8 38 fd ff ff       	callq  401b20 <mem_free>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:77
+  mem_free(&right);
+  401de8:	48 89 e7             	mov    %rsp,%rdi
+  401deb:	e8 30 fd ff ff       	callq  401b20 <mem_free>
+sort_a():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:39
+}
+  401df0:	48 83 c4 18          	add    $0x18,%rsp
+  401df4:	5b                   	pop    %rbx
+  401df5:	5d                   	pop    %rbp
+  401df6:	41 5c                	pop    %r12
+  401df8:	41 5d                	pop    %r13
+  401dfa:	41 5e                	pop    %r14
+  401dfc:	41 5f                	pop    %r15
+  401dfe:	c3                   	retq   
+  401dff:	90                   	nop
+copy_a():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:84
+  for (int i = 0 ; i < n ; i++) {
+  401e00:	31 d2                	xor    %edx,%edx
+  401e02:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:85
+    dest[i] = source[i];
+  401e08:	8b 3c 91             	mov    (%rcx,%rdx,4),%edi
+  401e0b:	41 89 3c 91          	mov    %edi,(%r9,%rdx,4)
+  401e0f:	48 83 c2 01          	add    $0x1,%rdx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:84
+  for (int i = 0 ; i < n ; i++) {
+  401e13:	41 39 d5             	cmp    %edx,%r13d
+  401e16:	7f f0                	jg     401e08 <sort_a+0x268>
+  401e18:	e9 67 ff ff ff       	jmpq   401d84 <sort_a+0x1e4>
+  401e1d:	0f 1f 00             	nopl   (%rax)
+  401e20:	31 c9                	xor    %ecx,%ecx
+  401e22:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:85
+    dest[i] = source[i];
+  401e28:	8b 14 88             	mov    (%rax,%rcx,4),%edx
+  401e2b:	41 89 14 88          	mov    %edx,(%r8,%rcx,4)
+  401e2f:	48 83 c1 01          	add    $0x1,%rcx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_a.c:84
+  for (int i = 0 ; i < n ; i++) {
+  401e33:	41 39 cf             	cmp    %ecx,%r15d
+  401e36:	7f f0                	jg     401e28 <sort_a+0x288>
+  401e38:	e9 9b fe ff ff       	jmpq   401cd8 <sort_a+0x138>
+sort_a():
+  401e3d:	0f 1f 00             	nopl   (%rax)
+
+0000000000401e40 <sort_c>:
+sort_c():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_c.c:27
+
+
+#include "./util.h"
+
+void sort_c(data_t* A, int p, int r) {
+  printf("Unimplemented!\n");
+  401e40:	bf 59 25 40 00       	mov    $0x402559,%edi
+  401e45:	e9 46 ea ff ff       	jmpq   400890 <puts@plt>
+  401e4a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+
+0000000000401e50 <sort_i>:
+sort_i():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:29
+#include "./util.h"
+
+static void merge_i(data_t* A, int p, int q, int r);
+static void copy_i(data_t* source, data_t* dest, int n);
+
+void sort_i(data_t* A, int p, int r) {
+  401e50:	41 57                	push   %r15
+  401e52:	41 56                	push   %r14
+  401e54:	41 55                	push   %r13
+  401e56:	41 54                	push   %r12
+  401e58:	55                   	push   %rbp
+  401e59:	89 d5                	mov    %edx,%ebp
+  401e5b:	53                   	push   %rbx
+  401e5c:	89 f3                	mov    %esi,%ebx
+  401e5e:	48 83 ec 18          	sub    $0x18,%rsp
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:31
+  assert(A);
+  if (p < r) {
+  401e62:	39 d6                	cmp    %edx,%esi
+  401e64:	7c 12                	jl     401e78 <sort_i+0x28>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:37
+    int q = (p + r) / 2;
+    sort_i(A, p, q);
+    sort_i(A, q + 1, r);
+    merge_i(A, p, q, r);
+  }
+}
+  401e66:	48 83 c4 18          	add    $0x18,%rsp
+  401e6a:	5b                   	pop    %rbx
+  401e6b:	5d                   	pop    %rbp
+  401e6c:	41 5c                	pop    %r12
+  401e6e:	41 5d                	pop    %r13
+  401e70:	41 5e                	pop    %r14
+  401e72:	41 5f                	pop    %r15
+  401e74:	c3                   	retq   
+  401e75:	0f 1f 00             	nopl   (%rax)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:32
+    int q = (p + r) / 2;
+  401e78:	8d 04 16             	lea    (%rsi,%rdx,1),%eax
+  401e7b:	49 89 fc             	mov    %rdi,%r12
+merge_i():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:46
+static inline void merge_i(data_t* A, int p, int q, int r) {
+  assert(A);
+  assert(p <= q);
+  assert((q + 1) <= r);
+  int n1 = q - p + 1;
+  int n2 = r - q;
+  401e7e:	41 89 ed             	mov    %ebp,%r13d
+sort_i():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:32
+    int q = (p + r) / 2;
+  401e81:	41 89 c6             	mov    %eax,%r14d
+  401e84:	41 c1 ee 1f          	shr    $0x1f,%r14d
+  401e88:	41 01 c6             	add    %eax,%r14d
+  401e8b:	41 d1 fe             	sar    %r14d
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:33
+    sort_i(A, p, q);
+  401e8e:	44 89 f2             	mov    %r14d,%edx
+merge_i():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:46
+  int n2 = r - q;
+  401e91:	45 29 f5             	sub    %r14d,%r13d
+sort_i():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:33
+    sort_i(A, p, q);
+  401e94:	e8 b7 ff ff ff       	callq  401e50 <sort_i>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:34
+    sort_i(A, q + 1, r);
+  401e99:	41 8d 76 01          	lea    0x1(%r14),%esi
+  401e9d:	89 ea                	mov    %ebp,%edx
+  401e9f:	4c 89 e7             	mov    %r12,%rdi
+  401ea2:	e8 a9 ff ff ff       	callq  401e50 <sort_i>
+merge_i():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:45
+  int n1 = q - p + 1;
+  401ea7:	44 89 f6             	mov    %r14d,%esi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:49
+
+  data_t* left = 0, * right = 0;
+  mem_alloc(&left, n1 + 1);
+  401eaa:	48 8d 7c 24 08       	lea    0x8(%rsp),%rdi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:48
+  data_t* left = 0, * right = 0;
+  401eaf:	48 c7 44 24 08 00 00 	movq   $0x0,0x8(%rsp)
+  401eb6:	00 00 
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:45
+  int n1 = q - p + 1;
+  401eb8:	29 de                	sub    %ebx,%esi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:48
+  data_t* left = 0, * right = 0;
+  401eba:	48 c7 04 24 00 00 00 	movq   $0x0,(%rsp)
+  401ec1:	00 
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:45
+  int n1 = q - p + 1;
+  401ec2:	44 8d 7e 01          	lea    0x1(%rsi),%r15d
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:49
+  mem_alloc(&left, n1 + 1);
+  401ec6:	83 c6 02             	add    $0x2,%esi
+  401ec9:	e8 22 fc ff ff       	callq  401af0 <mem_alloc>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:50
+  mem_alloc(&right, n2 + 1);
+  401ece:	41 8d 75 01          	lea    0x1(%r13),%esi
+  401ed2:	48 89 e7             	mov    %rsp,%rdi
+  401ed5:	e8 16 fc ff ff       	callq  401af0 <mem_alloc>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:51
+  if (left == NULL || right == NULL) {
+  401eda:	4c 8b 44 24 08       	mov    0x8(%rsp),%r8
+  401edf:	4d 85 c0             	test   %r8,%r8
+  401ee2:	0f 84 a6 01 00 00    	je     40208e <sort_i+0x23e>
+  401ee8:	4c 8b 0c 24          	mov    (%rsp),%r9
+  401eec:	4d 85 c9             	test   %r9,%r9
+  401eef:	0f 84 99 01 00 00    	je     40208e <sort_i+0x23e>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:57
+    mem_free(&left);
+    mem_free(&right);
+    return;
+  }
+
+  copy_i(&(A[p]), left, n1);
+  401ef5:	48 63 f3             	movslq %ebx,%rsi
+copy_i():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:82
+
+static inline void copy_i(data_t* source, data_t* dest, int n) {
+  assert(dest);
+  assert(source);
+
+  for (int i = 0 ; i < n ; i++) {
+  401ef8:	45 85 ff             	test   %r15d,%r15d
+merge_i():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:57
+  copy_i(&(A[p]), left, n1);
+  401efb:	49 8d 04 b4          	lea    (%r12,%rsi,4),%rax
+copy_i():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:82
+  for (int i = 0 ; i < n ; i++) {
+  401eff:	0f 8e 83 00 00 00    	jle    401f88 <sort_i+0x138>
+  401f05:	48 8d 50 10          	lea    0x10(%rax),%rdx
+  401f09:	49 39 d0             	cmp    %rdx,%r8
+  401f0c:	49 8d 50 10          	lea    0x10(%r8),%rdx
+  401f10:	0f 93 c1             	setae  %cl
+  401f13:	48 39 d0             	cmp    %rdx,%rax
+  401f16:	0f 93 c2             	setae  %dl
+  401f19:	08 d1                	or     %dl,%cl
+  401f1b:	0f 84 af 01 00 00    	je     4020d0 <sort_i+0x280>
+  401f21:	41 83 ff 0b          	cmp    $0xb,%r15d
+  401f25:	0f 86 a5 01 00 00    	jbe    4020d0 <sort_i+0x280>
+  401f2b:	45 89 fa             	mov    %r15d,%r10d
+  401f2e:	31 d2                	xor    %edx,%edx
+  401f30:	31 c9                	xor    %ecx,%ecx
+  401f32:	41 c1 ea 02          	shr    $0x2,%r10d
+  401f36:	42 8d 3c 95 00 00 00 	lea    0x0(,%r10,4),%edi
+  401f3d:	00 
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:83
+    dest[i] = source[i];
+  401f3e:	f3 0f 6f 04 10       	movdqu (%rax,%rdx,1),%xmm0
+  401f43:	83 c1 01             	add    $0x1,%ecx
+  401f46:	f3 41 0f 7f 04 10    	movdqu %xmm0,(%r8,%rdx,1)
+  401f4c:	48 83 c2 10          	add    $0x10,%rdx
+  401f50:	44 39 d1             	cmp    %r10d,%ecx
+  401f53:	72 e9                	jb     401f3e <sort_i+0xee>
+  401f55:	41 39 ff             	cmp    %edi,%r15d
+  401f58:	74 2e                	je     401f88 <sort_i+0x138>
+  401f5a:	48 63 d7             	movslq %edi,%rdx
+  401f5d:	8b 0c 90             	mov    (%rax,%rdx,4),%ecx
+  401f60:	41 89 0c 90          	mov    %ecx,(%r8,%rdx,4)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:82
+  for (int i = 0 ; i < n ; i++) {
+  401f64:	8d 57 01             	lea    0x1(%rdi),%edx
+  401f67:	41 39 d7             	cmp    %edx,%r15d
+  401f6a:	7e 1c                	jle    401f88 <sort_i+0x138>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:83
+    dest[i] = source[i];
+  401f6c:	48 63 d2             	movslq %edx,%rdx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:82
+  for (int i = 0 ; i < n ; i++) {
+  401f6f:	83 c7 02             	add    $0x2,%edi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:83
+    dest[i] = source[i];
+  401f72:	8b 0c 90             	mov    (%rax,%rdx,4),%ecx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:82
+  for (int i = 0 ; i < n ; i++) {
+  401f75:	41 39 ff             	cmp    %edi,%r15d
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:83
+    dest[i] = source[i];
+  401f78:	41 89 0c 90          	mov    %ecx,(%r8,%rdx,4)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:82
+  for (int i = 0 ; i < n ; i++) {
+  401f7c:	7e 0a                	jle    401f88 <sort_i+0x138>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:83
+    dest[i] = source[i];
+  401f7e:	48 63 ff             	movslq %edi,%rdi
+  401f81:	8b 14 b8             	mov    (%rax,%rdi,4),%edx
+  401f84:	41 89 14 b8          	mov    %edx,(%r8,%rdi,4)
+merge_i():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:58
+  copy_i(&(A[q + 1]), right, n2);
+  401f88:	4d 63 f6             	movslq %r14d,%r14
+copy_i():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:82
+  for (int i = 0 ; i < n ; i++) {
+  401f8b:	45 85 ed             	test   %r13d,%r13d
+merge_i():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:58
+  copy_i(&(A[q + 1]), right, n2);
+  401f8e:	4a 8d 14 b5 04 00 00 	lea    0x4(,%r14,4),%rdx
+  401f95:	00 
+  401f96:	49 8d 0c 14          	lea    (%r12,%rdx,1),%rcx
+copy_i():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:82
+  for (int i = 0 ; i < n ; i++) {
+  401f9a:	0f 8e 94 00 00 00    	jle    402034 <sort_i+0x1e4>
+  401fa0:	49 8d 7c 14 fc       	lea    -0x4(%r12,%rdx,1),%rdi
+  401fa5:	4d 8d 59 10          	lea    0x10(%r9),%r11
+  401fa9:	48 8d 57 14          	lea    0x14(%rdi),%rdx
+  401fad:	49 39 d1             	cmp    %rdx,%r9
+  401fb0:	48 8d 57 04          	lea    0x4(%rdi),%rdx
+  401fb4:	41 0f 93 c2          	setae  %r10b
+  401fb8:	49 39 d3             	cmp    %rdx,%r11
+  401fbb:	0f 96 c2             	setbe  %dl
+  401fbe:	41 08 d2             	or     %dl,%r10b
+  401fc1:	0f 84 e9 00 00 00    	je     4020b0 <sort_i+0x260>
+  401fc7:	41 83 fd 0b          	cmp    $0xb,%r13d
+  401fcb:	0f 86 df 00 00 00    	jbe    4020b0 <sort_i+0x260>
+  401fd1:	45 89 ee             	mov    %r13d,%r14d
+  401fd4:	31 d2                	xor    %edx,%edx
+  401fd6:	45 31 d2             	xor    %r10d,%r10d
+  401fd9:	41 c1 ee 02          	shr    $0x2,%r14d
+  401fdd:	46 8d 1c b5 00 00 00 	lea    0x0(,%r14,4),%r11d
+  401fe4:	00 
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:83
+    dest[i] = source[i];
+  401fe5:	f3 0f 6f 44 17 04    	movdqu 0x4(%rdi,%rdx,1),%xmm0
+  401feb:	41 83 c2 01          	add    $0x1,%r10d
+  401fef:	f3 41 0f 7f 04 11    	movdqu %xmm0,(%r9,%rdx,1)
+  401ff5:	48 83 c2 10          	add    $0x10,%rdx
+  401ff9:	45 39 d6             	cmp    %r10d,%r14d
+  401ffc:	77 e7                	ja     401fe5 <sort_i+0x195>
+  401ffe:	45 39 eb             	cmp    %r13d,%r11d
+  402001:	74 31                	je     402034 <sort_i+0x1e4>
+  402003:	49 63 d3             	movslq %r11d,%rdx
+  402006:	8b 3c 91             	mov    (%rcx,%rdx,4),%edi
+  402009:	41 89 3c 91          	mov    %edi,(%r9,%rdx,4)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:82
+  for (int i = 0 ; i < n ; i++) {
+  40200d:	41 8d 53 01          	lea    0x1(%r11),%edx
+  402011:	41 39 d5             	cmp    %edx,%r13d
+  402014:	7e 1e                	jle    402034 <sort_i+0x1e4>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:83
+    dest[i] = source[i];
+  402016:	48 63 d2             	movslq %edx,%rdx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:82
+  for (int i = 0 ; i < n ; i++) {
+  402019:	41 83 c3 02          	add    $0x2,%r11d
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:83
+    dest[i] = source[i];
+  40201d:	8b 3c 91             	mov    (%rcx,%rdx,4),%edi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:82
+  for (int i = 0 ; i < n ; i++) {
+  402020:	45 39 dd             	cmp    %r11d,%r13d
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:83
+    dest[i] = source[i];
+  402023:	41 89 3c 91          	mov    %edi,(%r9,%rdx,4)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:82
+  for (int i = 0 ; i < n ; i++) {
+  402027:	7e 0b                	jle    402034 <sort_i+0x1e4>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:83
+    dest[i] = source[i];
+  402029:	4d 63 db             	movslq %r11d,%r11
+  40202c:	42 8b 14 99          	mov    (%rcx,%r11,4),%edx
+  402030:	43 89 14 99          	mov    %edx,(%r9,%r11,4)
+  402034:	29 dd                	sub    %ebx,%ebp
+merge_i():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:59
+  left[n1] = UINT_MAX;
+  402036:	4d 63 ff             	movslq %r15d,%r15
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:60
+  right[n2] = UINT_MAX;
+  402039:	4d 63 ed             	movslq %r13d,%r13
+  40203c:	48 01 ee             	add    %rbp,%rsi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:59
+  left[n1] = UINT_MAX;
+  40203f:	43 c7 04 b8 ff ff ff 	movl   $0xffffffff,(%r8,%r15,4)
+  402046:	ff 
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:63
+  int j = 0;
+  402047:	31 ff                	xor    %edi,%edi
+  402049:	4d 8d 54 b4 04       	lea    0x4(%r12,%rsi,4),%r10
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:60
+  right[n2] = UINT_MAX;
+  40204e:	43 c7 04 a9 ff ff ff 	movl   $0xffffffff,(%r9,%r13,4)
+  402055:	ff 
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:62
+  int i = 0;
+  402056:	31 f6                	xor    %esi,%esi
+  402058:	eb 14                	jmp    40206e <sort_i+0x21e>
+  40205a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:67
+      A[k] = left[i];
+  402060:	89 08                	mov    %ecx,(%rax)
+  402062:	48 83 c0 04          	add    $0x4,%rax
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:68
+      i++;
+  402066:	83 c6 01             	add    $0x1,%esi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:65
+  for (int k = p; k <= r; k++) {
+  402069:	4c 39 d0             	cmp    %r10,%rax
+  40206c:	74 20                	je     40208e <sort_i+0x23e>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:66
+    if (left[i] <= right[j]) {
+  40206e:	48 63 d6             	movslq %esi,%rdx
+  402071:	41 8b 0c 90          	mov    (%r8,%rdx,4),%ecx
+  402075:	48 63 d7             	movslq %edi,%rdx
+  402078:	41 8b 14 91          	mov    (%r9,%rdx,4),%edx
+  40207c:	39 d1                	cmp    %edx,%ecx
+  40207e:	76 e0                	jbe    402060 <sort_i+0x210>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:70
+      A[k] = right[j];
+  402080:	89 10                	mov    %edx,(%rax)
+  402082:	48 83 c0 04          	add    $0x4,%rax
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:71
+      j++;
+  402086:	83 c7 01             	add    $0x1,%edi
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:65
+  for (int k = p; k <= r; k++) {
+  402089:	4c 39 d0             	cmp    %r10,%rax
+  40208c:	75 e0                	jne    40206e <sort_i+0x21e>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:74
+  mem_free(&left);
+  40208e:	48 8d 7c 24 08       	lea    0x8(%rsp),%rdi
+  402093:	e8 88 fa ff ff       	callq  401b20 <mem_free>
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:75
+  mem_free(&right);
+  402098:	48 89 e7             	mov    %rsp,%rdi
+  40209b:	e8 80 fa ff ff       	callq  401b20 <mem_free>
+sort_i():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:37
+}
+  4020a0:	48 83 c4 18          	add    $0x18,%rsp
+  4020a4:	5b                   	pop    %rbx
+  4020a5:	5d                   	pop    %rbp
+  4020a6:	41 5c                	pop    %r12
+  4020a8:	41 5d                	pop    %r13
+  4020aa:	41 5e                	pop    %r14
+  4020ac:	41 5f                	pop    %r15
+  4020ae:	c3                   	retq   
+  4020af:	90                   	nop
+copy_i():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:82
+  for (int i = 0 ; i < n ; i++) {
+  4020b0:	31 d2                	xor    %edx,%edx
+  4020b2:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:83
+    dest[i] = source[i];
+  4020b8:	8b 3c 91             	mov    (%rcx,%rdx,4),%edi
+  4020bb:	41 89 3c 91          	mov    %edi,(%r9,%rdx,4)
+  4020bf:	48 83 c2 01          	add    $0x1,%rdx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:82
+  for (int i = 0 ; i < n ; i++) {
+  4020c3:	41 39 d5             	cmp    %edx,%r13d
+  4020c6:	7f f0                	jg     4020b8 <sort_i+0x268>
+  4020c8:	e9 67 ff ff ff       	jmpq   402034 <sort_i+0x1e4>
+  4020cd:	0f 1f 00             	nopl   (%rax)
+  4020d0:	31 c9                	xor    %ecx,%ecx
+  4020d2:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:83
+    dest[i] = source[i];
+  4020d8:	8b 14 88             	mov    (%rax,%rcx,4),%edx
+  4020db:	41 89 14 88          	mov    %edx,(%r8,%rcx,4)
+  4020df:	48 83 c1 01          	add    $0x1,%rcx
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:82
+  for (int i = 0 ; i < n ; i++) {
+  4020e3:	41 39 cf             	cmp    %ecx,%r15d
+  4020e6:	7f f0                	jg     4020d8 <sort_i+0x288>
+  4020e8:	e9 9b fe ff ff       	jmpq   401f88 <sort_i+0x138>
+sort_i():
+  4020ed:	0f 1f 00             	nopl   (%rax)
+
+00000000004020f0 <sort_p>:
+sort_p():
+/zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_p.c:27
+
+
+#include "./util.h"
+
+void sort_p(data_t* A, int p, int r) {
+  printf("Unimplemented!\n");
+  4020f0:	bf 59 25 40 00       	mov    $0x402559,%edi
+  4020f5:	e9 96 e7 ff ff       	jmpq   400890 <puts@plt>
+  4020fa:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+
+0000000000402100 <sort_m>:
+sort_m():
+
+
+#include "./util.h"
+
+void sort_m(data_t* A, int p, int r) {
+  printf("Unimplemented!\n");
+  402100:	bf 59 25 40 00       	mov    $0x402559,%edi
+  402105:	e9 86 e7 ff ff       	jmpq   400890 <puts@plt>
+  40210a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+
+0000000000402110 <sort_f>:
+sort_f():
+
+
+#include "./util.h"
+
+void sort_f(data_t* A, int p, int r) {
+  printf("Unimplemented!\n");
+  402110:	bf 59 25 40 00       	mov    $0x402559,%edi
+  402115:	e9 76 e7 ff ff       	jmpq   400890 <puts@plt>
+  40211a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+
+0000000000402120 <__libc_csu_init>:
+__libc_csu_init():
+  402120:	41 57                	push   %r15
+  402122:	41 89 ff             	mov    %edi,%r15d
+  402125:	41 56                	push   %r14
+  402127:	49 89 f6             	mov    %rsi,%r14
+  40212a:	41 55                	push   %r13
+  40212c:	49 89 d5             	mov    %rdx,%r13
+  40212f:	41 54                	push   %r12
+  402131:	4c 8d 25 b8 0c 20 00 	lea    0x200cb8(%rip),%r12        # 602df0 <__frame_dummy_init_array_entry>
+  402138:	55                   	push   %rbp
+  402139:	48 8d 2d b8 0c 20 00 	lea    0x200cb8(%rip),%rbp        # 602df8 <__init_array_end>
+  402140:	53                   	push   %rbx
+  402141:	4c 29 e5             	sub    %r12,%rbp
+  402144:	31 db                	xor    %ebx,%ebx
+  402146:	48 c1 fd 03          	sar    $0x3,%rbp
+  40214a:	48 83 ec 08          	sub    $0x8,%rsp
+  40214e:	e8 ed e6 ff ff       	callq  400840 <_init>
+  402153:	48 85 ed             	test   %rbp,%rbp
+  402156:	74 1e                	je     402176 <__libc_csu_init+0x56>
+  402158:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
+  40215f:	00 
+  402160:	4c 89 ea             	mov    %r13,%rdx
+  402163:	4c 89 f6             	mov    %r14,%rsi
+  402166:	44 89 ff             	mov    %r15d,%edi
+  402169:	41 ff 14 dc          	callq  *(%r12,%rbx,8)
+  40216d:	48 83 c3 01          	add    $0x1,%rbx
+  402171:	48 39 eb             	cmp    %rbp,%rbx
+  402174:	75 ea                	jne    402160 <__libc_csu_init+0x40>
+  402176:	48 83 c4 08          	add    $0x8,%rsp
+  40217a:	5b                   	pop    %rbx
+  40217b:	5d                   	pop    %rbp
+  40217c:	41 5c                	pop    %r12
+  40217e:	41 5d                	pop    %r13
+  402180:	41 5e                	pop    %r14
+  402182:	41 5f                	pop    %r15
+  402184:	c3                   	retq   
+  402185:	90                   	nop
+  402186:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)
+  40218d:	00 00 00 
+
+0000000000402190 <__libc_csu_fini>:
+__libc_csu_fini():
+  402190:	f3 c3                	repz retq 
+
+Disassembly of section .fini:
+
+0000000000402194 <_fini>:
+_fini():
+  402194:	48 83 ec 08          	sub    $0x8,%rsp
+  402198:	48 83 c4 08          	add    $0x8,%rsp
+  40219c:	c3                   	retq   

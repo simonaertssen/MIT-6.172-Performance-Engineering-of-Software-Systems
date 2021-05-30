@@ -1,3 +1,0 @@
-Allocated array of size 10000
-Summing 10000000 random values...
-Done. Value = -1535335350

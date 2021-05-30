@@ -60,9 +60,9 @@ int main(int argc, char** argv) {
   // the struct contains two fields --- the function pointer to the sort function
   // and its name (for printing)
   struct testFunc_t testFunc[] = {
-    {&sort_a, "sort_a\t\t"},
-    {&sort_a, "sort_a repeated\t"},
-    //{&sort_i, "sort_i\t\t"},
+    //{&sort_a, "sort_a\t\t"},
+    //{&sort_a, "sort_a repeated\t"},
+    {&sort_i, "sort_i\t\t"},
     //{&sort_p, "sort_p\t\t"},
     //{&sort_c, "sort_c\t\t"},
     //{&sort_m, "sort_m\t\t"},

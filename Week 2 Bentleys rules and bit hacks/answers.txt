@@ -95,3 +95,73 @@ $ perf stat -e branch-misses,cycles,instructions ./isort 10000 10
        0.955825000 seconds user
        0.000000000 seconds sys
 
+The biggest bottleneck might be the number of branch misses, 
+as we seem to predict the wrong outcome many times.
+
+
+# CHECKOFF ITEM 2:
+$ lscpu
+Architecture:          x86_64
+CPU op-mode(s):        32-bit, 64-bit
+Byte Order:            Little Endian
+CPU(s):                20
+On-line CPU(s) list:   0-19
+Thread(s) per core:    1
+Core(s) per socket:    10
+Socket(s):             2
+NUMA node(s):          2
+Vendor ID:             GenuineIntel
+CPU family:            6
+Model:                 63
+Model name:            Intel(R) Xeon(R) CPU E5-2660 v3 @ 2.60GHz
+Stepping:              2
+CPU MHz:               1199.865
+CPU max MHz:           3300.0000
+CPU min MHz:           1200.0000
+BogoMIPS:              5188.20
+Virtualization:        VT-x
+L1d cache:             32K
+L1i cache:             32K
+L2 cache:              256K
+L3 cache:              25600K
+NUMA node0 CPU(s):     0-9
+NUMA node1 CPU(s):     10-19
+Flags:                 fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm epb invpcid_single intel_ppin ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid cqm xsaveopt cqm_llc cqm_occup_llc dtherm ida arat pln pts md_clear spec_ctrl intel_stibp flush_l1d
+
+Here, the clock speed is very interesting: up to 3.3 GHz. Also, look at those flags!
+
+(had to decrease array size because it just kept on running...)
+$ valgrind --tool=cachegrind --branch-sim=yes ./sum > cachegrind_results.txt
+==4682== Cachegrind, a cache and branch-prediction profiler
+==4682== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==4682== Using Valgrind-3.14.0 and LibVEX; rerun with -h for copyright info
+==4682== Command: ./sum
+==4682== 
+--4682-- warning: L3 cache found, using its data for the LL simulation.
+--4682-- warning: specified LL cache: line_size 64  assoc 20  total_size 31,457,280
+--4682-- warning: simulated LL cache: line_size 64  assoc 30  total_size 31,457,280
+==4682== 
+==4682== I   refs:      364,198,304
+==4682== I1  misses:            954
+==4682== LLi misses:            950
+==4682== I1  miss rate:        0.00%
+==4682== LLi miss rate:        0.00%
+==4682== 
+==4682== D   refs:       61,070,309  (40,051,975 rd   + 21,018,334 wr)
+==4682== D1  misses:      9,984,649  ( 9,921,481 rd   +     63,168 wr)
+==4682== LLd misses:         65,165  (     2,086 rd   +     63,079 wr)
+==4682== D1  miss rate:        16.3% (      24.8%     +        0.3%  )
+==4682== LLd miss rate:         0.1% (       0.0%     +        0.3%  )
+==4682== 
+==4682== LL refs:         9,985,603  ( 9,922,435 rd   +     63,168 wr)
+==4682== LL misses:          66,115  (     3,036 rd   +     63,079 wr)
+==4682== LL miss rate:          0.0% (       0.0%     +        0.3%  )
+==4682== 
+==4682== Branches:       21,039,823  (11,039,424 cond + 10,000,399 ind)
+==4682== Mispredicts:         4,947  (     4,833 cond +        114 ind)
+==4682== Mispred rate:          0.0% (       0.0%     +        0.0%   )
+
+Looking at the D1 and LLd miss rates, the first is pretty high. 
+It seems that for higher U and N, the cache miss rates increase exponentially.
+However, we know that the L1d cache is about 32Kb. Setting U=1000 results in a 
+miss rate of 0% for both caches. 

@@ -1,8 +1,8 @@
 CC := gcc
-CFLAGS := -g -ggdb -Wall -Werror -std=gnu99 -gdwarf-3 
+CFLAGS := -Wall -Werror -std=gnu99 -gdwarf-3 
 
 ifeq ($(DEBUG),1)
-	CFLAGS := -O0 -DDEBUG $(CFLAGS)
+	CFLAGS := -O0 -DDEBUG -g -ggdb $(CFLAGS)
 else
 	CFLAGS := -O2 -DNDEBUG $(CFLAGS)
 endif

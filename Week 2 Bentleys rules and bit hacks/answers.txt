@@ -3,15 +3,34 @@ follow instructions listed on:
 https://gperftools.github.io/gperftools/cpuprofile.html
 https://codearcana.com/posts/2013/02/26/introduction-to-using-profiling-tools.html
 
-The main difference is using the -lprofiler flag during linking (DFLAGS), which works for both gcc and clang. This only seems to work when 'brew install gpperftools'. There is the bare pprof and also the go tool pprof. 
+The main difference is using the -lprofiler flag during linking (DFLAGS), which works for both gcc and clang. This only seems to work when 'brew install gpperftools'. There is the bare pprof and also the go tool pprof. Added a dedicated section PROFILE in Makefile.
 
 Building:
 make clean
 make sort PROFILE=1
-CPUPROFILE=out.prof ./sort
-pprof --pdf ./sort out.prof > out.pdf
+CPUPROFILE=isort.prof ./isort 10000 10
+PPROF_BINARY_PATH=/Users/SimonAertssen/Desktop/Zelfstudie/6.172\ Performance\ Engineering\ of\ Software\ Systems/MIT-6.172-Performance-Engineering-of-Software-Systems/Week\ 2\ Bentleys\ rules\ and\ bit\ hacks
+pprof --text isort isort.prof
+
+If a visual output is preferred, then use:
+pprof --pdf isort isort.prof > results.pdf
 
 Symbols not showing? See: https://users.rust-lang.org/t/pprof-wont-show-symbols/24241/2
-Problem is partially solved with flag -Wl,-no_pie
+Problem is partially solved with flags -Wl,-no_pie -fno-omit-frame-pointer -Wl,-export_dynamic
 
--Wl,-no_pie -fno-omit-frame-pointer -Wl,-export_dynamic
+Despite everything, output is:
+PROFILE: interrupts/evictions/bytes = 13/3/448
+PPROF_BINARY_PATH=/Users/SimonAertssen/Desktop/Zelfstudie/6.172\ Performance\ Engineering\ of\ Software\ Systems/MIT-6.172-Performance-Engineering-of-Software-Systems/Week\ 2\ Bentleys\ rules\ and\ bit\ hacks
+pprof --text isort isort.prof
+Using local file isort.
+Using local file isort.prof.
+Total: 13 samples
+      12  92.3%  92.3%       12  92.3% _isort
+       1   7.7% 100.0%        1   7.7% 0x00007fff69bc631d
+       0   0.0% 100.0%        1   7.7% 0x0000000100001007
+       0   0.0% 100.0%       12  92.3% 0x0000000106c1df47
+       0   0.0% 100.0%       13 100.0% 0x00007fff69bda3d4
+       0   0.0% 100.0%        1   7.7% __mh_execute_header
+       0   0.0% 100.0%       12  92.3% _main
+
+These symbols are practically unreadable.

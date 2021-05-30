@@ -2479,8 +2479,8 @@ sort_i():
 /zhome/ab/9/134067/Desktop/MIT-6.172-Performance-Engineering-of-Software-Systems/Week 2 Bentleys rules and bit hacks/homework/sort_i.c:29
 #include "./util.h"
 
-static void merge_i(data_t* A, int p, int q, int r);
-static void copy_i(data_t* source, data_t* dest, int n);
+static inline void merge_i(data_t* A, int p, int q, int r);
+static inline void copy_i(data_t* source, data_t* dest, int n);
 
 void sort_i(data_t* A, int p, int r) {
   401e50:	41 57                	push   %r15

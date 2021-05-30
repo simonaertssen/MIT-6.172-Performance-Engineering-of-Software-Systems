@@ -23,8 +23,8 @@
 
 #include "./util.h"
 
-static void merge_i(data_t* A, int p, int q, int r);
-static void copy_i(data_t* source, data_t* dest, int n);
+static inline void merge_i(data_t* A, int p, int q, int r);
+static inline void copy_i(data_t* source, data_t* dest, int n);
 
 void sort_i(data_t* A, int p, int r) {
   assert(A);

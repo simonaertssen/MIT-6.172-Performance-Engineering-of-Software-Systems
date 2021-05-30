@@ -237,14 +237,14 @@ Another version of merge_i and copy_i were copied and inlined.
 
 $ perf stat -e branch-misses,cycles,instructions ./sort 10000 10
 Performance counter stats for './sort 10000 10':
-           705,434      branch-misses:u                                             
-        64,552,072      cycles:u                                                    
-       151,618,488      instructions:u            #    2.35  insn per cycle         
+           700,360      branch-misses:u                                             
+        64,315,740      cycles:u                                                    
+       151,618,393      instructions:u            #2.36  insn per cycle         
 
-       0.030237521 seconds time elapsed
-       0.027663000 seconds user
-       0.001975000 seconds sys
-A little faster and nearly half of the branch misses!
+       0.044307892 seconds time elapsed
+       0.041664000 seconds user
+       0.001984000 seconds sys
+Much faster and nearly half of the branch misses, cycles, and instructions!
 
 ==8893== I   refs:      151,650,605
 ==8893== I1  misses:          1,401
@@ -268,11 +268,13 @@ A little faster and nearly half of the branch misses!
 There are many less references and branches, resulting in a faster execution.
 The miss rates are slightly higher.
 
-If we add an inlined version of the utils.c functions:
+If we add an inlined version of the utils.c functions, then we are even a little faster
+but no difference is found in the cache results.
+
 
 # WRITEUP 3
 We can get the annotated assembly code with 
-$ objdump -lSb sort > annotated_ASM.txt
+$ objdump -lSd sort > annotated_ASM.txt
 Here it does not seem like the code is simply inlined.
 
 

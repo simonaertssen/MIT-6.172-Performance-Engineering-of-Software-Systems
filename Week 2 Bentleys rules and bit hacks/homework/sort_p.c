@@ -54,20 +54,21 @@ static inline void merge_p(data_t* A, int p, int q, int r) {
     return;
   }
 
-  copy_p(&(A[p]), left, n1);
-  copy_p(&(A[q + 1]), right, n2);
+  copy_p(&(*(A+p)), left, n1);
+  copy_p(&(*(A+p+1)), right, n2);
   left[n1] = UINT_MAX;
   right[n2] = UINT_MAX;
 
   int i = 0;
   int j = 0;
 
+  // Here we access the arrays with pointers instead of indices
   for (int k = p; k <= r; k++) {
-    if (left[i] <= right[j]) {
-      A[k] = left[i];
+    if (*(left+i) <= *(right+j)) {
+      *(A+k) = *(left+i); // Used to be A[k] = left[i];
       i++;
     } else {
-      A[k] = right[j];
+      *(A+k) = *(right+j); // Used to be A[k] = right[j];
       j++;
     }
   }
@@ -80,7 +81,7 @@ static inline void copy_p(data_t* source, data_t* dest, int n) {
   assert(source);
 
   for (int i = 0 ; i < n ; i++) {
-    dest[i] = source[i];
+    *(dest+i) = *(source+i); // Used to be dest[i] = source[i];
   }
 }
 

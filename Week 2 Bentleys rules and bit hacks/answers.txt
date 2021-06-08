@@ -227,7 +227,6 @@ Performance counter stats for './sort 10000 10':
        299,490,874      instructions:u            #    2.34  insn per cycle         
 
        0.085810121 seconds time elapsed
-
        0.083193000 seconds user
        0.001980000 seconds sys
 
@@ -291,5 +290,19 @@ The cache misses can therefore be registered with valgrind.
 
 
 # WRITEUP 4
-Inlin
+When using pointers, we only use the memory address of the array + an offset
+for the index. This is much lighter.
+
+$ perf stat -e branch-misses,cycles,instructions ./sort 10000 10
+Performance counter stats for './sort 10000 10':
+            56,253      branch-misses:u                                             
+        50,021,301      cycles:u                                                    
+       149,058,337      instructions:u            #    2.98  insn per cycle         
+
+       0.023284892 seconds time elapsed
+       0.021295000 seconds user
+       0.000000000 seconds sys
+
+
+
 

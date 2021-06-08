@@ -64,14 +64,19 @@ static inline void merge_c(data_t* A, int p, int q, int r) {
   left[n1] = UINT_MAX;
   right[n2] = UINT_MAX;
 
-  // Here we make a sorting algorithm based on the branchless minimum
+  // Here we make a merging algorithm based on the branchless minimum
   unsigned int * __restrict leftptr = left;
   unsigned int * __restrict rghtptr = right;
 
   for (int k = p; k <= r; k++) {
     long cmp = (*leftptr <= *rghtptr); // Store result of comparison
-    long min = *rghtptr ((*leftptr))
+    long min = *rghtptr ^ ((*leftptr ^ *rghtptr) & -(cmp));
+
+    *(A+k) = min;
+    leftptr += cmp;
+    rghtptr += !cmp;
   }
+
   mem_free(&left);
   mem_free(&right);
 }

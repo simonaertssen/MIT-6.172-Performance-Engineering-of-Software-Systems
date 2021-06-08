@@ -55,7 +55,7 @@ static inline void merge_p(data_t* A, int p, int q, int r) {
   }
 
   copy_p(&(*(A+p)), left, n1);
-  copy_p(&(*(A+p+1)), right, n2);
+  copy_p(&(*(A+q+1)), right, n2);
   left[n1] = UINT_MAX;
   right[n2] = UINT_MAX;
 

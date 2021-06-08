@@ -277,6 +277,19 @@ We can get the annotated assembly code with
 $ objdump -lSd sort > annotated_ASM.txt
 Here it does not seem like the code is simply inlined.
 
+Inlining functions increases compile time with increasing inline function size.
+Also the size of the binary increases. The compiler can also just ignore the "inline"
+keyword. However, the performance can increase up to 20% due to increased knowledge
+of the context, as it is easier to optimise large functions.
+Specifically for recursive functions: here the issue is that we cannot infinitely inline
+the function body. At some point we have to stop, so we inline to a certain depth.
+Set with #pragma inline_recursion(on) and #pragma inline_depth.
+
+Inlining also imposes a cost on performance, due to the code expansion (due to duplication) hurting instruction cache performance. This is most significant if, prior to expansion, the working set of the program (or a hot section of code) fit in one level of the memory hierarchy (e.g., L1 cache), but after expansion it no longer fits, resulting in frequent cache misses at that level. Due to the significant difference in performance at different levels of the hierarchy, this hurts performance considerably. At the highest level this can result in increased page faults, catastrophic performance degradation due to thrashing, or the program failing to run at all. 
+
+The cache misses can therefore be registered with valgrind.
+
 
 # WRITEUP 4
+Inlin
 

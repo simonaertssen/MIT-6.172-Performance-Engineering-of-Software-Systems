@@ -5,3 +5,22 @@ Use 32-bit aligned registers.
 
 # WRITEUP 3
 Seems like the ternary operator does not compare arrays element-wise.
+
+
+# WRITEUP 4
+The memory is not aligned. It should be possible to either reallign the 
+b array by moving everything one place further or by making it possible
+to align with an offset. This should definitely be faster.
+
+
+# WRITEUP 5
+The ffast-math flag was already set from a prior experiment! The addsd command 
+is replaced by a addpd command.
+
+clang -O3 example4.c -o example4; ./example4
+The decimal floating point sum result is: 11.667578
+The raw floating point sum result is: 0x1.755cccec10aa5p+3
+
+clang -O3 -ffast-math  example4.c -o example4; ./example4
+The decimal floating point sum result is: 11.667578
+The raw floating point sum result is: 0x1.755cccec10aa3p+3

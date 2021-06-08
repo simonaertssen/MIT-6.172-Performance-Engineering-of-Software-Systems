@@ -2,8 +2,8 @@ CC := clang
 
 TARGETS = example1 example2 example3 example4
 
-OTHER_CFLAGS ?=
-CFLAGS := -Wall -g -std=gnu99
+OTHER_CFLAGS ?= -ffast-math
+CFLAGS := -Wall -g -std=gnu99 
 
 ifeq ($(DEBUG),1)
   CFLAGS += -O0
@@ -25,7 +25,7 @@ ifeq ($(ASSEMBLE),1)
 endif
 
 ifeq ($(AVX2),1)
-  CFLAGS += -mavx2
+  CFLAGS += -mavx2 -march=core-avx2
 endif
 
 CFLAGS += $(OTHER_CFLAGS)

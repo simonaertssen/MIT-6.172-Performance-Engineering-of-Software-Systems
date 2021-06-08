@@ -44,3 +44,43 @@ void isort(data_t* begin, data_t* end) {
   }
 }
 
+
+// Quicksort implementation
+inline void swap(data_t* a, data_t* b) {
+  data_t tmp = *a;
+  *a = *b;
+  *b = tmp;
+}
+
+int partition(data_t* A, int low, int high) {
+  int flag  = 0;
+  int first = low;
+  int last  = high + 1;
+  int pivot = A[low];
+
+  while (flag == 0) {
+    while (A[++first] < pivot) {
+      if (first == high) flag = 1;
+    }
+    while (A[--last] > pivot) {
+      if (last == low) flag = 1;
+    }
+    if (first >= last) {
+      flag = 1;
+    } else {
+      swap(&A[first], &A[last]);
+    }
+  }
+  swap(&A[low], &A[last]);
+  return last;
+}
+
+void quicksort(data_t* A, int low, int high) {
+  if (high <= low) {
+    return;
+  }
+
+  int k = partition(A, low, high);
+  quicksort(A, low, k - 1);
+  quicksort(A, k + 1, high);
+}

@@ -321,3 +321,21 @@ Again, the execution time has gone down drastically (factor of 4.5) but the rati
 of insn per cycle is slightly smaller, regardless of the fact that the absolute
 number of instructions and cycles is more than half.
 
+When adding a custom branchless sorting algoritm:
+$ perf stat -e branch-misses,cycles,instructions ./sort 10000 10
+Performance counter stats for './sort 10000 10':
+           185,953      branch-misses:u                                             
+        41,881,764      cycles:u                                                    
+        78,398,709      instructions:u            #    1.87  insn per cycle         
+
+       0.018087820 seconds time elapsed
+       0.016512000 seconds user
+       0.000971000 seconds sys
+The number of branches has now been reduced heavily, but more instructions and cycles 
+were needed.
+
+Tried to incorporate a quicksort but it's actually really slow...
+
+
+# WRITEUP 6
+

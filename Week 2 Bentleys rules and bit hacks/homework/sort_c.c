@@ -25,6 +25,7 @@
 
 // include the predefined isort:
 extern void isort(data_t* begin, data_t* end);
+extern void quicksort(data_t* A, int low, int high);
 
 static inline void merge_c(data_t* A, int p, int q, int r);
 static inline void copy_c(data_t* source, data_t* dest, int n);
@@ -33,6 +34,8 @@ void sort_c(data_t* A, int p, int r) {
   assert(A);
   if (r - p < 100) {
     isort(&(A[p]), &(A[r]));
+  } else if (r - p < 1000) {
+    quicksort(A, p, r);
   } else {
     int q = (p + r) / 2;
     sort_c(A, p, q);

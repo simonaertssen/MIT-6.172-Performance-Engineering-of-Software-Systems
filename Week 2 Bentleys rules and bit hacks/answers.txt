@@ -370,3 +370,20 @@ With an additional filtering of the sorting criteria, this is a very fast method
 
 
 # WRITEUP 7
+Allocate one buffer at the beginning and free it after all sorting is over. Pass the 
+memory buffer between all functions.
+
+$ perf stat -e branch-misses,cycles,instructions ./sort 10000 10
+Performance counter stats for './sort 10000 10':
+
+           186,251      branch-misses:u                                             
+        35,695,915      cycles:u                                                    
+        77,855,968      instructions:u            #    2.18  insn per cycle         
+
+       0.017212960 seconds time elapsed
+       0.015579000 seconds user
+       0.000973000 seconds sys
+
+The numbers are only slightly better, and execution time is really dependant on other
+users, but good job!
+

@@ -2,3 +2,6 @@ RECITATION
 # WRITEUP 2
 Use 32-bit aligned registers.
 
+
+# WRITEUP 3
+Seems like the ternary operator does not compare arrays element-wise.

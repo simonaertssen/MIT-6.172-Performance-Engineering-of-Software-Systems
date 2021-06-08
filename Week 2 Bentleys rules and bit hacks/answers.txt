@@ -295,14 +295,29 @@ for the index. This is much lighter.
 
 $ perf stat -e branch-misses,cycles,instructions ./sort 10000 10
 Performance counter stats for './sort 10000 10':
-            56,253      branch-misses:u                                             
-        50,021,301      cycles:u                                                    
-       149,058,337      instructions:u            #    2.98  insn per cycle         
+           697,273      branch-misses:u                                             
+        65,511,329      cycles:u                                                    
+       151,618,252      instructions:u            #    2.31  insn per cycle         
 
-       0.023284892 seconds time elapsed
-       0.021295000 seconds user
-       0.000000000 seconds sys
+       0.027317088 seconds time elapsed
+       0.023909000 seconds user
+       0.002869000 seconds sys
+The program is faster but the ratio of insn per cycle remains the same.
 
 
+# WRITEUP 5
+When using isort, another sorting algorithm, we can gain a speedup for smaller arrays.
 
+$ perf stat -e branch-misses,cycles,instructions ./sort 10000 10
+Performance counter stats for './sort 10000 10':
+           546,892      branch-misses:u                                             
+        31,021,060      cycles:u                                                    
+        67,203,981      instructions:u            #    2.17  insn per cycle         
+
+       0.014478695 seconds time elapsed
+       0.012907000 seconds user
+       0.000992000 seconds sys
+Again, the execution time has gone down drastically (factor of 4.5) but the ratio 
+of insn per cycle is slightly smaller, regardless of the fact that the absolute
+number of instructions and cycles is more than half.
 

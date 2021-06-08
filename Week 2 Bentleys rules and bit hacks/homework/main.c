@@ -24,6 +24,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <getopt.h>
 
 #include "./fasttime.h"
 #include "./tests.h"

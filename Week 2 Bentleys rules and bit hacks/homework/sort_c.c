@@ -31,7 +31,7 @@ static inline void copy_c(data_t* source, data_t* dest, int n);
 
 void sort_c(data_t* A, int p, int r) {
   assert(A);
-  if (r - p > 100) {
+  if (r - p < 100) {
     isort(&(A[p]), &(A[r]));
   } else {
     int q = (p + r) / 2;
@@ -64,18 +64,13 @@ static inline void merge_c(data_t* A, int p, int q, int r) {
   left[n1] = UINT_MAX;
   right[n2] = UINT_MAX;
 
-  int i = 0;
-  int j = 0;
+  // Here we make a sorting algorithm based on the branchless minimum
+  unsigned int * __restrict leftptr = left;
+  unsigned int * __restrict rghtptr = right;
 
-  // Here we access the arrays with pointers instead of indices
   for (int k = p; k <= r; k++) {
-    if (*(left+i) <= *(right+j)) {
-      *(A+k) = *(left+i); // Used to be A[k] = left[i];
-      i++;
-    } else {
-      *(A+k) = *(right+j); // Used to be A[k] = right[j];
-      j++;
-    }
+    long cmp = (*leftptr <= *rghtptr); // Store result of comparison
+    long min = *rghtptr ((*leftptr))
   }
   mem_free(&left);
   mem_free(&right);

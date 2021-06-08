@@ -338,4 +338,35 @@ Tried to incorporate a quicksort but it's actually really slow...
 
 
 # WRITEUP 6
+As a start, the classic pointer merge from sort_p was adjusted to only used one 
+scratch space. Now we just keep using a reference to the original array. That is not
+necessarily always a good thing.Because of the command to 'free()' the compiler 
+cannot optimise on this scratch space.
 
+$ perf stat -e branch-misses,cycles,instructions ./sort 10000 10
+Performance counter stats for './sort 10000 10':
+           539,242      branch-misses:u                                             
+        32,704,193      cycles:u                                                    
+        70,108,886      instructions:u            #    2.14  insn per cycle         
+
+       0.016385369 seconds time elapsed
+       0.013937000 seconds user
+       0.001858000 seconds sys
+
+That's not bad, but it's also not a real improvement. 
+
+But we can see there is another merging algorithm suggested in other writeups:
+$ perf stat -e branch-misses,cycles,instructions ./sort 10000 10
+Performance counter stats for './sort 10000 10':
+
+           186,618      branch-misses:u                                             
+        35,973,761      cycles:u                                                    
+        78,647,102      instructions:u            #    2.19  insn per cycle         
+
+       0.015707568 seconds time elapsed
+       0.012989000 seconds user
+       0.002164000 seconds sys
+With an additional filtering of the sorting criteria, this is a very fast method.
+
+
+# WRITEUP 7

@@ -36,10 +36,10 @@
 // Guarding it with #ifndef allows passing -D"__OP__=$value" on the
 // command line
 #ifndef __OP__
-#define __OP__     *
+#define __OP__     +
 #endif
 #ifndef __TYPE__
-#define __TYPE__   uint32_t
+#define __TYPE__   uint8_t
 #endif
 
 // Define a way of automatically converting __OP__ and __TYPE__ into string literals

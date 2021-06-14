@@ -100,3 +100,25 @@ Only some these look like vector instructions.
 
 
 # WRITEUP 9
+Baseline (unvectorised):
+Elapsed execution time: 5.355811 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint64_t
+Elapsed execution time: 4.876741 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint32_t
+Elapsed execution time: 4.880880 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint16_t
+Elapsed execution time: 4.871564 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint8_t
+It seems like there is almost no performance increase when decreasing data type width.
+
+Vectorised (VECTORIZE=1):
+Elapsed execution time: 2.426008 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint64_t
+Elapsed execution time: 1.311766 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint32_t
+Elapsed execution time: 0.604613 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint16_t
+Elapsed execution time: 0.003570 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint8_t
+This yields a speed-up of about 2, 4, 8 and 1360 respectively. Insane!
+
+Vectorised (VECTORIZE=1 AVX2=1):
+Elapsed execution time: 2.525990 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint64_t
+Elapsed execution time: 1.232248 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint32_t
+Elapsed execution time: 0.003610 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint16_t
+Elapsed execution time: 0.003279 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint8_t
+Funny enough the speedup is about 2, 4, 1360 and 1360 respectively. The AVX registers on this
+laptop surely must be only 128 bits wide.
+

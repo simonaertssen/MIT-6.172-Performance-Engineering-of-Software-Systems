@@ -122,3 +122,14 @@ Elapsed execution time: 0.003279 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__:
 Funny enough the speedup is about 2, 4, 1360 and 1360 respectively. The AVX registers on this
 laptop surely must be only 128 bits wide.
 
+
+# WRITEUP 10
+For the baseline we obtain:
+Elapsed execution time: 5.102470 sec; N: 1024, I: 10000000, __OP__: *, __TYPE__: uint64_t
+Elapsed execution time: 5.054718 sec; N: 1024, I: 10000000, __OP__: *, __TYPE__: uint8_t
+
+For the vectorised code we obtain:
+Elapsed execution time: 5.159584 sec; N: 1024, I: 10000000, __OP__: *, __TYPE__: uint64_t
+Elapsed execution time: 0.003583 sec; N: 1024, I: 10000000, __OP__: *, __TYPE__: uint8_t
+
+This yields a speedup of 1 and 1400 respectively.

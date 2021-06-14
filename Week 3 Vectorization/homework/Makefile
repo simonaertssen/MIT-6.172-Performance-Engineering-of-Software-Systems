@@ -1,7 +1,7 @@
 CC := clang
 
 EXTRA_CFLAGS ?=
-CFLAGS := -Wall -std=gnu99 -g
+CFLAGS := -Wall -std=gnu99
 
 ifeq ($(DEBUG),1)
   CFLAGS += -O0

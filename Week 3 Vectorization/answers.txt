@@ -46,8 +46,9 @@ With AVX instructions:
 Elapsed execution time: 1.240279 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint32_t
 
 The speedup gained by vectorisation is about 4 times, for both vectorisations. This makes
-sense, as the SSE vector registers are usually 128 bits wide, so 4 x 32 = 128.
-That is only for the MacBook. When using the DTU cluster, we obtain the following.
+sense, as the SSE vector registers are usually 128 bits wide, so 4 x 32 = 128. The AVX 
+registers on the MacBook are apparently also 4 bits wide. When using the DTU cluster, 
+we obtain the following.
 
 Without vectorisation:
 Elapsed execution time: 1.627987 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint32_t
@@ -58,10 +59,44 @@ Elapsed execution time: 0.955319 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__:
 
 On the DTU cluster we cannot seem to disable vectorisation, but here the AVX2 vectorisation 
 clearly yields an advantage, with a speedup of about 2. This is because the AVX registers
-are 256 bits wide, instead of 128bits 
+on the cluster are 256 bits wide, instead of 128bits.
 
 
 # WRITEUP 7
 Without vectorisation there is a lot of pushing 'long' values around. With the initial 
 vectorisation present we can see that the speedup is gained by the 'movdqa' command, 
-which is fast because it uses an aligned move. 
+which is fast because it uses an aligned move. With AVX instructions enabled, we see the 
+'vmovdqu' command. Ideally we would need 'vmovdqa' but that is for the future.
+
+
+# WRITEUP 8
+There seems to be a command for the most used operators
+__OP__ + yields vpaddd
+__OP__ - yields vpsubd
+__OP__ * yields vpmulld
+__OP__ / yields unvectorised code
+__OP__ % yields unvectorised code
+__OP__ << yields vpsllvd
+__OP__ >> yields vpsrlvd
+Using bit operators like && also seems to yield vectorised code but it's a little more complex,
+as a mask has to be made.
+
+With AVX2, the vectorised code is mostly here:
+vmovdqu	-4128(%rbp,%rax,4), %ymm0
+vpsllvd	-8224(%rbp,%rax,4), %ymm0, %ymm0
+vmovdqu	%ymm0, -12320(%rbp,%rax,4)
+
+Without, we get something much more horrible:
+movdqa	-8224(%rbp,%rax,4), %xmm1
+pslld	$23, %xmm1
+paddd	%xmm0, %xmm1
+cvttps2dq	%xmm1, %xmm1
+pmulld	-4128(%rbp,%rax,4), %xmm1
+movdqa	%xmm1, -12320(%rbp,%rax,4)
+
+Seems like it does vectorise but having a dedicated command also seems handy. The digits get shifted
+left by a constant value, then the precision gets increased and a multiplication happens... Shit...
+Only some these look like vector instructions.
+
+
+# WRITEUP 9

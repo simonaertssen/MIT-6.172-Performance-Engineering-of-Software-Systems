@@ -16,7 +16,7 @@ else
 endif
 
 ifeq ($(ASSEMBLE),1)
-  CFLAGS += -S
+  CFLAGS += -S -fno-unroll-loops
 endif
 
 ifeq ($(AVX2),1)

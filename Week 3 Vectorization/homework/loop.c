@@ -36,7 +36,7 @@
 // Guarding it with #ifndef allows passing -D"__OP__=$value" on the
 // command line
 #ifndef __OP__
-#define __OP__     +
+#define __OP__     *
 #endif
 #ifndef __TYPE__
 #define __TYPE__   uint32_t
@@ -59,9 +59,9 @@ int main(int argc, char* argv[]) {
     // of execution.  This operation brings all arrays into the level 1
     // cache and gives us a 'cleaner' view of speedup from vectorization.
     for (j = 0; j < N; j++) {
-        A[j] = 0;  // 0 was chosen arbitrarily
-        B[j] = 0;
-        C[j] = 0;
+        A[j] = 1;  // 0 was chosen arbitrarily
+        B[j] = 1;
+        C[j] = 1;
     }
 
     fasttime_t time1 = gettime();

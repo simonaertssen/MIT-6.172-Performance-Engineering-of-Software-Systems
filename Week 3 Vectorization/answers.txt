@@ -30,23 +30,33 @@ HOMEWORK
 # WRITEUP 6
 Without vectorisation:
 Elapsed execution time: 0.051179 sec; N: 1024, I: 100000, __OP__: +, __TYPE__: uint32_t
-
 With vectorisation:
 Elapsed execution time: 0.014415 sec; N: 1024, I: 100000, __OP__: +, __TYPE__: uint32_t
-
 With AVX instructions:
 Elapsed execution time: 0.015936 sec; N: 1024, I: 100000, __OP__: +, __TYPE__: uint32_t
 
-The last two timings are not that different, the mean just fluctuates a lot! We need 100 times more data points!
+The last two timings are not that different, the mean just fluctuates a lot! We need 100 
+times more data points!
 
 Without vectorisation:
 Elapsed execution time: 5.143872 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint32_t
-
 With vectorisation:
 Elapsed execution time: 1.236273 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint32_t
-
 With AVX instructions:
 Elapsed execution time: 1.240279 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint32_t
 
-The speedup gained by vectorisation is about 4 times, for both vectorisations. This means that they must have a bit width of 4.
+The speedup gained by vectorisation is about 4 times, for both vectorisations. This means 
+that they must have a bit width of 4. That is only for the MacBook. When using the DTU
+cluster, we obtain the following.
+
+Without vectorisation:
+Elapsed execution time: 1.627987 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint32_t
+With vectorisation:
+Elapsed execution time: 1.623288 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint32_t
+With AVX instructions:
+Elapsed execution time: 0.955319 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint32_t
+
+On the DTU cluster we cannot seem to disable vectorisation, 
+but here the AVX2 vectorization clearly yields an advantage, 
+with a speedup of about 2.
 

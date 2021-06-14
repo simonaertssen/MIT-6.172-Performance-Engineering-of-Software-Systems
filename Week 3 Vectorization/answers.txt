@@ -24,3 +24,29 @@ The raw floating point sum result is: 0x1.755cccec10aa5p+3
 clang -O3 -ffast-math  example4.c -o example4; ./example4
 The decimal floating point sum result is: 11.667578
 The raw floating point sum result is: 0x1.755cccec10aa3p+3
+
+
+HOMEWORK
+# WRITEUP 6
+Without vectorisation:
+Elapsed execution time: 0.051179 sec; N: 1024, I: 100000, __OP__: +, __TYPE__: uint32_t
+
+With vectorisation:
+Elapsed execution time: 0.014415 sec; N: 1024, I: 100000, __OP__: +, __TYPE__: uint32_t
+
+With AVX instructions:
+Elapsed execution time: 0.015936 sec; N: 1024, I: 100000, __OP__: +, __TYPE__: uint32_t
+
+The last two timings are not that different, the mean just fluctuates a lot! We need 100 times more data points!
+
+Without vectorisation:
+Elapsed execution time: 5.143872 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint32_t
+
+With vectorisation:
+Elapsed execution time: 1.236273 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint32_t
+
+With AVX instructions:
+Elapsed execution time: 1.240279 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint32_t
+
+The speedup gained by vectorisation is about 4 times, for both vectorisations. This means that they must have a bit width of 4.
+

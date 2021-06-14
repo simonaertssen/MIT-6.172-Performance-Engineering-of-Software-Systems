@@ -25,12 +25,12 @@
 #include <stdlib.h>
 #include "./fasttime.h"
 
-// N is small enough so that 3 arrays of size N fit into the AWS machine
-// level 1 caches (which are 32 KB each, as seen by running `lscpu`)
+ // N is small enough so that 3 arrays of size N fit into the AWS machine
+ // level 1 caches (which are 32 KB each, as seen by running `lscpu`)
 #define N          1024
 
 // Run for multiple experiments to reduce measurement error on gettime().
-#define I          100000
+#define I          10000000
 
 // Which operations are vectorizable?
 // Guarding it with #ifndef allows passing -D"__OP__=$value" on the
@@ -46,7 +46,7 @@
 #define stringify(V) _stringify(V)
 #define _stringify(V) #V
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
     __TYPE__ A[N];
     __TYPE__ B[N];
     __TYPE__ C[N];
@@ -81,8 +81,8 @@ int main(int argc, char *argv[]) {
     // C concatenates adjacent string literals.  We take advantage of
     // this and include a print-out of __OP__ and __TYPE__
     printf("Elapsed execution time: %f sec; N: %d, I: %d,"
-           " __OP__: %s, __TYPE__: %s\n",
-           elapsedf, N, I, stringify(__OP__), stringify(__TYPE__));
+        " __OP__: %s, __TYPE__: %s\n",
+        elapsedf, N, I, stringify(__OP__), stringify(__TYPE__));
 
     return total;
 }

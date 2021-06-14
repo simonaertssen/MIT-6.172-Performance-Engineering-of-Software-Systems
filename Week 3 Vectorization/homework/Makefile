@@ -25,7 +25,7 @@ endif
 
 CFLAGS += $(EXTRA_CFLAGS)
 
-LDFLAGS := -lrt
+LDFLAGS :=
 
 # You shouldn't need to touch this.  This keeps track of whether or
 # not you've changed CFLAGS.

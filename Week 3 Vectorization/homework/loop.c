@@ -36,10 +36,10 @@
 // Guarding it with #ifndef allows passing -D"__OP__=$value" on the
 // command line
 #ifndef __OP__
-#define __OP__     *
+#define __OP__     +
 #endif
 #ifndef __TYPE__
-#define __TYPE__   uint64_t
+#define __TYPE__   uint32_t
 #endif
 
 // Define a way of automatically converting __OP__ and __TYPE__ into string literals
@@ -67,7 +67,11 @@ int main(int argc, char* argv[]) {
     fasttime_t time1 = gettime();
 
     for (i = 0; i < I; i++) {
-        for (j = 0; j < N; j++) {
+#pragma clang loop interleave(enable)
+#pragma clang loop interleave_count(2)
+#pragma clang loop vectorize(enable)
+#pragma clang loop vectorize_width(2)
+        for (j = 0; j < N; j += 2) {
             C[j] = A[j] __OP__ B[j];
         }
     }

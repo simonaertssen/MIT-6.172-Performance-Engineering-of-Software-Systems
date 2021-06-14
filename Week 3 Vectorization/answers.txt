@@ -133,3 +133,64 @@ Elapsed execution time: 5.159584 sec; N: 1024, I: 10000000, __OP__: *, __TYPE__:
 Elapsed execution time: 0.003583 sec; N: 1024, I: 10000000, __OP__: *, __TYPE__: uint8_t
 
 This yields a speedup of 1 and 1400 respectively.
+
+
+# WRITEUP 12
+Baseline (unvectorised):
+Elapsed execution time: 14.567039 sec; N: 2048, I: 10000000, __OP__: *, __TYPE__: uint64_t
+Elapsed execution time: 4.832512 sec; N: 1024, I: 10000000, __OP__: *, __TYPE__: uint64_t
+Elapsed execution time: 2.384933 sec; N: 512, I: 10000000, __OP__: *, __TYPE__: uint64_t
+Elapsed execution time: 1.274390 sec; N: 256, I: 10000000, __OP__: *, __TYPE__: uint64_t
+
+Vectorised (VECTORIZE=1):
+Elapsed execution time: 13.288087 sec; N: 2048, I: 10000000, __OP__: *, __TYPE__: uint64_t
+Elapsed execution time: 4.916160 sec; N: 1024, I: 10000000, __OP__: *, __TYPE__: uint64_t
+Elapsed execution time: 2.480489 sec; N: 512, I: 10000000, __OP__: *, __TYPE__: uint64_t
+Elapsed execution time: 1.267368 sec; N: 256, I: 10000000, __OP__: *, __TYPE__: uint64_t
+
+Vectorised (VECTORIZE=1 AVX2=1):
+Elapsed execution time: 10.420156 sec; N: 2048, I: 10000000, __OP__: *, __TYPE__: uint64_t
+Elapsed execution time: 5.146025 sec; N: 1024, I: 10000000, __OP__: *, __TYPE__: uint64_t
+Elapsed execution time: 2.498619 sec; N: 512, I: 10000000, __OP__: *, __TYPE__: uint64_t
+Elapsed execution time: 1.284762 sec; N: 256, I: 10000000, __OP__: *, __TYPE__: uint64_t
+
+We can see that speedups are better when we are using large arrays.
+
+
+# WRITEUP 13
+The code is never vectorised when a stride is implemented. 
+
+
+# WRITEUP 14
+Baseline (with a stride of 2:
+Elapsed execution time: 2.584729 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint32_t
+Vectorised (VECTORIZE=1):
+Elapsed execution time: 2.436141 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint32_t
+Vectorised (VECTORIZE=1 AVX2=1):
+Elapsed execution time: 2.570534 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint32_t
+
+So not a single block was vectorised! We can use #pragma clang loop vectorize_width(x)
+and that does seem to produce vectorised code:
+vmovdqa	-8224(%rbp,%rax,8), %xmm0
+vpaddd	-4128(%rbp,%rax,8), %xmm0, %xmm0
+vmovd	%xmm0, -12320(%rbp,%rax,8)
+vpextrd	$2, %xmm0, -12312(%rbp,%rax,8)
+
+Vectorised (VECTORIZE=1):
+Elapsed execution time: 1.688359 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint32_t
+Vectorised (VECTORIZE=1 AVX2=1):
+Elapsed execution time: 1.659592 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint32_t
+
+So now it actually is vectorised and the speedup is about 2!
+
+What is the result of using 'interleave'?
+
+Baseline:
+Elapsed execution time: 1.588413 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint32_t
+Vectorised (VECTORIZE=1):
+Elapsed execution time: 1.742076 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint32_t
+Vectorised (VECTORIZE=1 AVX2=1):
+Elapsed execution time: 1.642037 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint32_t
+No speedup with this functionality :p
+
+

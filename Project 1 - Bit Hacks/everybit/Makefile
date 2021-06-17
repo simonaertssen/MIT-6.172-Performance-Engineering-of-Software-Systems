@@ -55,9 +55,9 @@ OBJECTS = $(patsubst %.c,%.o,$(SOURCES))
 PRODUCT = everybit
 
 # What we're building with
-CC = clang
+CC = clang -Wno-deprecated-declarations # Added this because of legacy timers
 CFLAGS = -std=c99 -Wall -m64 -g
-LDFLAGS = -flto -fuse-ld=gold 
+LDFLAGS = -flto #-fuse-ld=gold This is unknown on my laptop
 
 # We need to link against the timing library for whatever OS we're on.
 PLATFORM = $(shell uname)

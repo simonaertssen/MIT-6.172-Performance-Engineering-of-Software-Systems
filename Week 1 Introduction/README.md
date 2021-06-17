@@ -1,4 +1,5 @@
-# WRITEUP 2
+# Answers:
+## WRITEUP 2
 - What is the type of argv? It is a char pointer.
 
 - printf("char d = %c\n", d); 
@@ -37,7 +38,7 @@
   Invalid? Because nothing can be altered after declaration.
 
 
-# WRITEUP 3
+## WRITEUP 3
 size of int : 4 bytes 
 size of int* : 8 bytes 
 size of short : 2 bytes 
@@ -91,15 +92,15 @@ size of student* : 8 bytes
 size of int array 4 : 20 bytes 
 
 
-# WRITEUP 5
+## WRITEUP 5
 When compiled with -O1, the binary is 9kB. When compiled with -O2 and -O3 it is 13kB.
 
 
-# WRITEUP 6
+## WRITEUP 6
 It takes 1us to run the script, which is a tiny bit longer than before. There seems to be an overflow on all of the results. Otherwise, there is no output from AddressSanitizer as we would expect it, so no memory leak?
 
 
-# WRITEUP 7:
+## WRITEUP 7:
 Matrix A: 
 ------------
     7      9      3      8  
@@ -133,11 +134,11 @@ Result:
 Elapsed execution time: 0.000000 sec
 
 
-# WRITEUP 8:
+## WRITEUP 8:
 No Valgrind available on MacOS10.14
 
 
-# EXTRA: CODE COVERAGE:
+## EXTRA: CODE COVERAGE:
 Compile the makefile with clang --coverage.
 Commands:
 make clean
@@ -146,12 +147,12 @@ make DEBUG=1
 gcov matrix_multiply.c	
 
 
-# WRITEUP 9:
+## WRITEUP 9:
 1000x1000 matrix takes:
 8.803739 sec (naive)
 0.892479 sec (loops reversed)
 
-# WRITEUP 10:
+## WRITEUP 10:
 using RELEASE:
 4.137507 sec (-O0)
 

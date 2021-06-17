@@ -194,3 +194,12 @@ Elapsed execution time: 1.642037 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__:
 No speedup with this functionality :p
 
 
+# WRITEUP 15
+It seems like the vector is shuffled with 'pshufd' and then two add commands follow:
+.loc	4 72 15                 ## loop.c:72:15
+pshufd	$78, %xmm1, %xmm0       ## xmm0 = xmm1[2,3,0,1]
+paddd	%xmm1, %xmm0
+phaddd	%xmm0, %xmm0
+movd	%xmm0, %r15d
+So it is vectorised!
+

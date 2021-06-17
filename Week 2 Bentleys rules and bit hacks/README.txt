@@ -1,5 +1,6 @@
-# RECITATION
-# RUNNING THE PROFILERS
+# ANSWERS
+## RECITATION
+## RUNNING THE PROFILERS
 follow instructions listed on:
 https://gperftools.github.io/gperftools/cpuprofile.html
 https://codearcana.com/posts/2013/02/26/introduction-to-using-profiling-tools.html
@@ -44,9 +45,9 @@ $ make clean
 $ make isort DEBUG=1
 $ perf record ./isort 10000 10
 $ perf report
-# Overhead  Command  Shared Object     Symbol                
-# ........  .......  ................  ......................
-#
+## Overhead  Command  Shared Object     Symbol                
+## ........  .......  ................  ......................
+##
     99.60%  isort    isort             [.] isort
      0.25%  isort    [unknown]         [k] 0xffffffff9d18c4ef
      0.07%  isort    libc-2.17.so      [.] rand_r
@@ -56,21 +57,21 @@ $ perf report
 This seems to give similar results but at least we can do more.
 
 
-# CHECKOFF ITEM 1:
+## CHECKOFF ITEM 1:
 A good instructional reading can be found on 
 https://sandsoftwaresound.net/perf/perf-tutorial-hot-spots/
 
 -- Elapsed time and event counting:
 $ perf stat -e cpu-clock,faults ./isort 10000 10
-# Performance counter stats for './isort 10000 10':
-      929.74 msec cpu-clock:u          #    0.999 CPUs utilized          
-      178    faults:u                  #    0.191 K/sec  
+## Performance counter stats for './isort 10000 10':
+      929.74 msec cpu-clock:u          ##    0.999 CPUs utilized          
+      178    faults:u                  ##    0.191 K/sec  
       0.938420000 seconds user
       0.001000000 seconds sys
 
 -- Branch misses:
 $ perf stat -e branch-misses ./isort 10000 10
-# Performance counter stats for './isort 10000 10':
+## Performance counter stats for './isort 10000 10':
       103,968      branch-misses:u                                             
       0.862921126 seconds time elapsed
       0.862432000 seconds user
@@ -78,19 +79,19 @@ $ perf stat -e branch-misses ./isort 10000 10
 
 -- CPU instruction cycles:
 $ perf stat -e cpu-cycles,instructions ./isort 10000 10
-# Performance counter stats for './isort 10000 10':
+## Performance counter stats for './isort 10000 10':
      2,270,497,213      cpu-cycles:u                                                
-     3,264,379,290      instructions:u            #1.44  insn per cycle         
+     3,264,379,290      instructions:u            ##1.44  insn per cycle         
       1.009240766 seconds time elapsed
       1.007062000 seconds user
       0.001000000 seconds sys
 
 -- All at once:
 $ perf stat -e branch-misses,cycles,instructions ./isort 10000 10
-# Performance counter stats for './isort 10000 10':
+## Performance counter stats for './isort 10000 10':
            103,955      branch-misses:u                                             
      2,270,694,215      cycles:u                                                    
-     3,264,379,838      instructions:u            #1.44  insn per cycle         
+     3,264,379,838      instructions:u            ##1.44  insn per cycle         
 
        0.956292825 seconds time elapsed
        0.955825000 seconds user
@@ -100,7 +101,7 @@ The biggest bottleneck might be the number of branch misses,
 as we seem to predict the wrong outcome many times.
 
 
-# CHECKOFF ITEM 2:
+## CHECKOFF ITEM 2:
 $ lscpu
 Architecture:          x86_64
 CPU op-mode(s):        32-bit, 64-bit
@@ -168,8 +169,8 @@ However, we know that the L1d cache is about 32Kb. Setting U=1000 results in a
 miss rate of 0% for both caches. 
 
 
-# HOMEWORK
-# WRITEUP 1
+## HOMEWORK
+## WRITEUP 1
 For DEBUG=0 we get:
 ==6231== I   refs:      299,521,008
 ==6231== I1  misses:          1,392
@@ -224,21 +225,21 @@ $ perf stat -e branch-misses,cycles,instructions ./sort 10000 10
 Performance counter stats for './sort 10000 10':
          1,391,220      branch-misses:u                                             
        127,891,782      cycles:u                                                    
-       299,490,874      instructions:u            #    2.34  insn per cycle         
+       299,490,874      instructions:u            ##    2.34  insn per cycle         
 
        0.085810121 seconds time elapsed
        0.083193000 seconds user
        0.001980000 seconds sys
 
 
-# WRITEUP 2
+## WRITEUP 2
 Another version of merge_i and copy_i were copied and inlined.
 
 $ perf stat -e branch-misses,cycles,instructions ./sort 10000 10
 Performance counter stats for './sort 10000 10':
            700,360      branch-misses:u                                             
         64,315,740      cycles:u                                                    
-       151,618,393      instructions:u            #2.36  insn per cycle         
+       151,618,393      instructions:u            ##2.36  insn per cycle         
 
        0.044307892 seconds time elapsed
        0.041664000 seconds user
@@ -271,7 +272,7 @@ If we add an inlined version of the utils.c functions, then we are even a little
 but no difference is found in the cache results.
 
 
-# WRITEUP 3
+## WRITEUP 3
 We can get the annotated assembly code with 
 $ objdump -lSd sort > annotated_ASM.txt
 Here it does not seem like the code is simply inlined.
@@ -282,14 +283,14 @@ keyword. However, the performance can increase up to 20% due to increased knowle
 of the context, as it is easier to optimise large functions.
 Specifically for recursive functions: here the issue is that we cannot infinitely inline
 the function body. At some point we have to stop, so we inline to a certain depth.
-Set with #pragma inline_recursion(on) and #pragma inline_depth.
+Set with ##pragma inline_recursion(on) and ##pragma inline_depth.
 
 Inlining also imposes a cost on performance, due to the code expansion (due to duplication) hurting instruction cache performance. This is most significant if, prior to expansion, the working set of the program (or a hot section of code) fit in one level of the memory hierarchy (e.g., L1 cache), but after expansion it no longer fits, resulting in frequent cache misses at that level. Due to the significant difference in performance at different levels of the hierarchy, this hurts performance considerably. At the highest level this can result in increased page faults, catastrophic performance degradation due to thrashing, or the program failing to run at all. 
 
 The cache misses can therefore be registered with valgrind.
 
 
-# WRITEUP 4
+## WRITEUP 4
 When using pointers, we only use the memory address of the array + an offset
 for the index. This is much lighter.
 
@@ -297,7 +298,7 @@ $ perf stat -e branch-misses,cycles,instructions ./sort 10000 10
 Performance counter stats for './sort 10000 10':
            697,273      branch-misses:u                                             
         65,511,329      cycles:u                                                    
-       151,618,252      instructions:u            #    2.31  insn per cycle         
+       151,618,252      instructions:u            ##    2.31  insn per cycle         
 
        0.027317088 seconds time elapsed
        0.023909000 seconds user
@@ -305,14 +306,14 @@ Performance counter stats for './sort 10000 10':
 The program is faster but the ratio of insn per cycle remains the same.
 
 
-# WRITEUP 5
+## WRITEUP 5
 When using isort, another sorting algorithm, we can gain a speedup for smaller arrays.
 
 $ perf stat -e branch-misses,cycles,instructions ./sort 10000 10
 Performance counter stats for './sort 10000 10':
            546,892      branch-misses:u                                             
         31,021,060      cycles:u                                                    
-        67,203,981      instructions:u            #    2.17  insn per cycle         
+        67,203,981      instructions:u            ##    2.17  insn per cycle         
 
        0.014478695 seconds time elapsed
        0.012907000 seconds user
@@ -326,7 +327,7 @@ $ perf stat -e branch-misses,cycles,instructions ./sort 10000 10
 Performance counter stats for './sort 10000 10':
            185,953      branch-misses:u                                             
         41,881,764      cycles:u                                                    
-        78,398,709      instructions:u            #    1.87  insn per cycle         
+        78,398,709      instructions:u            ##    1.87  insn per cycle         
 
        0.018087820 seconds time elapsed
        0.016512000 seconds user
@@ -337,7 +338,7 @@ were needed.
 Tried to incorporate a quicksort but it's actually really slow...
 
 
-# WRITEUP 6
+## WRITEUP 6
 As a start, the classic pointer merge from sort_p was adjusted to only used one 
 scratch space. Now we just keep using a reference to the original array. That is not
 necessarily always a good thing.Because of the command to 'free()' the compiler 
@@ -347,7 +348,7 @@ $ perf stat -e branch-misses,cycles,instructions ./sort 10000 10
 Performance counter stats for './sort 10000 10':
            539,242      branch-misses:u                                             
         32,704,193      cycles:u                                                    
-        70,108,886      instructions:u            #    2.14  insn per cycle         
+        70,108,886      instructions:u            ##    2.14  insn per cycle         
 
        0.016385369 seconds time elapsed
        0.013937000 seconds user
@@ -361,7 +362,7 @@ Performance counter stats for './sort 10000 10':
 
            186,618      branch-misses:u                                             
         35,973,761      cycles:u                                                    
-        78,647,102      instructions:u            #    2.19  insn per cycle         
+        78,647,102      instructions:u            ##    2.19  insn per cycle         
 
        0.015707568 seconds time elapsed
        0.012989000 seconds user
@@ -369,7 +370,7 @@ Performance counter stats for './sort 10000 10':
 With an additional filtering of the sorting criteria, this is a very fast method.
 
 
-# WRITEUP 7
+## WRITEUP 7
 Allocate one buffer at the beginning and free it after all sorting is over. Pass the 
 memory buffer between all functions.
 
@@ -378,7 +379,7 @@ Performance counter stats for './sort 10000 10':
 
            186,251      branch-misses:u                                             
         35,695,915      cycles:u                                                    
-        77,855,968      instructions:u            #    2.18  insn per cycle         
+        77,855,968      instructions:u            ##    2.18  insn per cycle         
 
        0.017212960 seconds time elapsed
        0.015579000 seconds user

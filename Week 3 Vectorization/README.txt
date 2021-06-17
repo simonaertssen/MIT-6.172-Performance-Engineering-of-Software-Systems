@@ -1,19 +1,20 @@
-RECITATION
-# WRITEUP 2
+# ANSWERS
+## RECITATION
+## WRITEUP 2
 Use 32-bit aligned registers.
 
 
-# WRITEUP 3
+## WRITEUP 3
 Seems like the ternary operator does not compare arrays element-wise.
 
 
-# WRITEUP 4
+## WRITEUP 4
 The memory is not aligned. It should be possible to either reallign the 
 b array by moving everything one place further or by making it possible
 to align with an offset. This should definitely be faster.
 
 
-# WRITEUP 5
+## WRITEUP 5
 The ffast-math flag was already set from a prior experiment! The addsd command 
 is replaced by a addpd command.
 
@@ -27,7 +28,7 @@ The raw floating point sum result is: 0x1.755cccec10aa3p+3
 
 
 HOMEWORK
-# WRITEUP 6
+## WRITEUP 6
 Without vectorisation:
 Elapsed execution time: 0.051179 sec; N: 1024, I: 100000, __OP__: +, __TYPE__: uint32_t
 With vectorisation:
@@ -62,14 +63,14 @@ clearly yields an advantage, with a speedup of about 2. This is because the AVX 
 on the cluster are 256 bits wide, instead of 128bits.
 
 
-# WRITEUP 7
+## WRITEUP 7
 Without vectorisation there is a lot of pushing 'long' values around. With the initial 
 vectorisation present we can see that the speedup is gained by the 'movdqa' command, 
 which is fast because it uses an aligned move. With AVX instructions enabled, we see the 
 'vmovdqu' command. Ideally we would need 'vmovdqa' but that is for the future.
 
 
-# WRITEUP 8
+## WRITEUP 8
 There seems to be a command for the most used operators
 __OP__ + yields vpaddd
 __OP__ - yields vpsubd
@@ -99,7 +100,7 @@ left by a constant value, then the precision gets increased and a multiplication
 Only some these look like vector instructions.
 
 
-# WRITEUP 9
+## WRITEUP 9
 Baseline (unvectorised):
 Elapsed execution time: 5.355811 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint64_t
 Elapsed execution time: 4.876741 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint32_t
@@ -123,7 +124,7 @@ Funny enough the speedup is about 2, 4, 1360 and 1360 respectively. The AVX regi
 laptop surely must be only 128 bits wide.
 
 
-# WRITEUP 10
+## WRITEUP 10
 For the baseline we obtain:
 Elapsed execution time: 5.102470 sec; N: 1024, I: 10000000, __OP__: *, __TYPE__: uint64_t
 Elapsed execution time: 5.054718 sec; N: 1024, I: 10000000, __OP__: *, __TYPE__: uint8_t
@@ -135,7 +136,7 @@ Elapsed execution time: 0.003583 sec; N: 1024, I: 10000000, __OP__: *, __TYPE__:
 This yields a speedup of 1 and 1400 respectively.
 
 
-# WRITEUP 12
+## WRITEUP 12
 Baseline (unvectorised):
 Elapsed execution time: 14.567039 sec; N: 2048, I: 10000000, __OP__: *, __TYPE__: uint64_t
 Elapsed execution time: 4.832512 sec; N: 1024, I: 10000000, __OP__: *, __TYPE__: uint64_t
@@ -157,11 +158,11 @@ Elapsed execution time: 1.284762 sec; N: 256, I: 10000000, __OP__: *, __TYPE__: 
 We can see that speedups are better when we are using large arrays.
 
 
-# WRITEUP 13
+## WRITEUP 13
 The code is never vectorised when a stride is implemented. 
 
 
-# WRITEUP 14
+## WRITEUP 14
 Baseline (with a stride of 2:
 Elapsed execution time: 2.584729 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint32_t
 Vectorised (VECTORIZE=1):
@@ -169,7 +170,7 @@ Elapsed execution time: 2.436141 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__:
 Vectorised (VECTORIZE=1 AVX2=1):
 Elapsed execution time: 2.570534 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__: uint32_t
 
-So not a single block was vectorised! We can use #pragma clang loop vectorize_width(x)
+So not a single block was vectorised! We can use ##pragma clang loop vectorize_width(x)
 and that does seem to produce vectorised code:
 vmovdqa	-8224(%rbp,%rax,8), %xmm0
 vpaddd	-4128(%rbp,%rax,8), %xmm0, %xmm0
@@ -194,10 +195,10 @@ Elapsed execution time: 1.642037 sec; N: 1024, I: 10000000, __OP__: +, __TYPE__:
 No speedup with this functionality :p
 
 
-# WRITEUP 15
+## WRITEUP 15
 It seems like the vector is shuffled with 'pshufd' and then two add commands follow:
-.loc	4 72 15                 ## loop.c:72:15
-pshufd	$78, %xmm1, %xmm0       ## xmm0 = xmm1[2,3,0,1]
+.loc	4 72 15                 #### loop.c:72:15
+pshufd	$78, %xmm1, %xmm0       #### xmm0 = xmm1[2,3,0,1]
 paddd	%xmm1, %xmm0
 phaddd	%xmm0, %xmm0
 movd	%xmm0, %r15d

@@ -40,25 +40,25 @@
 #define ANSI_COLOR_CYAN    "\x1b[36m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
-// ******************************* Prototypes *******************************
+ // ******************************* Prototypes *******************************
 
-// Creates a new bit array in test_bitarray by parsing a string of 0s
-// and 1s.  For instance, "0101011011" is a suitable argument.
+ // Creates a new bit array in test_bitarray by parsing a string of 0s
+ // and 1s.  For instance, "0101011011" is a suitable argument.
 void testutil_frmstr(const char* const bitstring);
 
 // Rotates test_bitarray in place.
 // Requires that test_bitarray is not NULL.
 void testutil_rotate(const size_t bit_offset,
-                     const size_t bit_length,
-                     const ssize_t bit_right_shift_amount);
+  const size_t bit_length,
+  const ssize_t bit_right_shift_amount);
 
 // Checks that the rotation is valid given the size of test_bitarray.
 // Causes a test suite failure if the input is invalid.
 void testutil_require_valid_input(const size_t bit_offset,
-                                  const size_t bit_length,
-                                  const ssize_t bit_right_shift_amount,
-                                  const char* const func_name,
-                                  const int line);
+  const size_t bit_length,
+  const ssize_t bit_right_shift_amount,
+  const char* const func_name,
+  const int line);
 
 // Creates a new bit array in test_bitarray of the specified size and
 // fills it with random data based on the seed given.  For a given seed number,
@@ -68,7 +68,7 @@ static void testutil_newrand(const size_t bit_sz, const unsigned int seed);
 
 // Prints a string representation of a bit array.
 static void bitarray_fprint(FILE* const stream,
-                            const bitarray_t* const bitarray);
+  const bitarray_t* const bitarray);
 
 // Verifies that test_bitarray has the expected content.
 // Outputs FAIL or PASS as appropriate.
@@ -76,8 +76,8 @@ static void bitarray_fprint(FILE* const stream,
 // testutil_expect macro instead.
 // Requires that test_bitarray is not NULL.
 static void testutil_expect_internal(const char* const bitstring,
-                                     const char* const func_name,
-                                     const int line);
+  const char* const func_name,
+  const int line);
 
 // Converts a character into a boolean.  The character '1' converts to true;
 // the character '0' converts to false.
@@ -157,7 +157,7 @@ static void testutil_newrand(const size_t bit_sz, const unsigned int seed) {
   if (test_verbose) {
     bitarray_fprint(stdout, test_bitarray);
     fprintf(stdout, " newrand sz=%zu, seed=%u\n",
-            bit_sz, seed);
+      bit_sz, seed);
   }
 }
 
@@ -186,15 +186,15 @@ void testutil_frmstr(const char* const bitstring) {
 }
 
 static void bitarray_fprint(FILE* const stream,
-                            const bitarray_t* const bitarray) {
+  const bitarray_t* const bitarray) {
   for (size_t i = 0; i < bitarray_get_bit_sz(bitarray); i++) {
     fprintf(stream, "%d", bitarray_get(bitarray, i) ? 1 : 0);
   }
 }
 
 static void testutil_expect_internal(const char* bitstring,
-                                     const char* const func_name,
-                                     const int line) {
+  const char* const func_name,
+  const int line) {
   // The reason why the test fails.  If the test passes, this will stay
   // NULL.
   const char* bad = NULL;
@@ -220,7 +220,8 @@ static void testutil_expect_internal(const char* bitstring,
   for (size_t i = 0; i < actual_bitstring_length; i++) {
     if (bitarray_get(test_bitarray, i)) {
       actual_bitstring[i] = '1';
-    } else {
+    }
+    else {
       actual_bitstring[i] = '0';
     }
   }
@@ -229,42 +230,43 @@ static void testutil_expect_internal(const char* bitstring,
     bitarray_fprint(stdout, test_bitarray);
     fprintf(stdout, " expect bits=%s \n", bitstring);
     TEST_FAIL_WITH_NAME(func_name, line, " Incorrect %s.\n    Expected: %s\n    Actual:   %s",
-                        bad, bitstring, actual_bitstring);
-  } else {
+      bad, bitstring, actual_bitstring);
+  }
+  else {
     TEST_PASS_WITH_NAME(func_name, line);
   }
   free(actual_bitstring);
 }
 
 void testutil_rotate(const size_t bit_offset,
-                     const size_t bit_length,
-                     const ssize_t bit_right_shift_amount) {
+  const size_t bit_length,
+  const ssize_t bit_right_shift_amount) {
   assert(test_bitarray != NULL);
   bitarray_rotate(test_bitarray, bit_offset, bit_length, bit_right_shift_amount);
   if (test_verbose) {
     bitarray_fprint(stdout, test_bitarray);
     fprintf(stdout, " rotate off=%zu, len=%zu, amnt=%zd\n",
-            bit_offset, bit_length, bit_right_shift_amount);
+      bit_offset, bit_length, bit_right_shift_amount);
   }
 }
 
 void testutil_require_valid_input(const size_t bit_offset,
-                                  const size_t bit_length,
-                                  const ssize_t bit_right_shift_amount,
-                                  const char* const func_name,
-                                  const int line) {
+  const size_t bit_length,
+  const ssize_t bit_right_shift_amount,
+  const char* const func_name,
+  const int line) {
   size_t bitarray_length = bitarray_get_bit_sz(test_bitarray);
   if (bit_offset >= bitarray_length || bit_length > bitarray_length ||
-      bit_offset + bit_length > bitarray_length) {
+    bit_offset + bit_length > bitarray_length) {
     // invalid input
     TEST_FAIL_WITH_NAME(func_name, line, " TEST SUITE ERROR - " \
-                        "bit_offset + bit_length > bitarray_length");
+      "bit_offset + bit_length > bitarray_length");
   }
 }
 
 // Precomputed array of fibonacci numbers
 const int FIB_SIZE = 53;
-const double fibs[FIB_SIZE] = {1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 28657, 46368, 75025, 121393, 196418, 317811, 514229, 832040, 1346269, 2178309, 3524578, 5702887, 9227465, 14930352, 24157817, 39088169, 63245986, 102334155, 165580141, 267914296, 433494437, 701408733, 1134903170, 1836311903, 2971215073, 4807526976, 7778742049, 12586269025, 20365011074, 32951280099, 53316291173, 86267571272};
+const double fibs[FIB_SIZE] = { 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 28657, 46368, 75025, 121393, 196418, 317811, 514229, 832040, 1346269, 2178309, 3524578, 5702887, 9227465, 14930352, 24157817, 39088169, 63245986, 102334155, 165580141, 267914296, 433494437, 701408733, 1134903170, 1836311903, 2971215073, 4807526976, 7778742049, 12586269025, 20365011074, 32951280099, 53316291173, 86267571272 };
 
 int timed_rotation(const double time_limit_seconds) {
   // We're going to be doing a bunch of rotations; we probably shouldn't
@@ -273,11 +275,11 @@ int timed_rotation(const double time_limit_seconds) {
 
   // Continue until the rotation exceeds time_limits_seconds
   int tier_num = 0;
-  while(tier_num + 3 < FIB_SIZE){
-    const size_t bit_offset             = fibs[tier_num];
-    const size_t bit_right_shift_amount = fibs[tier_num+1];
-    const size_t bit_length             = fibs[tier_num+2];
-    const size_t bit_sz                 = fibs[tier_num+3];
+  while (tier_num + 3 < FIB_SIZE) {
+    const size_t bit_offset = fibs[tier_num];
+    const size_t bit_right_shift_amount = fibs[tier_num + 1];
+    const size_t bit_length = fibs[tier_num + 2];
+    const size_t bit_sz = fibs[tier_num + 3];
     assert(bit_sz > bit_length);
     assert(bit_length > bit_right_shift_amount);
     assert(bit_right_shift_amount > bit_offset);
@@ -285,7 +287,7 @@ int timed_rotation(const double time_limit_seconds) {
 
     // Initialize a new bit_array
     testutil_newrand(bit_sz, 6172);
- 
+
     // Time the duration of a rotation
     const clockmark_t start_time = ktiming_getmark();
     testutil_rotate(bit_offset, bit_length, bit_right_shift_amount);
@@ -294,22 +296,26 @@ int timed_rotation(const double time_limit_seconds) {
 
     //char *str_size = NULL;
     char buf[20];
-    if (bit_length < 8*1024){
-        sprintf(buf, "%luB", bit_length / 8);
-    } else if (bit_length < 8 * 1024 * 1024){
-        sprintf(buf, "%luKB", bit_length / (8 * 1024));
-    } else if (bit_length < 8UL * 1024 * 1024 * 1024){
-        sprintf(buf, "%luMB", bit_length / (8 * 1024 * 1024));
-    } else {
-        sprintf(buf, "%luGB", bit_length / (8UL * 1024 * 1024 * 1024));
+    if (bit_length < 8 * 1024) {
+      sprintf(buf, "%luB", bit_length / 8);
     }
-    if (diff_seconds < time_limit_seconds){
+    else if (bit_length < 8 * 1024 * 1024) {
+      sprintf(buf, "%luKB", bit_length / (8 * 1024));
+    }
+    else if (bit_length < 8UL * 1024 * 1024 * 1024) {
+      sprintf(buf, "%luMB", bit_length / (8 * 1024 * 1024));
+    }
+    else {
+      sprintf(buf, "%luGB", bit_length / (8UL * 1024 * 1024 * 1024));
+    }
+    if (diff_seconds < time_limit_seconds) {
       printf("Tier %d (≈%s) completed in " ANSI_COLOR_GREEN "%.6fs" ANSI_COLOR_RESET "\n",
         tier_num, buf, diff_seconds);
       tier_num++;
-    } else {
+    }
+    else {
       printf("Tier %d (≈%s) exceeded %.2fs cutoff with time" ANSI_COLOR_RED " %.6fs" ANSI_COLOR_RESET "\n",
-         tier_num, buf, time_limit_seconds, diff_seconds);
+        tier_num, buf, time_limit_seconds, diff_seconds);
       // Return the last tier that was succesful.
       return tier_num - 1;
     }
@@ -355,7 +361,7 @@ void parse_and_run_tests(const char* filename, int selected_test) {
     case '#':
       continue;
     case 't':
-      test = (int) NEXT_ARG_LONG();
+      test = (int)NEXT_ARG_LONG();
       ready_to_run = (test == selected_test || selected_test == -1);
       if (!ready_to_run) {
         continue;
@@ -383,9 +389,9 @@ void parse_and_run_tests(const char* filename, int selected_test) {
         continue;
       }
       {
-        size_t offset = (size_t) NEXT_ARG_LONG();
-        size_t length = (size_t) NEXT_ARG_LONG();
-        ssize_t amount = (ssize_t) NEXT_ARG_LONG();
+        size_t offset = (size_t)NEXT_ARG_LONG();
+        size_t length = (size_t)NEXT_ARG_LONG();
+        ssize_t amount = (ssize_t)NEXT_ARG_LONG();
         testutil_require_valid_input(offset, length, amount, filename, line);
         testutil_rotate(offset, length, amount);
       }

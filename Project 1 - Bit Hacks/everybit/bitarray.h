@@ -26,9 +26,9 @@
 #include <sys/types.h>
 #include <stdbool.h>
 
-// ********************************* Types **********************************
+ // ********************************* Types **********************************
 
-// Abstract data type representing an array of bits.
+ // Abstract data type representing an array of bits.
 typedef struct bitarray bitarray_t;
 
 // ******************************* Prototypes *******************************
@@ -53,8 +53,8 @@ bool bitarray_get(const bitarray_t* const bitarray, const size_t bit_index);
 
 // Indexes into a bit array, setting the bit at the specified zero-based index.
 void bitarray_set(bitarray_t* const bitarray,
-                  const size_t bit_index,
-                  const bool value);
+    const size_t bit_index,
+    const bool value);
 
 // Rotates a subarray.
 //
@@ -81,8 +81,8 @@ void bitarray_set(bitarray_t* const bitarray,
 // (inclusive) bits right two places.  After the rotation, ba contains the
 // byte 0b10110100.
 void bitarray_rotate(bitarray_t* const bitarray,
-                     const size_t bit_offset,
-                     const size_t bit_length,
-                     const ssize_t bit_right_amount);
+    const size_t bit_offset,
+    const size_t bit_length,
+    const ssize_t bit_right_amount);
 
 #endif  // BITARRAY_H

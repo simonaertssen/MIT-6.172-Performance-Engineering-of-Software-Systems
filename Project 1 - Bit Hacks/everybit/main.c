@@ -20,10 +20,10 @@
  * IN THE SOFTWARE.
  **/
 
-// This test harness which allows both functional testing (i.e., testing for
-// correctness) and performance testing (i.e., testing for speed).
+ // This test harness which allows both functional testing (i.e., testing for
+ // correctness) and performance testing (i.e., testing for speed).
 
-// We need _POSIX_C_SOURCE >= 2 to use getopt.
+ // We need _POSIX_C_SOURCE >= 2 to use getopt.
 #define _POSIX_C_SOURCE 200112L
 
 #include <stdio.h>
@@ -61,7 +61,7 @@ int main(int argc, char** argv) {
       // -s runs the short rotation performance test.
       printf("---- RESULTS ----\n");
       printf("Succesfully completed tier: %d\n",
-             timed_rotation(0.01));
+        timed_rotation(0.01));
       printf("---- END RESULTS ----\n");
       retval = EXIT_SUCCESS;
       goto cleanup;
@@ -69,7 +69,7 @@ int main(int argc, char** argv) {
       // -m runs the medium rotation performance test.
       printf("---- RESULTS ----\n");
       printf("Succesfully completed tier: %d\n",
-             timed_rotation(0.1));
+        timed_rotation(0.1));
       printf("---- END RESULTS ----\n");
       retval = EXIT_SUCCESS;
       goto cleanup;
@@ -77,7 +77,7 @@ int main(int argc, char** argv) {
       // -l runs the large rotation performance test.
       printf("---- RESULTS ----\n");
       printf("Succesfully completed tier: %d\n",
-             timed_rotation(1.0));
+        timed_rotation(1.0));
       printf("---- END RESULTS ----\n");
       retval = EXIT_SUCCESS;
       goto cleanup;
@@ -95,11 +95,11 @@ cleanup:
 
 void print_usage(const char* const argv_0) {
   fprintf(stderr, "usage: %s\n"
-          "\t -s Run a sample small (0.01s) rotation operation\n"
-          "\t -m Run a sample medium (0.1s) rotation operation\n"
-          "\t -l Run a sample large (1s) rotation operation\n"
-          "\t    (note: the provided -[s/m/l] options only test performance and NOT correctness.)\n"
-          "\t -t tests/default\tRun alltests in the testfile tests/default\n"
-          "\t -n 1 -t tests/default\tRun test 1 in the testfile tests/default\n",
-          argv_0);
+    "\t -s Run a sample small (0.01s) rotation operation\n"
+    "\t -m Run a sample medium (0.1s) rotation operation\n"
+    "\t -l Run a sample large (1s) rotation operation\n"
+    "\t    (note: the provided -[s/m/l] options only test performance and NOT correctness.)\n"
+    "\t -t tests/default\tRun alltests in the testfile tests/default\n"
+    "\t -n 1 -t tests/default\tRun test 1 in the testfile tests/default\n",
+    argv_0);
 }

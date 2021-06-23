@@ -20,9 +20,9 @@
  * IN THE SOFTWARE.
  **/
 
-// Implements the ADT specified in bitarray.h as a packed array of bits; a bit
-// array containing bit_sz bits will consume roughly bit_sz/8 bytes of
-// memory.
+ // Implements the ADT specified in bitarray.h as a packed array of bits; a bit
+ // array containing bit_sz bits will consume roughly bit_sz/8 bytes of
+ // memory.
 
 
 #include "./bitarray.h"
@@ -61,9 +61,9 @@ struct bitarray {
 // [bit_offset, bit_offset + bit_length)
 // That is, the start is inclusive, but the end is exclusive.
 static void bitarray_rotate_left(bitarray_t* const bitarray,
-                                 const size_t bit_offset,
-                                 const size_t bit_length,
-                                 const size_t bit_left_amount);
+  const size_t bit_offset,
+  const size_t bit_length,
+  const size_t bit_left_amount);
 
 // Rotates a subarray left by one bit.
 //
@@ -74,8 +74,8 @@ static void bitarray_rotate_left(bitarray_t* const bitarray,
 // [bit_offset, bit_offset + bit_length)
 // That is, the start is inclusive, but the end is exclusive.
 static void bitarray_rotate_left_one(bitarray_t* const bitarray,
-                                     const size_t bit_offset,
-                                     const size_t bit_length);
+  const size_t bit_offset,
+  const size_t bit_length);
 
 // Portable modulo operation that supports negative dividends.
 //
@@ -112,7 +112,7 @@ static char bitmask(const size_t bit_index);
 
 bitarray_t* bitarray_new(const size_t bit_sz) {
   // Allocate an underlying buffer of ceil(bit_sz/8) bytes.
-  char* const buf = calloc(1, (bit_sz+7) / 8);
+  char* const buf = calloc(1, (bit_sz + 7) / 8);
   if (buf == NULL) {
     return NULL;
   }
@@ -154,12 +154,12 @@ bool bitarray_get(const bitarray_t* const bitarray, const size_t bit_index) {
   // to produce either a zero byte (if the bit was 0) or a nonzero byte
   // (if it wasn't).  Finally, we convert that to a boolean.
   return (bitarray->buf[bit_index / 8] & bitmask(bit_index)) ?
-         true : false;
+    true : false;
 }
 
 void bitarray_set(bitarray_t* const bitarray,
-                  const size_t bit_index,
-                  const bool value) {
+  const size_t bit_index,
+  const bool value) {
   assert(bit_index < bitarray->bit_sz);
 
   // We're storing bits in packed form, 8 per byte.  So to set the nth
@@ -174,17 +174,17 @@ void bitarray_set(bitarray_t* const bitarray,
     (value ? bitmask(bit_index) : 0);
 }
 
-void bitarray_randfill(bitarray_t* const bitarray){
-  int32_t *ptr = (int32_t *)bitarray->buf;
-  for (int64_t i=0; i<bitarray->bit_sz/32 + 1; i++){
+void bitarray_randfill(bitarray_t* const bitarray) {
+  int32_t* ptr = (int32_t*)bitarray->buf;
+  for (int64_t i = 0; i < bitarray->bit_sz / 32 + 1; i++) {
     ptr[i] = rand();
   }
 }
 
 void bitarray_rotate(bitarray_t* const bitarray,
-                     const size_t bit_offset,
-                     const size_t bit_length,
-                     const ssize_t bit_right_amount) {
+  const size_t bit_offset,
+  const size_t bit_length,
+  const ssize_t bit_right_amount) {
   assert(bit_offset + bit_length <= bitarray->bit_sz);
 
   if (bit_length == 0) {
@@ -194,21 +194,21 @@ void bitarray_rotate(bitarray_t* const bitarray,
   // Convert a rotate left or right to a left rotate only, and eliminate
   // multiple full rotations.
   bitarray_rotate_left(bitarray, bit_offset, bit_length,
-                       modulo(-bit_right_amount, bit_length));
+    modulo(-bit_right_amount, bit_length));
 }
 
 static void bitarray_rotate_left(bitarray_t* const bitarray,
-                                 const size_t bit_offset,
-                                 const size_t bit_length,
-                                 const size_t bit_left_amount) {
+  const size_t bit_offset,
+  const size_t bit_length,
+  const size_t bit_left_amount) {
   for (size_t i = 0; i < bit_left_amount; i++) {
     bitarray_rotate_left_one(bitarray, bit_offset, bit_length);
   }
 }
 
 static void bitarray_rotate_left_one(bitarray_t* const bitarray,
-                                     const size_t bit_offset,
-                                     const size_t bit_length) {
+  const size_t bit_offset,
+  const size_t bit_length) {
   // Grab the first bit in the range, shift everything left by one, and
   // then stick the first bit at the end.
   const bool first_bit = bitarray_get(bitarray, bit_offset);

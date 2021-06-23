@@ -56,7 +56,7 @@ PRODUCT = everybit
 
 # What we're building with
 CC = clang -Wno-deprecated-declarations # Added this because of legacy timers
-CFLAGS = -std=c99 -Wall -m64 -g
+CFLAGS = -std=c99 -Wall -m64
 LDFLAGS = -flto #-fuse-ld=gold This is unknown on my laptop
 
 # We need to link against the timing library for whatever OS we're on.
@@ -80,7 +80,7 @@ endif
 OLD_MODE = $(shell cat .buildmode 2> /dev/null)
 ifeq ($(DEBUG),1)
 # We want debug mode.
-CFLAGS += -O0
+CFLAGS += -O0 -g
 ifneq ($(OLD_MODE),debug)
 $(shell echo debug >.buildmode)
 endif

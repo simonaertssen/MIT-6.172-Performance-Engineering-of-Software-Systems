@@ -36,10 +36,10 @@ So: if we have the bitarray `0b00101101` and we wish to set a value of `1` (`tru
     
     It is unclear why so many steps are needed but we will not touch the functionality here.
 
-## Initial performance of the program:
+## Initial performance of the program on my laptop
 `-s` yields 14 tiers, `-m` 15 tiers and `-l` 18 tiers. This is a simple test.
 
-### Setting up Instruments. 
+### Setting up Instruments.
 We need to count events as they are occuring on the microarchitecture. It is believed that my [laptop](https://en.wikipedia.org/wiki/MacBook_Pro) has a Broadwell microarchitecture.
 
 `system_profiler SPHardwareDataType` reveils:
@@ -55,11 +55,6 @@ We need to count events as they are occuring on the microarchitecture. It is bel
       L3 Cache: 3 MB
       Hyper-Threading Technology: Enabled
       Memory: 16 GB
-
-|  	|  	|
-|-	|-	|
-|  	|  	|
-
 
 The microarchitecture documentation can then be collected from [here](https://download.01.org/perfmon/index/broadwell.html). Using the information about how [perf computes cache misses](https://stackoverflow.com/questions/55035313/how-does-linux-perf-calculate-the-cache-references-and-cache-misses-events), the most important events are:
 
@@ -89,12 +84,18 @@ Using the information about how [perf computes cache misses](https://stackoverfl
 
 
 Using Instruments for profiling the `-l` option we can see:
-    - 2898.0ms  execution time
-    - 11.021.380.196 instructions
-    - 10.034.574.084 cycles (1.098 instr/cycle)
-    - 1.090.244.913 branches
-    - 765.107.680 taken branches (70%)
+- 2898.0ms  execution time
+- 11.021.380.196 instructions
+- 10.034.574.084 cycles (1.098 instr/cycle)
+- 1.090.244.913 branches
+- 765.107.680 taken branches (70%)
 
+However, using Instruments we cannot measure all of the performance events at once, like one does with Valgrind. It is better to start development on the laptop and benchmark on the cluster.
+
+## Performance measured on the cluster
+We need to change the compiler to `gcc` as there is no `clang` on the cluster and we cannot seem to install it.
+
+`-s` yields 14 tiers, `-m` 15 tiers and `-l` 18 tiers. This is a simple test.
 
 ## Initial ideas
 - Use a temporary value as we move each value around in the bitarray.

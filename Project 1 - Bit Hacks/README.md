@@ -149,9 +149,15 @@ We need to change the compiler to `gcc` as there is no `clang` on the cluster an
     ==11746== Mispredicts:        15,213  (    14,886 cond +        327 ind)
     ==11746== Mispred rate:          0.1% (       0.1%     +       14.8%   )
 
-So it seems like there are very few cache misses and branch mispredictions, that is already really good!
+So it seems like there are very few cache misses and branch mispredictions, that is already really good! However, the performance is also impacted by measuring it. Now we can start looking at how changes influence the performance.
 
 ## Initial ideas
 - Use a temporary value as we move each value around in the bitarray.
 - Remove complete revolutions by checking first: is `modulo(-bit_right_amount, bit_length) == 0`?
 - Inline some of the more simple functions, like `bitmask`, `bitarray_get_bit_sz` and `bitarray_get`.
+- Use `__restrict__` as a keyword for the global array.
+
+## Performance improvements
+### Inlining
+The functions `bitmask`, `bitarray_get_bit_sz` and `bitarray_get` were inlined but no performance increase was observed.
+

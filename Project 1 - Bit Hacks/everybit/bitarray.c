@@ -105,7 +105,7 @@ static size_t modulo(const ssize_t n, const size_t m);
 // however, so as long as you always use bitarray_get and bitarray_set
 // to access bits in your bitarray, this reverse representation should
 // not matter.
-static char bitmask(const size_t bit_index);
+static inline char bitmask(const size_t bit_index);
 
 
 // ******************************* Functions ********************************
@@ -138,12 +138,12 @@ void bitarray_free(bitarray_t* const bitarray) {
   free(bitarray);
 }
 
-size_t bitarray_get_bit_sz(const bitarray_t* const bitarray) {
+inline size_t bitarray_get_bit_sz(const bitarray_t* const bitarray) {
   return bitarray->bit_sz;
 }
 
-bool bitarray_get(const bitarray_t* const bitarray, const size_t bit_index) {
-  assert(bit_index < bitarray->bit_sz);
+inline bool bitarray_get(const bitarray_t* const bitarray, const size_t bit_index) {
+  // assert(bit_index < bitarray->bit_sz);
 
   // We're storing bits in packed form, 8 per byte.  So to get the nth
   // bit, we want to look at the (n mod 8)th bit of the (floor(n/8)th)
@@ -157,10 +157,10 @@ bool bitarray_get(const bitarray_t* const bitarray, const size_t bit_index) {
     true : false;
 }
 
-void bitarray_set(bitarray_t* const bitarray,
+inline void bitarray_set(bitarray_t* const bitarray,
   const size_t bit_index,
   const bool value) {
-  assert(bit_index < bitarray->bit_sz);
+  // assert(bit_index < bitarray->bit_sz);
 
   // We're storing bits in packed form, 8 per byte.  So to set the nth
   // bit, we want to set the (n mod 8)th bit of the (floor(n/8)th) byte.
@@ -227,7 +227,7 @@ static size_t modulo(const ssize_t n, const size_t m) {
   return (size_t)result;
 }
 
-static char bitmask(const size_t bit_index) {
+static inline char bitmask(const size_t bit_index) {
   return 1 << (bit_index % 8);
 }
 

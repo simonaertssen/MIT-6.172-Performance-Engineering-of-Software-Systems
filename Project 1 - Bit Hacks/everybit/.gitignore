@@ -1,3 +1,4 @@
 .buildmode
 everybit
 *.o
+*.out.*

@@ -38,21 +38,21 @@ typedef struct bitarray bitarray_t;
 bitarray_t* bitarray_new(const size_t bit_sz);
 
 // Frees a bit array allocated by bitarray_new.
-void bitarray_free(bitarray_t* restrict const bitarray);
+void bitarray_free(bitarray_t* const bitarray);
 
 // Returns the number of bits stored in a bit array.
 // Note the invariant bitarray_get_bit_sz(bitarray_new(n)) = n.
-size_t bitarray_get_bit_sz(const bitarray_t* restrict const bitarray);
+size_t bitarray_get_bit_sz(const bitarray_t* const bitarray);
 
 // Does a random fill of all the bits in the bit array.
-void bitarray_randfill(bitarray_t* restrict const bitarray);
+void bitarray_randfill(bitarray_t* const bitarray);
 
 // Indexes into a bit array, retreiving the bit at the specified zero-based
 // index.
-bool bitarray_get(const bitarray_t* restrict const bitarray, const size_t bit_index);
+bool bitarray_get(const bitarray_t* const bitarray, const size_t bit_index);
 
 // Indexes into a bit array, setting the bit at the specified zero-based index.
-void bitarray_set(bitarray_t* restrict const bitarray,
+void bitarray_set(bitarray_t* const bitarray,
     const size_t bit_index,
     const bool value);
 

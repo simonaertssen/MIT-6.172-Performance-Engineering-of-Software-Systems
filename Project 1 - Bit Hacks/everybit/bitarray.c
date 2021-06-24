@@ -60,7 +60,7 @@ struct bitarray {
 // The subarray spans the half-open interval
 // [bit_offset, bit_offset + bit_length)
 // That is, the start is inclusive, but the end is exclusive.
-static void bitarray_rotate_left(bitarray_t* restrict const bitarray,
+static void bitarray_rotate_left(bitarray_t* const bitarray,
   const size_t bit_offset,
   const size_t bit_length,
   const size_t bit_left_amount);
@@ -73,7 +73,7 @@ static void bitarray_rotate_left(bitarray_t* restrict const bitarray,
 // The subarray spans the half-open interval
 // [bit_offset, bit_offset + bit_length)
 // That is, the start is inclusive, but the end is exclusive.
-static void bitarray_rotate_left_one(bitarray_t* restrict const bitarray,
+static void bitarray_rotate_left_one(bitarray_t* const bitarray,
   const size_t bit_offset,
   const size_t bit_length);
 
@@ -105,7 +105,7 @@ static size_t modulo(const ssize_t n, const size_t m);
 // however, so as long as you always use bitarray_get and bitarray_set
 // to access bits in your bitarray, this reverse representation should
 // not matter.
-static inline __attribute__((always_inline)) char bitmask(const size_t bit_index);
+static char bitmask(const size_t bit_index);
 
 
 // ******************************* Functions ********************************
@@ -138,12 +138,12 @@ void bitarray_free(bitarray_t* const bitarray) {
   free(bitarray);
 }
 
-inline size_t bitarray_get_bit_sz(const bitarray_t* restrict const bitarray) {
+size_t bitarray_get_bit_sz(const bitarray_t* const bitarray) {
   return bitarray->bit_sz;
 }
 
-inline bool bitarray_get(const bitarray_t* restrict const bitarray, const size_t bit_index) {
-  // assert(bit_index < bitarray->bit_sz);
+bool bitarray_get(const bitarray_t* const bitarray, const size_t bit_index) {
+  assert(bit_index < bitarray->bit_sz);
 
   // We're storing bits in packed form, 8 per byte.  So to get the nth
   // bit, we want to look at the (n mod 8)th bit of the (floor(n/8)th)
@@ -157,10 +157,10 @@ inline bool bitarray_get(const bitarray_t* restrict const bitarray, const size_t
     true : false;
 }
 
-inline void bitarray_set(bitarray_t* restrict const bitarray,
+void bitarray_set(bitarray_t* const bitarray,
   const size_t bit_index,
   const bool value) {
-  // assert(bit_index < bitarray->bit_sz);
+  assert(bit_index < bitarray->bit_sz);
 
   // We're storing bits in packed form, 8 per byte.  So to set the nth
   // bit, we want to set the (n mod 8)th bit of the (floor(n/8)th) byte.
@@ -174,14 +174,14 @@ inline void bitarray_set(bitarray_t* restrict const bitarray,
     (value ? bitmask(bit_index) : 0);
 }
 
-void bitarray_randfill(bitarray_t* restrict const bitarray) {
+void bitarray_randfill(bitarray_t* const bitarray) {
   int32_t* ptr = (int32_t*)bitarray->buf;
   for (int64_t i = 0; i < bitarray->bit_sz / 32 + 1; i++) {
     ptr[i] = rand();
   }
 }
 
-void bitarray_rotate(bitarray_t* restrict const bitarray,
+void bitarray_rotate(bitarray_t* const bitarray,
   const size_t bit_offset,
   const size_t bit_length,
   const ssize_t bit_right_amount) {
@@ -197,7 +197,7 @@ void bitarray_rotate(bitarray_t* restrict const bitarray,
     modulo(-bit_right_amount, bit_length));
 }
 
-static void bitarray_rotate_left(bitarray_t* restrict const bitarray,
+static void bitarray_rotate_left(bitarray_t* const bitarray,
   const size_t bit_offset,
   const size_t bit_length,
   const size_t bit_left_amount) {
@@ -206,7 +206,7 @@ static void bitarray_rotate_left(bitarray_t* restrict const bitarray,
   }
 }
 
-static void bitarray_rotate_left_one(bitarray_t* restrict const bitarray,
+static void bitarray_rotate_left_one(bitarray_t* const bitarray,
   const size_t bit_offset,
   const size_t bit_length) {
   // Grab the first bit in the range, shift everything left by one, and
@@ -227,7 +227,7 @@ static size_t modulo(const ssize_t n, const size_t m) {
   return (size_t)result;
 }
 
-static inline char bitmask(const size_t bit_index) {
+static char bitmask(const size_t bit_index) {
   return 1 << (bit_index % 8);
 }
 

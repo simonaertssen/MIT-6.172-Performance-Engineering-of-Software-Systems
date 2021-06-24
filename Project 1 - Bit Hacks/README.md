@@ -98,55 +98,55 @@ We need to change the compiler to `gcc` as there is no `clang` on the cluster an
 `-s` yields 14 tiers, `-m` 16 tiers and `-l` 19 tiers. This is a simple test.
 
 ### Performance tests
-valgrind --tool=cachegrind --branch-sim=yes ./everybit -l
-==11746== Cachegrind, a cache and branch-prediction profiler
-==11746== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
-==11746== Using Valgrind-3.14.0 and LibVEX; rerun with -h for copyright info
-==11746== Command: ./everybit -l
-==11746== 
---11746-- warning: L3 cache found, using its data for the LL simulation.
---11746-- warning: specified LL cache: line_size 64  assoc 20  total_size 26,214,400
---11746-- warning: simulated LL cache: line_size 64  assoc 25  total_size 26,214,400
----- RESULTS ----
-Tier 0 (≈0B) completed in 0.001136s
-Tier 1 (≈0B) completed in 0.000086s
-Tier 2 (≈1B) completed in 0.000006s
-Tier 3 (≈1B) completed in 0.000010s
-Tier 4 (≈2B) completed in 0.000021s
-Tier 5 (≈4B) completed in 0.000047s
-Tier 6 (≈6B) completed in 0.000115s
-Tier 7 (≈11B) completed in 0.000291s
-Tier 8 (≈18B) completed in 0.000766s
-Tier 9 (≈29B) completed in 0.002002s
-Tier 10 (≈47B) completed in 0.005186s
-Tier 11 (≈76B) completed in 0.013554s
-Tier 12 (≈123B) completed in 0.035518s
-Tier 13 (≈199B) completed in 0.093152s
-Tier 14 (≈323B) completed in 0.230668s
-Tier 15 (≈522B) completed in 0.571084s
-Tier 16 (≈845B) exceeded 1.00s cutoff with time 1.496448s
-Succesfully completed tier: 15
----- END RESULTS ----
-==11746== 
-==11746== I   refs:      764,303,460
-==11746== I1  misses:          1,522
-==11746== LLi misses:          1,279
-==11746== I1  miss rate:        0.00%
-==11746== LLi miss rate:        0.00%
-==11746== 
-==11746== D   refs:      113,427,761  (85,055,183 rd   + 28,372,578 wr)
-==11746== D1  misses:          4,544  (     3,706 rd   +        838 wr)
-==11746== LLd misses:          3,230  (     2,459 rd   +        771 wr)
-==11746== D1  miss rate:         0.0% (       0.0%     +        0.0%  )
-==11746== LLd miss rate:         0.0% (       0.0%     +        0.0%  )
-==11746== 
-==11746== LL refs:             6,066  (     5,228 rd   +        838 wr)
-==11746== LL misses:           4,509  (     3,738 rd   +        771 wr)
-==11746== LL miss rate:          0.0% (       0.0%     +        0.0%  )
-==11746== 
-==11746== Branches:       28,415,706  (28,413,493 cond +      2,213 ind)
-==11746== Mispredicts:        15,213  (    14,886 cond +        327 ind)
-==11746== Mispred rate:          0.1% (       0.1%     +       14.8%   )
+`valgrind --tool=cachegrind --branch-sim=yes ./everybit -l`
+    ==11746== Cachegrind, a cache and branch-prediction profiler
+    ==11746== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+    ==11746== Using Valgrind-3.14.0 and LibVEX; rerun with -h for copyright info
+    ==11746== Command: ./everybit -l
+    ==11746== 
+    --11746-- warning: L3 cache found, using its data for the LL simulation.
+    --11746-- warning: specified LL cache: line_size 64  assoc 20  total_size 26,214,400
+    --11746-- warning: simulated LL cache: line_size 64  assoc 25  total_size 26,214,400
+    ---- RESULTS ----
+    Tier 0 (≈0B) completed in 0.001136s
+    Tier 1 (≈0B) completed in 0.000086s
+    Tier 2 (≈1B) completed in 0.000006s
+    Tier 3 (≈1B) completed in 0.000010s
+    Tier 4 (≈2B) completed in 0.000021s
+    Tier 5 (≈4B) completed in 0.000047s
+    Tier 6 (≈6B) completed in 0.000115s
+    Tier 7 (≈11B) completed in 0.000291s
+    Tier 8 (≈18B) completed in 0.000766s
+    Tier 9 (≈29B) completed in 0.002002s
+    Tier 10 (≈47B) completed in 0.005186s
+    Tier 11 (≈76B) completed in 0.013554s
+    Tier 12 (≈123B) completed in 0.035518s
+    Tier 13 (≈199B) completed in 0.093152s
+    Tier 14 (≈323B) completed in 0.230668s
+    Tier 15 (≈522B) completed in 0.571084s
+    Tier 16 (≈845B) exceeded 1.00s cutoff with time 1.496448s
+    Succesfully completed tier: 15
+    ---- END RESULTS ----
+    ==11746== 
+    ==11746== I   refs:      764,303,460
+    ==11746== I1  misses:          1,522
+    ==11746== LLi misses:          1,279
+    ==11746== I1  miss rate:        0.00%
+    ==11746== LLi miss rate:        0.00%
+    ==11746== 
+    ==11746== D   refs:      113,427,761  (85,055,183 rd   + 28,372,578 wr)
+    ==11746== D1  misses:          4,544  (     3,706 rd   +        838 wr)
+    ==11746== LLd misses:          3,230  (     2,459 rd   +        771 wr)
+    ==11746== D1  miss rate:         0.0% (       0.0%     +        0.0%  )
+    ==11746== LLd miss rate:         0.0% (       0.0%     +        0.0%  )
+    ==11746== 
+    ==11746== LL refs:             6,066  (     5,228 rd   +        838 wr)
+    ==11746== LL misses:           4,509  (     3,738 rd   +        771 wr)
+    ==11746== LL miss rate:          0.0% (       0.0%     +        0.0%  )
+    ==11746== 
+    ==11746== Branches:       28,415,706  (28,413,493 cond +      2,213 ind)
+    ==11746== Mispredicts:        15,213  (    14,886 cond +        327 ind)
+    ==11746== Mispred rate:          0.1% (       0.1%     +       14.8%   )
 
 So it seems like there are very few cache misses and branch mispredictions, that is already really good!
 

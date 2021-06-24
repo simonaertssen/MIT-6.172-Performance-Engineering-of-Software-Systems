@@ -106,7 +106,7 @@ $(PRODUCT):	$(OBJECTS) .buildmode
 
 # How to clean up
 clean:
-	$(RM) everybit *.o .buildmode *.gcov *.gcno *.gcda
+	$(RM) everybit *.o .buildmode *.gcov *.gcno *.gcda *.out.*
 
 test: $(PRODUCT)
 	../test.py $(PRODUCT)

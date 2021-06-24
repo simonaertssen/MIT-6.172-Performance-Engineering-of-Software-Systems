@@ -186,15 +186,15 @@ void bitarray_rotate(bitarray_t* const bitarray,
   const size_t bit_length,
   const ssize_t bit_right_amount) {
   assert(bit_offset + bit_length <= bitarray->bit_sz);
+  if (bit_length == 0) return;
 
-  if (bit_length == 0) {
-    return;
-  }
+  // Check whether we actually need to shift the array or not.
+  size_t k = modulo(-bit_right_amount, bit_length);
+  if (k == 0) return;
 
   // Convert a rotate left or right to a left rotate only, and eliminate
   // multiple full rotations.
-  bitarray_rotate_left(bitarray, bit_offset, bit_length,
-    modulo(-bit_right_amount, bit_length));
+  bitarray_rotate_left(bitarray, bit_offset, bit_length, k);
 }
 
 static void bitarray_rotate_left(bitarray_t* const bitarray,

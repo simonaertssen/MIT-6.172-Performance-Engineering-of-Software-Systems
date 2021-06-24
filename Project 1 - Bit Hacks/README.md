@@ -165,4 +165,4 @@ The functions `bitmask`, `bitarray_get_bit_sz` and `bitarray_get` were inlined b
 No performance increase when using keyword `restrict`. Removed again.
 
 ### Checking
-Check whether there is actually a modification needed 
+Check whether there is actually a modification needed: if `modulo(-bit_right_amount, bit_length) == 0` then the bits would be shifted right by as many bits as there are in the subarray. No optimisations there either.

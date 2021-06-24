@@ -99,6 +99,7 @@ We need to change the compiler to `gcc` as there is no `clang` on the cluster an
 
 ### Performance tests
 `valgrind --tool=cachegrind --branch-sim=yes ./everybit -l`
+
     ==11746== Cachegrind, a cache and branch-prediction profiler
     ==11746== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
     ==11746== Using Valgrind-3.14.0 and LibVEX; rerun with -h for copyright info

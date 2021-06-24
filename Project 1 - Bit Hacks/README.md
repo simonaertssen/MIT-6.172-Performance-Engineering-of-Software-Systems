@@ -161,3 +161,8 @@ So it seems like there are very few cache misses and branch mispredictions, that
 ### Inlining
 The functions `bitmask`, `bitarray_get_bit_sz` and `bitarray_get` were inlined but no performance increase was observed.
 
+### Restricting
+No performance increase when using keyword `restrict`.
+
+### Checking
+Check whether there is actually a modification needed 

@@ -105,7 +105,7 @@ static size_t modulo(const ssize_t n, const size_t m);
 // however, so as long as you always use bitarray_get and bitarray_set
 // to access bits in your bitarray, this reverse representation should
 // not matter.
-static inline char bitmask(const size_t bit_index);
+static inline __attribute__((always_inline)) char bitmask(const size_t bit_index);
 
 
 // ******************************* Functions ********************************

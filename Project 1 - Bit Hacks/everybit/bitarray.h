@@ -42,7 +42,7 @@ void bitarray_free(bitarray_t* const bitarray);
 
 // Returns the number of bits stored in a bit array.
 // Note the invariant bitarray_get_bit_sz(bitarray_new(n)) = n.
-inline size_t bitarray_get_bit_sz(const bitarray_t* const bitarray);
+size_t bitarray_get_bit_sz(const bitarray_t* const bitarray);
 
 // Does a random fill of all the bits in the bit array.
 void bitarray_randfill(bitarray_t* const bitarray);

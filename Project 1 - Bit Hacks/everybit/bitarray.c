@@ -153,8 +153,7 @@ bool bitarray_get(const bitarray_t* const bitarray, const size_t bit_index) {
   // get the byte; we then bitwise-and the byte with an appropriate mask
   // to produce either a zero byte (if the bit was 0) or a nonzero byte
   // (if it wasn't).  Finally, we convert that to a boolean.
-  return (bitarray->buf[bit_index / 8] & bitmask(bit_index)) ?
-    true : false;
+  return (bitarray->buf[bit_index / 8] & bitmask(bit_index)) ? true : false;
 }
 
 void bitarray_set(bitarray_t* const bitarray,
@@ -169,9 +168,7 @@ void bitarray_set(bitarray_t* const bitarray,
   // get the byte; we then bitwise-and the byte with an appropriate mask
   // to clear out the bit we're about to set.  We bitwise-or the result
   // with a byte that has either a 1 or a 0 in the correct place.
-  bitarray->buf[bit_index / 8] =
-    (bitarray->buf[bit_index / 8] & ~bitmask(bit_index)) |
-    (value ? bitmask(bit_index) : 0);
+  bitarray->buf[bit_index / 8] = (bitarray->buf[bit_index / 8] & ~bitmask(bit_index)) | (value ? bitmask(bit_index) : 0);
 }
 
 void bitarray_randfill(bitarray_t* const bitarray) {

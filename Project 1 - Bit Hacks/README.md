@@ -168,4 +168,34 @@ No performance increase when using keyword `restrict`. Removed again.
 Check whether there is actually a modification needed: if `modulo(-bit_right_amount, bit_length) == 0` then the bits would be shifted right by as many bits as there are in the subarray. No optimisations there either.
 
 ## Cyclic approach
-Instead of cycling through the array and moving every bit one by one, we immediately move every bit to its desired position.
+Instead of cycling through the array and moving every bit one by one, we immediately move every bit to its desired position. We literally hop across the array `left_amount` of steps per iteration and move each value along.
+
+So for the array `10010110` where we apply `r 2 5 2`, we expect `10110100`. We then simply start rotating every bit two places:
+
+    size_t prv = offset;                                // index of previous element
+    size_t nxt = modulo(prv + left_amount, length);     // index of next element
+
+    bool x = bitarray[nxt];                             // next element
+
+    for (size_t i = 0; i < length - 1; i++) { 
+        bitarray[nxt] = bitarray[prv];
+        prv = nxt
+        nxt = modulo(nxt+left_amount, length);
+        x = bitarray[nxt];
+    }
+
+This produces:
+
+    10010110
+    10110100
+
+    01011
+    11010
+
+    prv = 2, nxt = 4, x = 0
+    i = 0: 1001x110  ->  10010110, x = 
+    i = 1:   
+    i = 2: x = 0  ->  10x10110  ->  10010110
+    i = 3: x = 1  ->  100x0110  ->  10010110
+    i = 4: x = 0  ->  1001x110  ->  10010100
+    

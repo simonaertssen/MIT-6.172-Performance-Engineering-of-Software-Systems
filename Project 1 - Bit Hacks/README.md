@@ -180,7 +180,7 @@ So for the array `10010110` where we apply `r 2 5 2`, we expect `10110100`. We t
     for (size_t i = 0; i < length - 1; i++) { 
         bitarray[nxt] = bitarray[prv];
         prv = nxt
-        nxt = modulo(nxt+left_amount, length);
+        nxt = modulo(prv+left_amount-offset, length);   // mod with respect to begin of subarray
         x = bitarray[nxt];
     }
 
@@ -193,8 +193,8 @@ This produces:
     11010
 
     prv = 2, nxt = 4, x = 0
-    i = 0: 1001x110  ->  10010110, x = 
-    i = 1:   
+    i = 0: 1001x110  ->  10010110, nxt = 6, prv = 4, x = 1
+    i = 1: 100101x0  ->  10010100, nxt = 8
     i = 2: x = 0  ->  10x10110  ->  10010110
     i = 3: x = 1  ->  100x0110  ->  10010110
     i = 4: x = 0  ->  1001x110  ->  10010100

@@ -77,6 +77,28 @@ static void bitarray_rotate_left_one(bitarray_t* const bitarray,
   const size_t bit_offset,
   const size_t bit_length);
 
+
+// ****************** Prototypes for optimised functions *******************
+
+//
+// Rotates subarray by moving each bit to its specified location
+// directly. See the README for more information.
+// 
+// Keep the temporay value of the bit along with its location between every
+// iteration. Move the bit stored in this temporary index to its new location.
+// Space complexity: O(1).
+// Time complexity: O(bit_length).
+// 
+// The subarray spans the half-open interval [bit_offset, bit_offset +
+// bit_length). That is, the start is inclusive, but the end is exclusive.
+// 
+// NOTE: Although constant auxillary space is used, the memory accesses are
+// scattered, which can adversely impact caching.
+static void bitarray_rotate_cyclic(bitarray_t* const bitarray,
+  const size_t bit_offset,
+  const size_t bit_length,
+  const ssize_t bit_right_amount);
+
 // Portable modulo operation that supports negative dividends.
 //
 // Many programming languages define modulo in a manner incompatible with its
@@ -185,12 +207,12 @@ void bitarray_rotate(bitarray_t* const bitarray,
   assert(bit_offset + bit_length <= bitarray->bit_sz);
   if (bit_length == 0) return;
 
-  // Check whether we actually need to shift the array or not.
+  // Check whether we actually need to shift the array or not: eliminate
+  // multiple full rotations.
   size_t k = modulo(-bit_right_amount, bit_length);
   if (k == 0) return;
 
-  // Convert a rotate left or right to a left rotate only, and eliminate
-  // multiple full rotations.
+  // Convert a rotate left or right to a left rotate only:
   bitarray_rotate_left(bitarray, bit_offset, bit_length, k);
 }
 
@@ -228,3 +250,10 @@ static char bitmask(const size_t bit_index) {
   return 1 << (bit_index % 8);
 }
 
+
+// ********************** Optimised functions ***********************
+
+static void bitarray_rotate_cyclic(bitarray_t* const bitarray,
+  const size_t bit_offset,
+  const size_t bit_length,
+  const ssize_t bit_right_amount);

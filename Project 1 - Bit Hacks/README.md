@@ -157,7 +157,7 @@ So it seems like there are very few cache misses and branch mispredictions, that
 - Inline some of the more simple functions, like `bitmask`, `bitarray_get_bit_sz` and `bitarray_get`.
 - Use `__restrict__` as a keyword for the global array.
 
-## Performance improvements
+## Initial performance improvements
 ### Inlining
 The functions `bitmask`, `bitarray_get_bit_sz` and `bitarray_get` were inlined but no performance increase was observed. Removed again.
 
@@ -166,3 +166,6 @@ No performance increase when using keyword `restrict`. Removed again.
 
 ### Checking
 Check whether there is actually a modification needed: if `modulo(-bit_right_amount, bit_length) == 0` then the bits would be shifted right by as many bits as there are in the subarray. No optimisations there either.
+
+## Cyclic approach
+Instead of cycling through the array and moving every bit one by one, we immediately move every bit to its desired position.

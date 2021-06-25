@@ -34,3 +34,142 @@
 # e 00101101
 
 # Place your 20 test cases below, here.
+
+# Test for when bit array is null; any shift should result in empty bit array
+t 1
+
+n ""
+r 0 0 0
+e ""
+
+r 0 0 1
+e ""
+
+r 0 0 -1
+e ""
+
+
+# Test 1 bit; any shift will result in same bit array
+t 2
+
+n 1
+r 0 0 1
+e 1
+
+r 0 1 0
+e 1
+
+r 0 1 -5
+e 1
+
+
+# Simple 12 bit test
+t 3
+
+n 010000101000
+r 0 12 1
+e 001000010100
+
+
+# Test bit array still in intermediate memory after previous shifts
+t 4
+
+n 010000101000
+r 0 12 -1
+e 100001010000
+
+r 0 12 -1
+e 000010100001
+
+r 0 12 -1
+e 000101000010
+
+
+# Test shifting a whole cycle
+t 5
+
+n 010000101000
+r 0 12 0
+e 010000101000
+
+r 0 12 1
+e 001000010100
+
+r 0 12 -1
+e 010000101000
+
+r 0 12 -1
+e 100001010000
+
+r 0 12 -15
+e 001010000100
+
+
+# Test n bits, with different amount of moves
+t 6
+
+n 00101
+r 0 5 0
+e 00101
+
+r 0 5 1
+e 10010
+
+r 0 5 -1
+e 00101
+
+r 0 5 -1
+e 01010
+
+r 0 5 -8
+e 10010
+
+
+# Test shifting only specific mask in bit array
+t 7
+
+n 11000101
+r 3 5 0
+e 11000101
+
+r 3 5 1
+e 11010010
+
+
+# Test when bit_length is 0
+t 8
+
+n 101010
+r 2 0 4
+e 101010
+
+
+# Test reversing bytes
+t 9
+
+n 01100110011111111101
+r 1 16 8
+e 01111111111001100101
+
+n 011101011
+r 0 9 4
+e 101101110
+
+
+# Test uneven offset
+t 9
+
+n 0000111100001111000011110000111100001111000011110000
+r 4 44 8
+e 0000000011111111000011110000111100001111000011110000
+
+r 4 44 4
+e 0000111100001111111100001111000011110000111100000000
+
+n 0000111100001111000011110000111100001111000011110000
+r 4 44 3
+e 0000111111100001111000011110000111100001111000010000
+
+n 0000111100001111000011110000111100001111000011110000
+r 4 44 7
+e 0000000111111110000111100001111000011110000111100000

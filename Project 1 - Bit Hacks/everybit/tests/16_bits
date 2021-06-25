@@ -1,0 +1,16 @@
+# Here we will test some of the bit rotations for bit arrays of 16 bits
+
+t 0
+
+n 1001011010010110
+r 2 5 2
+e 1011010010010110
+
+r 3 8 2
+e 1010010100110110
+
+r 1 11 -4
+e 1101001101000110
+
+r 9 3 3001
+e 1101001100100110

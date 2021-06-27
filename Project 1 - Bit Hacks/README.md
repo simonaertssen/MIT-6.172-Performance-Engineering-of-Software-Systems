@@ -168,20 +168,22 @@ No performance increase when using keyword `restrict`. Removed again.
 Check whether there is actually a modification needed: if `modulo(-bit_right_amount, bit_length) == 0` then the bits would be shifted right by as many bits as there are in the subarray. No optimisations there either.
 
 ## Cyclic approach
-Instead of cycling through the array and moving every bit one by one, we immediately move every bit to its desired position. We literally hop across the array `left_amount` of steps per iteration and move each value along.
+Instead of cycling through the array and moving every bit one by one, we immediately move every bit to its desired position. We literally hop across the array `left_amount` of steps per iteration and move each value along. That requires us to save the value of the item to be replaced in a temporary value, indexed by its position in the array.
 
 So for the array `10010110` where we apply `r 2 5 2`, we expect `10110100`. We then simply start rotating every bit two places:
 
-    size_t prv = offset;                                // index of previous element
-    size_t nxt = modulo(prv + left_amount, length);     // index of next element
+    size_t prv = offset;                                                // index of previous element
+    size_t nxt = offset + modulo(prv+right_amount-offset, bit_length);  // index of next element
 
-    bool x = bitarray[nxt];                             // next element
-
+    bool x = bitarray[prv];                                             // previous value in array
+    bool y = bitarray[nxt];                                             // next value in array
+       
     for (size_t i = 0; i < length - 1; i++) { 
-        bitarray[nxt] = bitarray[prv];
-        prv = nxt
-        nxt = modulo(prv+left_amount-offset, length);   // mod with respect to begin of subarray
-        x = bitarray[nxt];
+        bitarray[nxt] = x;                                  // replace next value with previous one
+        x = y;                                              // replace value 'pointers'
+        prv = nxt                                                       
+        nxt = offset + modulo(prv+right_amount-offset, bit_length);     // mod with respect to begin of subarray
+        y = bitarray[nxt]
     }
 
 This produces:
@@ -192,10 +194,19 @@ This produces:
     01011
     11010
 
-    prv = 2, nxt = 4, x = 0
-    i = 0: 1001x110  ->  10010110, nxt = 6, prv = 4, x = 1
-    i = 1: 100101x0  ->  10010100, nxt = 8
-    i = 2: x = 0  ->  10x10110  ->  10010110
+    setup:
+    prv = 2, nxt = 4
+    x = 0,   y = 0
+
+    i = 0: 10x1y110  ->  10x10110  -> prv = 4, nxt = 2 + (4+2-2%5) = 6  ->  10010010
+
+           0123x5y7      0123x5y7                                           0123x5y7
+               0 1           0                                                 0 1
+    i = 1: 10010010  ->  10010010  -> prv = 6, nxt = 2 + (6+2-2%5) = 3  ->  10010010
+
+    
+    i = 1: x = 1, 100101x0  ->  10010100, prv = 6, nxt = 2 + (6+2-2%5) = 3
+    i = 2: x = 1, 100x0100  ->  100x0100, prv = 6, nxt = 8
     i = 3: x = 1  ->  100x0110  ->  10010110
     i = 4: x = 0  ->  1001x110  ->  10010100
     

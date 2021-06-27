@@ -213,7 +213,10 @@ void bitarray_rotate(bitarray_t* const bitarray,
   if (k == 0) return;
 
   // Convert a rotate left or right to a left rotate only:
-  bitarray_rotate_left(bitarray, bit_offset, bit_length, k);
+  // bitarray_rotate_left(bitarray, bit_offset, bit_length, k);
+
+  // cyclic rotation: prevent moving these bits one by one
+  bitarray_rotate_cyclic(bitarray, bit_offset, bit_length, k);
 }
 
 static void bitarray_rotate_left(bitarray_t* const bitarray,
@@ -256,4 +259,21 @@ static char bitmask(const size_t bit_index) {
 static void bitarray_rotate_cyclic(bitarray_t* const bitarray,
   const size_t bit_offset,
   const size_t bit_length,
-  const ssize_t bit_right_amount);
+  const ssize_t bit_right_amount) {
+  assert(bit_offset + bit_length <= bitarray->bit_sz);
+  if (bit_length == 0) return;
+
+  size_t prv = bit_offset;                                                // index of previous element
+  size_t nxt = bit_offset + modulo(prv + bit_right_amount - bit_offset, bit_length);  // index of next element
+
+  bool x = bitarray_get(bitarray, prv);                                             // previous value in array
+  bool y = bitarray_get(bitarray, nxt);                                          // next value in array
+
+  for (size_t i = 0; i < bit_length - 1; i++) {
+    bitarray_set(bitarray, nxt, x);     // replace next value with previous one
+    x = y;                                              // replace value 'pointers'
+    prv = nxt;
+    nxt = bit_offset + modulo(prv + bit_right_amount - bit_offset, bit_length);     // mod with respect to begin of subarray
+    y = bitarray_get(bitarray, nxt);
+  }
+}

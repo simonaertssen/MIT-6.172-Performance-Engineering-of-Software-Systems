@@ -55,7 +55,7 @@ OBJECTS = $(patsubst %.c,%.o,$(SOURCES))
 PRODUCT = everybit
 
 # What we're building with
-CC = gcc -Wno-deprecated-declarations # Added this because of legacy timers
+CC = gcc -Wno-deprecated-declarations -Wno-unused-function # Added this because of legacy timers
 CFLAGS = -std=c99 -Wall -m64
 LDFLAGS = -flto #-fuse-ld=gold This is unknown on my laptop
 

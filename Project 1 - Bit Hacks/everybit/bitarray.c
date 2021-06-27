@@ -63,7 +63,7 @@ struct bitarray {
 static void bitarray_rotate_left(bitarray_t* const bitarray,
   const size_t bit_offset,
   const size_t bit_length,
-  const size_t bit_left_amount);
+  const size_t bit_left_amount) __attribute__((unused)); // Added unused flag, as compiler flag could not pick it up
 
 // Rotates a subarray left by one bit.
 //

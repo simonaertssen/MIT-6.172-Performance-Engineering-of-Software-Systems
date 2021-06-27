@@ -54,5 +54,5 @@ dkms.conf
 
 # Apple files:
 .DS_Store
-
+.vscode*
 *.cflags

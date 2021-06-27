@@ -71,6 +71,9 @@ def test_project1(binary):
     testdir = os.path.join(os.path.dirname(binary), 'tests')
     test_files = [os.path.join(testdir, file) for file in os.listdir(testdir)]
 
+    # If we only wish to test the default
+    test_files = [os.path.join(testdir, 'default')]
+
     num_passed = 0
     num_failed = 0
     test_index_total = 0

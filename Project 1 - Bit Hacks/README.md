@@ -188,7 +188,7 @@ So for the array `10010110` where we apply `r 2 5 2`, we expect `10110100`. We t
 
 After some testing it became clear that a left shift was preventing this algorithm from working correctly. A right shift was needed by removing the `-` from the modulo in the `bitarray_rotate` wrapper, and now it seems to work. However, not all tests were passed! Let us take a look.
 
-### Failed tests in the cyclic approach
+### Difficulties: what is wrong?
 We have problems when the subarray length and the number of shift steps are not coprime. What happens is that a cycle within the array exists, so that the `prv` and `nxt` pointers cycle through the same values:
 
             Array now: 100001010000, prv = 0, nxt = 3, x = 1, y = 0 
@@ -198,7 +198,20 @@ We have problems when the subarray length and the number of shift steps are not 
     i = 03, Array now: 000101010000, prv = 0, nxt = 3, x = 1, y = 1 
     ...
 
-How can we prevent this? We need to remember which indices have already been picked, and we can simply do this with the first index that ever produced a cycle.
+How can we prevent this? We need to remember which indices have already been picked, and we can simply do this with the first index that ever produced a cycle. 
 
+### Register cycles!
+The idea is to register how many cycles there are, and what period they have, using the remainder after division. In that way, we can easily track in what cycle we are by shifting a whole period and then increasing the `prv` pointer. Because we need to take care of left and right shifts, we need also need to check whether there are cycles going the other way. Example: take a bit length of 12, shifted twice to the right produces two cycles with a period of 6:
+
+    0 -> 2 -> 4 -> 6 -> 8 -> 10 -> 0
+    1 -> 3 -> 5 -> 7 -> 9 -> 11 -> 1
+
+However, if we shift 10 times to the right (or twice to the left) then the cycles just go in the opposite direction!
+
+### Results
+`-s` now yields 23 tiers, `-m` 28 tiers and `-l` 32 tiers. This is a huge improvement! From 19 to 32 tiers for the heaviest test has raised the maximum array length from around 3KB to around 2MB. That is a performance increase of about 680 times. Well done!
+
+### Further ideas
+One could register whether a left or a right shift is closest to the end result. Why shift `n` bit `n-1` places to the right if you can also shift them once to the left? However, this would require almost duplicate code, so we won't go into this now.
 
 

@@ -202,7 +202,7 @@ void bitarray_rotate(bitarray_t* const bitarray,
   // printf("k = %zu \n", k);
 
   // cyclic rotation: prevent moving these bits one by one
-  bitarray_rotate_cyclic(bitarray, bit_offset, bit_length, k);
+  bitarray_rotate_cyclic(bitarray, bit_offset, bit_length, -k);
 }
 
 static void bitarray_rotate_left(bitarray_t* const bitarray,
@@ -249,26 +249,44 @@ static void bitarray_rotate_cyclic(bitarray_t* const bitarray,
   assert(bit_offset + bit_length <= bitarray->bit_sz);
   if (bit_length == 0) return;
 
-  // printf("      , Array now: ");
-  // bitarray_fprint(stdout, bitarray);
+  bool PRINT = true;
+
+  if (PRINT) {
+    printf("      , Array now: ");
+    bitarray_fprint(stdout, bitarray);
+  }
 
   size_t prv = bit_offset;                                                            // index of previous element
   size_t nxt = bit_offset + modulo(prv + bit_right_amount - bit_offset, bit_length);  // index of next element
+  size_t first_value = prv;             // save first ever value so we can see when we encounter it again
+  size_t already_had_value = first_value;
+  bool already_cycled = false;
 
   bool x = bitarray_get(bitarray, prv); // previous value in array
   bool y = bitarray_get(bitarray, nxt); // next value in array
 
-  // printf(", prv = %zu, nxt = %zu, x = %d, y = %d \n", prv, nxt, x, y);
-  for (size_t i = 0; i < bit_length; i++) {
+  if (PRINT) printf(", prv = %zu, nxt = %zu, x = %d, y = %d \n", prv, nxt, x, y);
+
+  for (size_t i = 0; i < bit_length + 2; i++) {
     bitarray_set(bitarray, nxt, x);     // replace next value with previous one
     x = y;                              // replace value 'pointers'
     prv = nxt;
+
+    if (prv == already_had_value) {
+      already_cycled = true;
+      already_had_value++;
+      prv++;
+    }
+
+    // if (already_cycled && prv == first_value + bit_right_amount) return;
+
     nxt = bit_offset + modulo(prv + bit_right_amount - bit_offset, bit_length);       // mod with respect to begin of subarray
     y = bitarray_get(bitarray, nxt);
 
-    // printf("i = %.2zu, Array now: ", i);
-    // bitarray_fprint(stdout, bitarray);
-    // printf(", prv = %zu, nxt = %zu, x = %d, y = %d \n", prv, nxt, x, y);
+    if (PRINT) {
+      printf("i = %.2zu, Array now: ", i);
+      bitarray_fprint(stdout, bitarray);
+      printf(", prv = %zu, nxt = %zu, x = %d, y = %d \n", prv, nxt, x, y);
+    }
   }
-  // printf("\n");
 }

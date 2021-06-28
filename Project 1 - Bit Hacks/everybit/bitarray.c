@@ -197,12 +197,13 @@ void bitarray_rotate(bitarray_t* const bitarray,
 
   // Check whether we actually need to shift the array or not: eliminate
   // multiple full rotations.
-  size_t k = modulo(bit_right_amount, bit_length);
+  // size_t k = modulo(bit_right_amount, bit_length);
+  size_t k = bit_right_amount % bit_length;
   if (k == 0) return;
   // printf("k = %zu \n", k);
 
   // cyclic rotation: prevent moving these bits one by one
-  bitarray_rotate_cyclic(bitarray, bit_offset, bit_length, -k);
+  bitarray_rotate_cyclic(bitarray, bit_offset, bit_length, k);
 }
 
 static void bitarray_rotate_left(bitarray_t* const bitarray,
@@ -249,7 +250,7 @@ static void bitarray_rotate_cyclic(bitarray_t* const bitarray,
   assert(bit_offset + bit_length <= bitarray->bit_sz);
   if (bit_length == 0) return;
 
-  bool PRINT = true;
+  bool PRINT = false;
 
   if (PRINT) {
     printf("      , Array now: ");
@@ -258,8 +259,11 @@ static void bitarray_rotate_cyclic(bitarray_t* const bitarray,
 
   size_t prv = bit_offset;                                                            // index of previous element
   size_t nxt = bit_offset + modulo(prv + bit_right_amount - bit_offset, bit_length);  // index of next element
-  size_t first_value = prv;             // save first ever value so we can see when we encounter it again
-  size_t already_had_value = first_value;
+
+  bool cycles = !(bit_length % bit_right_amount); // If they divide then we have cycles
+  size_t nxt_first_ever_value = nxt;  // save first ever value so we can see when we encounter it again
+  size_t prv_first_ever_value = prv;  // save first ever value so we can see when we encounter it again
+  size_t prv_first_cycle_value = prv; // save first cycle value so we can see when we encounter it again
   bool already_cycled = false;
 
   bool x = bitarray_get(bitarray, prv); // previous value in array
@@ -267,18 +271,18 @@ static void bitarray_rotate_cyclic(bitarray_t* const bitarray,
 
   if (PRINT) printf(", prv = %zu, nxt = %zu, x = %d, y = %d \n", prv, nxt, x, y);
 
-  for (size_t i = 0; i < bit_length + 2; i++) {
+  for (size_t i = 0; i < bit_length; i++) {
     bitarray_set(bitarray, nxt, x);     // replace next value with previous one
     x = y;                              // replace value 'pointers'
     prv = nxt;
 
-    if (prv == already_had_value) {
-      already_cycled = true;
-      already_had_value++;
-      prv++;
-    }
+    // if (cycles && prv == prv_first_cycle_value) {
+    //   already_cycled = true;
+    //   prv_first_cycle_value++;
+    //   x = bitarray_get(bitarray, ++prv);
+    // }
 
-    // if (already_cycled && prv == first_value + bit_right_amount) return;
+    // if (cycles && already_cycled && (prv == prv_first_ever_value || prv == nxt_first_ever_value)) break;
 
     nxt = bit_offset + modulo(prv + bit_right_amount - bit_offset, bit_length);       // mod with respect to begin of subarray
     y = bitarray_get(bitarray, nxt);

@@ -48,10 +48,8 @@ int main(int argc, char** argv) {
   char optchar;
   opterr = 0;
   int selected_test = -1;
-  while ((optchar = getopt(argc, argv, "n:t:sml")) != -1) {
+  while ((optchar = getopt(argc, argv, "n:t:dsml")) != -1) {
     switch (optchar) {
-    case 'd':
-      debugging();
     case 'n':
       selected_test = atoi(optarg);
       break;
@@ -59,6 +57,9 @@ int main(int argc, char** argv) {
       // -t file runs functional tests in the provided file
       parse_and_run_tests(optarg, selected_test);
       retval = EXIT_SUCCESS;
+      goto cleanup;
+    case 'd':
+      debugging();
       goto cleanup;
     case 's':
       // -s runs the short rotation performance test.
@@ -110,7 +111,7 @@ void print_usage(const char* const argv_0) {
 
 
 void debugging() {
-  char bitstring_value[8] = { '1', '0', '0', '1', '0', '1', '1', '0' };
+  char bitstring_value[9] = { '1', '0', '0', '1', '0', '1', '1', '0' , '\0' };  // null-terminated was the problem!
   const char* bitstring = bitstring_value;
   const size_t bitstring_length = strlen(bitstring);
 
@@ -122,7 +123,11 @@ void debugging() {
     current_bit = (bitstring[i] == '1');
     bitarray_set(test_bitarray, i, current_bit);
   }
+
+  printf("Expected: 10110100\n");
+  printf("Actual:   ");
   bitarray_fprint(stdout, test_bitarray);
+  printf("\n");
 
   //bitarray_rotate(test_bitarray, bit_offset, bit_length, bit_right_shift_amount);
 }

@@ -71,7 +71,7 @@ r 0 12 1
 e 001000010100
 
 r 0 12 15
-e 000010000101
+e 100001000010
 
 
 # Test bit array still in intermediate memory after previous shifts

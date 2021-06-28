@@ -72,7 +72,7 @@ def test_project1(binary):
     test_files = [os.path.join(testdir, file) for file in os.listdir(testdir)]
 
     # If we only wish to test the default
-    test_files = [os.path.join(testdir, 'mytests')]
+    # test_files = [os.path.join(testdir, 'mytests')]
 
     num_passed = 0
     num_failed = 0

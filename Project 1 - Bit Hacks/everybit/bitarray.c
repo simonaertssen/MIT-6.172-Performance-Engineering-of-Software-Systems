@@ -199,7 +199,6 @@ void bitarray_rotate(bitarray_t* const bitarray,
   // multiple full rotations.
   size_t k = modulo(bit_right_amount, bit_length);
   if (k == 0) return;
-  // if (bit_right_amount < 0) k = bit_length - k;
 
   // cyclic rotation: prevent moving these bits one by one, but move immediately to the right place
   bitarray_rotate_cyclic(bitarray, bit_offset, bit_length, k);
@@ -249,21 +248,8 @@ static void bitarray_rotate_cyclic(bitarray_t* const bitarray,
   assert(bit_offset + bit_length <= bitarray->bit_sz);
   if (bit_length == 0) return;
 
-  bool PRINT = true;
-
-  // if (PRINT) {
-  //   printf("Array now: ");
-  //   bitarray_fprint(stdout, bitarray);
-  // }
-
-  if (PRINT) printf("%zu, %zu, %zu\n", bit_offset, bit_length, bit_right_amount);
-
   size_t cycle, num_cycles = 1;
   size_t pstep, period = bit_length;
-
-  if (PRINT) printf("%zu // %zu = %zu\n", bit_length, bit_right_amount, bit_length % bit_right_amount);
-  bool cycles = (bit_length % bit_right_amount == 0);       // If they divide then we have cycles
-  if (PRINT) printf("cycles =? %d\n", cycles);
 
   // Test if it's divisible
   if (bit_length % bit_right_amount == 0) {
@@ -277,53 +263,24 @@ static void bitarray_rotate_cyclic(bitarray_t* const bitarray,
     num_cycles = bit_length / period;
   }
 
-  if (PRINT) printf("num_cycles = %zu, period = %zu\n", num_cycles, period);
-  bool x, y;
+  bool x, y; // placeholders for temporary values
   size_t prv = bit_offset;                                                            // index of previous element
   size_t nxt = bit_offset + modulo(prv + bit_right_amount - bit_offset, bit_length);  // index of next element
-
-  // if (PRINT) printf(", prv = %zu, nxt = %zu, x = %d, y = %d \n", prv, nxt, x, y);
 
   for (cycle = 0; cycle < num_cycles; ++cycle) {
     x = bitarray_get(bitarray, prv); // previous value in array
     y = bitarray_get(bitarray, nxt); // next value in array
 
     for (pstep = 0; pstep < period; ++pstep) {
-      if (PRINT) {
-        printf("Array now: ");
-        bitarray_fprint(stdout, bitarray);
-        printf(", prv = %zu, nxt = %zu, x = %d, y = %d \n", prv, nxt, x, y);
+      bitarray_set(bitarray, nxt, x); // replace next value with previous one
+      if (pstep < period - 1) {
+        x = y;                        // replace value 'pointers'
+        prv = nxt;
+        nxt = bit_offset + modulo(prv + bit_right_amount - bit_offset, bit_length);   // mod with respect to begin of subarray
+        y = bitarray_get(bitarray, nxt);
       }
-      bitarray_set(bitarray, nxt, x);     // replace next value with previous one
-      x = y;                              // replace value 'pointers'
-      prv = nxt;
-      nxt = bit_offset + modulo(prv + bit_right_amount - bit_offset, bit_length);       // mod with respect to begin of subarray
-      y = bitarray_get(bitarray, nxt);
     }
-    printf("Cycle is over\n");
-
-    prv++;
+    prv++; // increase to fall into next cycle
     nxt = bit_offset + modulo(prv + bit_right_amount - bit_offset, bit_length);
   }
-  // for (size_t i = 0; i < bit_length; i++) {
-  //   bitarray_set(bitarray, nxt, x);     // replace next value with previous one
-  //   x = y;                              // replace value 'pointers'
-  //   prv = nxt;
-
-  //   // if (cycles && prv == prv_first_cycle_value) {
-  //   //   already_cycled = true;
-  //   //   prv_first_cycle_value++;
-  //   //   x = bitarray_get(bitarray, ++prv);
-  //   // }
-
-  //   // if (cycles && already_cycled && (prv == prv_first_ever_value || prv == nxt_first_ever_value)) break;
-
-  //   nxt = bit_offset + modulo(prv + bit_right_amount - bit_offset, bit_length);       // mod with respect to begin of subarray
-  //   y = bitarray_get(bitarray, nxt);
-
-  // if (PRINT) {
-  //   printf("i = %.2zu, Array now: ", i);
-  //   bitarray_fprint(stdout, bitarray);
-  //   printf(", prv = %zu, nxt = %zu, x = %d, y = %d \n", prv, nxt, x, y);
-  // }
 }

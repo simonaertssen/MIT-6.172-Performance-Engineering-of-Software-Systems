@@ -37,6 +37,7 @@
 
 void print_usage(const char* const argv_0);
 
+void debugging();
 
 // ******************************* Functions ********************************
 
@@ -49,6 +50,8 @@ int main(int argc, char** argv) {
   int selected_test = -1;
   while ((optchar = getopt(argc, argv, "n:t:sml")) != -1) {
     switch (optchar) {
+    case 'd':
+      debugging();
     case 'n':
       selected_test = atoi(optarg);
       break;
@@ -100,6 +103,26 @@ void print_usage(const char* const argv_0) {
     "\t -l Run a sample large (1s) rotation operation\n"
     "\t    (note: the provided -[s/m/l] options only test performance and NOT correctness.)\n"
     "\t -t tests/default\tRun alltests in the testfile tests/default\n"
-    "\t -n 1 -t tests/default\tRun test 1 in the testfile tests/default\n",
+    "\t -n 1 -t tests/default\tRun test 1 in the testfile tests/default\n"
+    "\t -d Run a small program in debugging mode\n",
     argv_0);
+}
+
+
+void debugging() {
+  char bitstring_value = '10010110';
+  const char* bitstring = &bitstring_value;
+  const size_t bitstring_length = strlen(bitstring);
+
+  static bitarray_t* test_bitarray = NULL;
+  test_bitarray = bitarray_new(bitstring_length);
+
+  bool current_bit;
+  for (size_t i = 0; i < bitstring_length; i++) {
+    current_bit = (bitstring[i] == '1');
+    bitarray_set(test_bitarray, i, current_bit);
+  }
+  bitarray_fprint(stdout, test_bitarray);
+
+  //bitarray_rotate(test_bitarray, bit_offset, bit_length, bit_right_shift_amount);
 }

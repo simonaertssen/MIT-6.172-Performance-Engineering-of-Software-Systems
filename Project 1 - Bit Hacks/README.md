@@ -186,4 +186,4 @@ So for the array `10010110` where we apply `r 2 5 2`, we expect `10110100`. We t
         y = bitarray[nxt]
     }
 
-After some testing it became clear that a left shift was preventing this algorithm from working correctly. A right shift was needed by removing the `-` from the modulo in the `bitarray_rotate` wrapper. However, not all tests were passed!
+After some testing it became clear that a left shift was preventing this algorithm from working correctly. A right shift was needed by removing the `-` from the modulo in the `bitarray_rotate` wrapper. However, not all tests were passed! Let us take a look:

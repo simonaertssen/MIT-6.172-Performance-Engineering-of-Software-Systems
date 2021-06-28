@@ -194,14 +194,14 @@ void bitarray_rotate(bitarray_t* const bitarray,
 
   // Check whether we actually need to shift the array or not: eliminate
   // multiple full rotations.
-  size_t k = modulo(-bit_right_amount, bit_length);
+  size_t k = modulo(bit_right_amount, bit_length);
   if (k == 0) return;
 
   // Convert a rotate left or right to a left rotate only:
-  // bitarray_rotate_left(bitarray, bit_offset, bit_length, k);
+  bitarray_rotate_left(bitarray, bit_offset, bit_length, (-bit_right_amount, bit_length));
 
   // cyclic rotation: prevent moving these bits one by one
-  bitarray_rotate_cyclic(bitarray, bit_offset, bit_length, k);
+  // bitarray_rotate_cyclic(bitarray, bit_offset, bit_length, k);
 }
 
 static void bitarray_rotate_left(bitarray_t* const bitarray,
@@ -251,7 +251,7 @@ static void bitarray_rotate_cyclic(bitarray_t* const bitarray,
   printf("\n");
 
   size_t prv = bit_offset;                                                // index of previous element
-  size_t nxt = bit_offset + modulo(prv + bit_right_amount - 1 - bit_offset, bit_length);  // index of next element
+  size_t nxt = bit_offset + modulo(prv + bit_right_amount - bit_offset, bit_length);  // index of next element
 
   bool x = bitarray_get(bitarray, prv);                                             // previous value in array
   bool y = bitarray_get(bitarray, nxt);                                          // next value in array
@@ -262,7 +262,7 @@ static void bitarray_rotate_cyclic(bitarray_t* const bitarray,
     printf("\n");
     x = y;                                              // replace value 'pointers'
     prv = nxt;
-    nxt = bit_offset + modulo(prv + bit_right_amount - 1 - bit_offset, bit_length);     // mod with respect to begin of subarray
+    nxt = bit_offset + modulo(prv + bit_right_amount - bit_offset, bit_length);     // mod with respect to begin of subarray
     y = bitarray_get(bitarray, nxt);
   }
 }

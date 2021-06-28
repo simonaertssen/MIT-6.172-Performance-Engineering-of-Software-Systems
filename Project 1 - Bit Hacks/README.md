@@ -186,27 +186,4 @@ So for the array `10010110` where we apply `r 2 5 2`, we expect `10110100`. We t
         y = bitarray[nxt]
     }
 
-This produces:
-
-    10010110
-    10110100
-
-    01011
-    11010
-
-    setup:
-    prv = 2, nxt = 2 + (2+2-2%5) = 4
-    x = 0,   y = 0
-
-    i = 0: 10x1y110  ->  10x10110  -> prv = 4, nxt = 2 + (4+2-2%5) = 6  ->  10010010
-
-           0123x5y7      0123x5y7                                           0123x5y7
-               0 1           0                                                 0 1
-    i = 1: 10010010  ->  10010010  -> prv = 6, nxt = 2 + (6+2-2%5) = 3  ->  10010010
-
-    
-    i = 1: x = 1, 100101x0  ->  10010100, prv = 6, nxt = 2 + (6+2-2%5) = 3
-    i = 2: x = 1, 100x0100  ->  100x0100, prv = 6, nxt = 8
-    i = 3: x = 1  ->  100x0110  ->  10010110
-    i = 4: x = 0  ->  1001x110  ->  10010100
-    
+After some testing it became clear that a left shift was preventing this algorithm from working correctly. A right shift was needed by removing the `-` from the modulo in the `bitarray_rotate` wrapper. However, not all tests were passed!

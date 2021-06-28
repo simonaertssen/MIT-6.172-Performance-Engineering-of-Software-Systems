@@ -60,6 +60,8 @@ int main(int argc, char** argv) {
       retval = EXIT_SUCCESS;
       goto cleanup;
     case 'd':
+      assert(modulo(-3, 5) == 2);
+      assert(modulo(-2, 5) == 3);
       assert(modulo(2, 5) == 2);
       assert(modulo(5, 5) == 0);
       assert(modulo(6, 5) == 1);
@@ -115,7 +117,7 @@ void print_usage(const char* const argv_0) {
 
 
 void debugging() {
-  char bitstring_value[9] = { '1', '0', '0', '1', '0', '1', '1', '0' , '\0' };  // null-terminated was the problem!
+  char bitstring_value[9] = { '1','0','0','0','0','1','0','1','\0' };  // null-terminated was the problem!
   const char* bitstring = bitstring_value;
   const size_t bitstring_length = strlen(bitstring);
 
@@ -128,13 +130,13 @@ void debugging() {
     bitarray_set(test_bitarray, i, current_bit);
   }
 
-  size_t bit_offset = 2;
-  size_t bit_length = 5;
-  size_t bit_right_shift_amount = 2;
+  size_t bit_offset = 0;
+  size_t bit_length = 8;
+  size_t bit_right_shift_amount = 1;
   bitarray_rotate(test_bitarray, bit_offset, bit_length, bit_right_shift_amount);
 
   printf("We had:   %s\n", bitstring_value);
-  printf("Expected: 10110100\n");
+  printf("Expected: 11000010\n");
   printf("Actual:   ");
   bitarray_fprint(stdout, test_bitarray);
   printf("\n");

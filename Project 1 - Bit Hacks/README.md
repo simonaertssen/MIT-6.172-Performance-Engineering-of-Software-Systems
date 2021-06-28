@@ -189,6 +189,16 @@ So for the array `10010110` where we apply `r 2 5 2`, we expect `10110100`. We t
 After some testing it became clear that a left shift was preventing this algorithm from working correctly. A right shift was needed by removing the `-` from the modulo in the `bitarray_rotate` wrapper, and now it seems to work. However, not all tests were passed! Let us take a look.
 
 ### Failed tests in the cyclic approach
-Perhaps there 
+We have problems when the subarray length and the number of shift steps are not coprime. What happens is that a cycle within the array exists, so that the `prv` and `nxt` pointers cycle through the same values:
+
+            Array now: 100001010000, prv = 0, nxt = 3, x = 1, y = 0 
+    i = 00, Array now: 100101010000, prv = 3, nxt = 6, x = 0, y = 0 
+    i = 01, Array now: 100101010000, prv = 6, nxt = 9, x = 0, y = 0 
+    i = 02, Array now: 100101010000, prv = 9, nxt = 0, x = 0, y = 1 
+    i = 03, Array now: 000101010000, prv = 0, nxt = 3, x = 1, y = 1 
+    ...
+
+How can we prevent this? We need to remember which indices have already been picked, and we can simply do this with the first index that ever produced a cycle.
+
 
 

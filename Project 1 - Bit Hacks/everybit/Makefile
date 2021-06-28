@@ -109,6 +109,7 @@ clean:
 	$(RM) everybit *.o .buildmode *.gcov *.gcno *.gcda *.out.*
 
 test: $(PRODUCT)
+	clear
 	../test.py $(PRODUCT)
 
 testquiet: $(PRODUCT)

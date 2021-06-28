@@ -199,6 +199,7 @@ void bitarray_rotate(bitarray_t* const bitarray,
   // multiple full rotations.
   size_t k = modulo(bit_right_amount, bit_length);
   if (k == 0) return;
+  // printf("k = %zu \n", k);
 
   // cyclic rotation: prevent moving these bits one by one
   bitarray_rotate_cyclic(bitarray, bit_offset, bit_length, k);
@@ -248,8 +249,8 @@ static void bitarray_rotate_cyclic(bitarray_t* const bitarray,
   assert(bit_offset + bit_length <= bitarray->bit_sz);
   if (bit_length == 0) return;
 
-  printf("Array now:");
-  bitarray_fprint(stdout, bitarray);
+  // printf("      , Array now: ");
+  // bitarray_fprint(stdout, bitarray);
 
   size_t prv = bit_offset;                                                            // index of previous element
   size_t nxt = bit_offset + modulo(prv + bit_right_amount - bit_offset, bit_length);  // index of next element
@@ -257,13 +258,17 @@ static void bitarray_rotate_cyclic(bitarray_t* const bitarray,
   bool x = bitarray_get(bitarray, prv); // previous value in array
   bool y = bitarray_get(bitarray, nxt); // next value in array
 
-  printf("prv = %zu, nxt = %zu, x = %d, y = %d \n", prv, nxt, x, y);
+  // printf(", prv = %zu, nxt = %zu, x = %d, y = %d \n", prv, nxt, x, y);
   for (size_t i = 0; i < bit_length; i++) {
-
     bitarray_set(bitarray, nxt, x);     // replace next value with previous one
     x = y;                              // replace value 'pointers'
     prv = nxt;
     nxt = bit_offset + modulo(prv + bit_right_amount - bit_offset, bit_length);       // mod with respect to begin of subarray
     y = bitarray_get(bitarray, nxt);
+
+    // printf("i = %.2zu, Array now: ", i);
+    // bitarray_fprint(stdout, bitarray);
+    // printf(", prv = %zu, nxt = %zu, x = %d, y = %d \n", prv, nxt, x, y);
   }
+  // printf("\n");
 }

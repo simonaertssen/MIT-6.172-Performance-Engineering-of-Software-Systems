@@ -70,6 +70,9 @@ n 010000101000
 r 0 12 1
 e 001000010100
 
+r 0 12 15
+e 000010000101
+
 
 # Test bit array still in intermediate memory after previous shifts
 t 4
@@ -100,9 +103,6 @@ e 010000101000
 
 r 0 12 -1
 e 100001010000
-
-r 0 12 15
-e 000100001010
 
 r 0 12 -15
 e 001010000100

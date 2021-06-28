@@ -65,6 +65,12 @@ int main(int argc, char** argv) {
       assert(modulo(2, 5) == 2);
       assert(modulo(5, 5) == 0);
       assert(modulo(6, 5) == 1);
+
+      assert(modulo(2, 12) == 2);
+      assert(modulo(-2, 12) == 10);
+      assert(modulo(15, 12) == 3);
+      assert(modulo(-15, 12) == 9);
+
       debugging();
       goto cleanup;
     case 's':
@@ -136,7 +142,7 @@ void debugging() {
   bitarray_rotate(test_bitarray, bit_offset, bit_length, bit_right_shift_amount);
 
   printf("We had:   %s\n", bitstring_value);
-  printf("Expected: 000100001010\n");
+  printf("Expected: 001010000100\n");
   printf("Actual:   ");
   bitarray_fprint(stdout, test_bitarray);
   printf("\n");

@@ -114,4 +114,7 @@ test: $(PRODUCT)
 testquiet: $(PRODUCT)
 	../test.py --quiet $(PRODUCT)
 
+debugging: 
+	$(CC) $(OBJECTS) $(LDFLAGS) $(EXTRA_LDFLAGS) -o $@
+	
 .PHONY:		all clean

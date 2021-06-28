@@ -197,12 +197,10 @@ void bitarray_rotate(bitarray_t* const bitarray,
 
   // Check whether we actually need to shift the array or not: eliminate
   // multiple full rotations.
-  // size_t k = modulo(bit_right_amount, bit_length);
-  size_t k = bit_right_amount % bit_length;
+  size_t k = modulo(bit_right_amount, bit_length);
   if (k == 0) return;
-  // printf("k = %zu \n", k);
 
-  // cyclic rotation: prevent moving these bits one by one
+  // cyclic rotation: prevent moving these bits one by one, but move immediately to the right place
   bitarray_rotate_cyclic(bitarray, bit_offset, bit_length, k);
 }
 

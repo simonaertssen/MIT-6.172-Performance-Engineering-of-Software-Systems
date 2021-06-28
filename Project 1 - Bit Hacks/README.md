@@ -178,7 +178,7 @@ So for the array `10010110` where we apply `r 2 5 2`, we expect `10110100`. We t
     bool x = bitarray[prv];                                             // previous value in array
     bool y = bitarray[nxt];                                             // next value in array
        
-    for (size_t i = 0; i < length - 1; i++) { 
+    for (size_t i = 0; i < length; i++) { 
         bitarray[nxt] = x;                                  // replace next value with previous one
         x = y;                                              // replace value 'pointers'
         prv = nxt                                                       
@@ -189,6 +189,6 @@ So for the array `10010110` where we apply `r 2 5 2`, we expect `10110100`. We t
 After some testing it became clear that a left shift was preventing this algorithm from working correctly. A right shift was needed by removing the `-` from the modulo in the `bitarray_rotate` wrapper, and now it seems to work. However, not all tests were passed! Let us take a look.
 
 ### Failed tests in the cyclic approach
-It seems like all tests with more than 8 bytes fail
+Perhaps there 
 
 

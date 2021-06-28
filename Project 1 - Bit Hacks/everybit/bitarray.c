@@ -248,13 +248,18 @@ static void bitarray_rotate_cyclic(bitarray_t* const bitarray,
   assert(bit_offset + bit_length <= bitarray->bit_sz);
   if (bit_length == 0) return;
 
+  printf("Array now:");
+  bitarray_fprint(stdout, bitarray);
+
   size_t prv = bit_offset;                                                            // index of previous element
   size_t nxt = bit_offset + modulo(prv + bit_right_amount - bit_offset, bit_length);  // index of next element
 
   bool x = bitarray_get(bitarray, prv); // previous value in array
   bool y = bitarray_get(bitarray, nxt); // next value in array
 
+  printf("prv = %zu, nxt = %zu, x = %d, y = %d \n", prv, nxt, x, y);
   for (size_t i = 0; i < bit_length; i++) {
+
     bitarray_set(bitarray, nxt, x);     // replace next value with previous one
     x = y;                              // replace value 'pointers'
     prv = nxt;

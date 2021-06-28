@@ -98,7 +98,6 @@ all:		$(PRODUCT)
 
 # How to compile a C file
 %.o:		%.c $(HEADERS) .buildmode
-	@echo $(PRODUCT)
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -o $@ -c $<
 
 # How to link the product

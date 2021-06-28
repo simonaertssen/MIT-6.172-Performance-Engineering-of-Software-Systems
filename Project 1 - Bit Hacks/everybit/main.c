@@ -110,8 +110,8 @@ void print_usage(const char* const argv_0) {
 
 
 void debugging() {
-  char bitstring_value = '10010110';
-  const char* bitstring = &bitstring_value;
+  char bitstring_value[8] = { '1', '0', '0', '1', '0', '1', '1', '0' };
+  const char* bitstring = bitstring_value;
   const size_t bitstring_length = strlen(bitstring);
 
   static bitarray_t* test_bitarray = NULL;

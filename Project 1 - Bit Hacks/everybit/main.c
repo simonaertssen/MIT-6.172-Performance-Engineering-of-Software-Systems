@@ -124,7 +124,10 @@ void debugging() {
     bitarray_set(test_bitarray, i, current_bit);
   }
 
-  bitarray_rotate(test_bitarray, 2, 5, 2);
+  size_t bit_offset = 2;
+  size_t bit_length = 5;
+  size_t bit_right_shift_amount = 2;
+  bitarray_rotate(test_bitarray, bit_offset, bit_length, bit_right_shift_amount);
 
   printf("We had:   %s\n", bitstring_value);
   printf("Expected: 10110100\n");

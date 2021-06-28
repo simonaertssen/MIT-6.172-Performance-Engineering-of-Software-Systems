@@ -1,8 +1,9 @@
 // Here we make a simple main program to debug the algorithms
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
+#include <string.h>
 
 #include "./bitarray.h"
 #include "./tests.h"
@@ -17,7 +18,7 @@ int main(int argc, char** argv) {
 
     bool current_bit;
     for (size_t i = 0; i < bitstring_length; i++) {
-        current_bit = boolfromchar(bitstring[i]);
+        current_bit = (bitstring[i] == '1');
         bitarray_set(test_bitarray, i, current_bit);
     }
     bitarray_fprint(stdout, test_bitarray);

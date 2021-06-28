@@ -28,6 +28,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #include <unistd.h>
 #include "./tests.h"
@@ -59,6 +60,7 @@ int main(int argc, char** argv) {
       retval = EXIT_SUCCESS;
       goto cleanup;
     case 'd':
+      assert(modulo)
       debugging();
       goto cleanup;
     case 's':

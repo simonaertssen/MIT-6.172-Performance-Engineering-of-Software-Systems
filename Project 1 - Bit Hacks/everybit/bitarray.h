@@ -85,4 +85,21 @@ void bitarray_rotate(bitarray_t* const bitarray,
     const size_t bit_length,
     const ssize_t bit_right_amount);
 
+// Portable modulo operation that supports negative dividends.
+//
+// Many programming languages define modulo in a manner incompatible with its
+// widely-accepted mathematical definition.
+// http://stackoverflow.com/questions/1907565/c-python-different-behaviour-of-the-modulo-operation
+// provides details; in particular, C's modulo
+// operator (which the standard calls a "remainder" operator) yields a result
+// signed identically to the dividend e.g., -1 % 10 yields -1.
+// This is obviously unacceptable for a function which returns size_t, so we
+// define our own.
+//
+// n is the dividend and m is the divisor
+//
+// Returns a positive integer r = n (mod m), in the range
+// 0 <= r < m.
+size_t modulo(const ssize_t n, const size_t m);
+
 #endif  // BITARRAY_H

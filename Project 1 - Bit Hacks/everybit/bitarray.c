@@ -255,10 +255,20 @@ static void bitarray_rotate_cyclic(bitarray_t* const bitarray,
   //   bitarray_fprint(stdout, bitarray);
   // }
 
+  if (PRINT) printf("%zu, %zu, %zu\n", bit_offset, bit_length, bit_right_amount);
+
   size_t cycle, num_cycles = 1;
-  bool cycles = !(bit_length % bit_right_amount);       // If they divide then we have cycles
-  if (cycles) num_cycles = bit_length / bit_right_amount;
-  size_t step, period = bit_length / num_cycles;
+  size_t pstep, period = bit_length;
+
+  if (PRINT) printf("%zu // %zu = %zu\n", bit_length, bit_right_amount, bit_length % bit_right_amount);
+  bool cycles = (bit_length % bit_right_amount == 0);       // If they divide then we have cycles
+  if (PRINT) printf("cycles =? %d\n", cycles);
+
+  if (cycles) {
+    period = bit_length / bit_right_amount;
+    num_cycles = bit_length / period;
+  }
+
 
   if (PRINT) printf("num_cycles = %zu, period = %zu\n", num_cycles, period);
   bool x, y;
@@ -271,7 +281,7 @@ static void bitarray_rotate_cyclic(bitarray_t* const bitarray,
     x = bitarray_get(bitarray, prv); // previous value in array
     y = bitarray_get(bitarray, nxt); // next value in array
 
-    for (step = 0; step < period + 1; ++step) {
+    for (pstep = 0; pstep < period; ++pstep) {
       if (PRINT) {
         printf("Array now: ");
         bitarray_fprint(stdout, bitarray);

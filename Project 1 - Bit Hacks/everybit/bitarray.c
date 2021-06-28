@@ -26,10 +26,12 @@
 
 
 #include "./bitarray.h"
+#include "./tests.h"
 
 #include <assert.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include <sys/types.h>
 
@@ -224,7 +226,7 @@ static void bitarray_rotate_left_one(bitarray_t* const bitarray,
   bitarray_set(bitarray, i, first_bit);
 }
 
-static size_t modulo(const ssize_t n, const size_t m) {
+size_t modulo(const ssize_t n, const size_t m) {
   const ssize_t signed_m = (ssize_t)m;
   assert(signed_m > 0);
   const ssize_t result = ((n % signed_m) + signed_m) % signed_m;
@@ -246,17 +248,19 @@ static void bitarray_rotate_cyclic(bitarray_t* const bitarray,
   assert(bit_offset + bit_length <= bitarray->bit_sz);
   if (bit_length == 0) return;
 
+  bitarray_fprint(stdout, bitarray);
   size_t prv = bit_offset;                                                // index of previous element
-  size_t nxt = bit_offset + modulo(prv + bit_right_amount - bit_offset, bit_length) - 1;  // index of next element
+  size_t nxt = bit_offset + modulo(prv + bit_right_amount - 1 - bit_offset, bit_length);  // index of next element
 
   bool x = bitarray_get(bitarray, prv);                                             // previous value in array
   bool y = bitarray_get(bitarray, nxt);                                          // next value in array
 
   for (size_t i = 0; i < bit_length; i++) {
+
     bitarray_set(bitarray, nxt, x);     // replace next value with previous one
     x = y;                                              // replace value 'pointers'
     prv = nxt;
-    nxt = bit_offset + modulo(prv + bit_right_amount - bit_offset, bit_length) - 1;     // mod with respect to begin of subarray
+    nxt = bit_offset + modulo(prv + bit_right_amount - 1 - bit_offset, bit_length);     // mod with respect to begin of subarray
     y = bitarray_get(bitarray, nxt);
   }
 }

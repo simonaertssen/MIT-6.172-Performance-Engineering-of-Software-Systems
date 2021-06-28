@@ -26,6 +26,7 @@
 #include <sys/types.h>
 #include <stdbool.h>
 
+
  // ********************************* Types **********************************
 
  // Abstract data type representing an array of bits.

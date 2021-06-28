@@ -60,7 +60,9 @@ int main(int argc, char** argv) {
       retval = EXIT_SUCCESS;
       goto cleanup;
     case 'd':
-      assert(modulo)
+      assert(modulo(2, 5) == 2);
+      assert(modulo(5, 5) == 0);
+      assert(modulo(6, 5) == 1);
       debugging();
       goto cleanup;
     case 's':

@@ -199,6 +199,7 @@ void bitarray_rotate(bitarray_t* const bitarray,
   // multiple full rotations.
   size_t k = modulo(bit_right_amount, bit_length);
   if (k == 0) return;
+  // if (bit_right_amount < 0) k = bit_length - k;
 
   // cyclic rotation: prevent moving these bits one by one, but move immediately to the right place
   bitarray_rotate_cyclic(bitarray, bit_offset, bit_length, k);
@@ -264,11 +265,17 @@ static void bitarray_rotate_cyclic(bitarray_t* const bitarray,
   bool cycles = (bit_length % bit_right_amount == 0);       // If they divide then we have cycles
   if (PRINT) printf("cycles =? %d\n", cycles);
 
-  if (cycles) {
+  // Test if it's divisible
+  if (bit_length % bit_right_amount == 0) {
     period = bit_length / bit_right_amount;
     num_cycles = bit_length / period;
   }
 
+  // Test if other direction is divisible
+  if (bit_length % (bit_length - bit_right_amount) == 0) {
+    period = bit_length / (bit_length - bit_right_amount);
+    num_cycles = bit_length / period;
+  }
 
   if (PRINT) printf("num_cycles = %zu, period = %zu\n", num_cycles, period);
   bool x, y;

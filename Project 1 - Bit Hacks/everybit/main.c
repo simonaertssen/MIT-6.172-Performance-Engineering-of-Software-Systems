@@ -40,6 +40,8 @@ void print_usage(const char* const argv_0);
 
 void debugging();
 
+void create_reverse_bit_table();
+
 // ******************************* Functions ********************************
 
 int main(int argc, char** argv) {
@@ -49,7 +51,7 @@ int main(int argc, char** argv) {
   char optchar;
   opterr = 0;
   int selected_test = -1;
-  while ((optchar = getopt(argc, argv, "n:t:dsml")) != -1) {
+  while ((optchar = getopt(argc, argv, "n:t:cdsml")) != -1) {
     switch (optchar) {
     case 'n':
       selected_test = atoi(optarg);
@@ -60,18 +62,10 @@ int main(int argc, char** argv) {
       retval = EXIT_SUCCESS;
       goto cleanup;
     case 'd':
-      assert(modulo(-3, 5) == 2);
-      assert(modulo(-2, 5) == 3);
-      assert(modulo(2, 5) == 2);
-      assert(modulo(5, 5) == 0);
-      assert(modulo(6, 5) == 1);
-
-      assert(modulo(2, 12) == 2);
-      assert(modulo(-2, 12) == 10);
-      assert(modulo(15, 12) == 3);
-      assert(modulo(-15, 12) == 9);
-
       debugging();
+      goto cleanup;
+    case 'c':
+      create_reverse_bit_table();
       goto cleanup;
     case 's':
       // -s runs the short rotation performance test.
@@ -147,4 +141,17 @@ void debugging() {
   bitarray_fprint(stdout, test_bitarray);
   printf("\n");
 
+}
+
+void create_reverse_bit_table() {
+  int num_bits = 8;
+  unsigned int reverse_num;
+  for (unsigned int num = 0; num < 256; num++) {
+    reverse_num = 0;
+    for (int i = 0; i < num_bits; i++) {
+      if ((num & (1 << i)))
+        reverse_num |= 1 << ((num_bits - 1) - i);
+    }
+    printf("0x%X, ", reverse_num);
+  }
 }

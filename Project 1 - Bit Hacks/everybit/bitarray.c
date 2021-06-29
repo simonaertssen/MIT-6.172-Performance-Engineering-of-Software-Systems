@@ -98,7 +98,7 @@ static void bitarray_rotate_left_one(bitarray_t* const bitarray,
 static void bitarray_rotate_cyclic(bitarray_t* const bitarray,
   const size_t bit_offset,
   const size_t bit_length,
-  const ssize_t bit_right_amount);
+  const ssize_t bit_right_amount) __attribute__((unused)); // Added unused flag, as compiler flag could not pick it up
 
 // Rotates subarray ab as (a^R b^R)^R = ba using a precomputed table
 // 
@@ -359,9 +359,17 @@ static void bitarray_rotate_reverse(bitarray_t* const bitarray,
   if (bit_length == 0) return;
 
   // Reverse the first part of the subarray:
+  bitarray_fprint(stdout, bitarray);
+  printf("\n");
   bitarray_reverse(bitarray, bit_offset, bit_right_amount);
+  bitarray_fprint(stdout, bitarray);
+  printf("\n");
   // Reverse the second part of the subarray:
   bitarray_reverse(bitarray, bit_offset + bit_right_amount, bit_length - bit_right_amount);
+  bitarray_fprint(stdout, bitarray);
+  printf("\n");
   // Reverse the whole subarray:
   bitarray_reverse(bitarray, bit_offset, bit_length);
+  bitarray_fprint(stdout, bitarray);
+  printf("\n");
 }

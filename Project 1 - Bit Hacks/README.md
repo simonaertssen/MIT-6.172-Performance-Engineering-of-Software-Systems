@@ -214,4 +214,11 @@ However, if we shift 10 times to the right (or twice to the left) then the cycle
 ### Further ideas
 One could register whether a left or a right shift is closest to the end result. Why shift `n` bit `n-1` places to the right if you can also shift them once to the left? However, this would require almost duplicate code, so we won't go into this now.
 
+## Reversal approach
+Finally, there is a clever approach that moves every bit twice without using auxiliary memory. Treating the string to be rotated as `ab`, observe the identity `(a^R b^R)^R = ba`, where `R` is the operation that reverses a string. The “reverse” operation can be accomplished using only constant storage. Thus, with 3 reversals of bit strings, the string can be rotated.
 
+### Precomputing the table
+This is easy, we can simply pluck off a program from [here](https://www.geeksforgeeks.org/write-an-efficient-c-program-to-reverse-bits-of-a-number/). What happens is that for every number between 0 and 255 we test every bit, if there is one bit at index `i` then set a `1` at the index `8 - 1 - i`.
+
+###
+We will start with arrays of 8 bits, for simplicity. So for the array `10010110` where we apply `r 2 5 2`, we expect `10110100`. If we take the subarray `01011` then we divide it into `01` and `011`. We reverse the bits like `10` and `110`, and put them together as `110` and `10` and we get `10110100`. Easy!

@@ -194,6 +194,20 @@ void bitarray_set(bitarray_t* const bitarray,
   bitarray->buf[bit_index / 8] = (bitarray->buf[bit_index / 8] & ~bitmask(bit_index)) | (value ? bitmask(bit_index) : 0);
 }
 
+// Indexes into a bit array, retreiving the byte at the specified zero-based index.
+bool bitarray_get_byte(const bitarray_t* const bitarray, const size_t byte_index) {
+  assert(byte_index < bitarray->bit_sz);
+  return bitarray->buf[byte_index];
+}
+
+// Indexes into a bit array, setting the byte at the specified zero-based index.
+void bitarray_set_byte(bitarray_t* const bitarray,
+  const size_t byte_index,
+  const bool value) {
+  assert(byte_index < bitarray->bit_sz);
+  bitarray->buf[byte_index] = (char)value;
+}
+
 void bitarray_randfill(bitarray_t* const bitarray) {
   int32_t* ptr = (int32_t*)bitarray->buf;
   for (int64_t i = 0; i < bitarray->bit_sz / 32 + 1; i++) {
@@ -328,13 +342,13 @@ unsigned char reverse_byte(unsigned char byte) {
 
 static void bitarray_reverse(bitarray_t* const bitarray,
   const size_t bit_offset,
-  const size_t bit_length,
-  const ssize_t bit_right_amount) {
+  const size_t bit_length) {
   assert(bit_offset + bit_length <= bitarray->bit_sz);
   if (bit_length == 0) return;
 
-
+  bitarray_set_byte(bitarray, bit_offset, reverse_byte(bitarray_get_byte(bitarray, bit_offset)));
 }
+
 
 
 static void bitarray_rotate_reverse(bitarray_t* const bitarray,

@@ -48,13 +48,20 @@ size_t bitarray_get_bit_sz(const bitarray_t* const bitarray);
 // Does a random fill of all the bits in the bit array.
 void bitarray_randfill(bitarray_t* const bitarray);
 
-// Indexes into a bit array, retreiving the bit at the specified zero-based
-// index.
+// Indexes into a bit array, retreiving the bit at the specified zero-based index.
 bool bitarray_get(const bitarray_t* const bitarray, const size_t bit_index);
 
 // Indexes into a bit array, setting the bit at the specified zero-based index.
 void bitarray_set(bitarray_t* const bitarray,
     const size_t bit_index,
+    const bool value);
+
+// Indexes into a bit array, retreiving the byte at the specified zero-based index.
+bool bitarray_get_byte(const bitarray_t* const bitarray, const size_t byte_index);
+
+// Indexes into a bit array, setting the byte at the specified zero-based index.
+void bitarray_set_byte(bitarray_t* const bitarray,
+    const size_t byte_index,
     const bool value);
 
 // Rotates a subarray.

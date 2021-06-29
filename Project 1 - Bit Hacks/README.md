@@ -220,5 +220,6 @@ Finally, there is a clever approach that moves every bit twice without using aux
 ### Precomputing the table
 This is easy, we can simply pluck off a program from [here](https://www.geeksforgeeks.org/write-an-efficient-c-program-to-reverse-bits-of-a-number/). What happens is that for every number between 0 and 255 we test every bit, if there is one bit at index `i` then set a `1` at the index `8 - 1 - i`.
 
-###
+### How does it work?
 We will start with arrays of 8 bits, for simplicity. So for the array `10010110` where we apply `r 2 5 2`, we expect `10110100`. If we take the subarray `01011` then we divide it into `01` and `011`. We reverse the bits like `10` and `110`, and put them together as `110` and `10` and we get `10110100`. Easy!
+

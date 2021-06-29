@@ -109,8 +109,13 @@ static void bitarray_rotate_reverse(bitarray_t* const bitarray,
   const size_t bit_length,
   const ssize_t bit_right_amount);
 
-// Reverse bits of a byte using a precomputed table
+// Reverse bits of a byte using a precomputed table.
 unsigned char reverse_byte(unsigned char byte);
+
+// Reverse a subarray using an offset and a length.
+static void bitarray_reverse(bitarray_t* const bitarray,
+  const size_t bit_offset,
+  const size_t bit_length);
 
 // Produces a mask which, when ANDed with a byte, retains only the
 // bit_index th byte.
@@ -321,7 +326,7 @@ unsigned char reverse_byte(unsigned char byte) {
   return (unsigned char)t[byte];
 }
 
-static void bitarray_rotate_reverse(bitarray_t* const bitarray,
+static void bitarray_reverse(bitarray_t* const bitarray,
   const size_t bit_offset,
   const size_t bit_length,
   const ssize_t bit_right_amount) {
@@ -329,4 +334,20 @@ static void bitarray_rotate_reverse(bitarray_t* const bitarray,
   if (bit_length == 0) return;
 
 
+}
+
+
+static void bitarray_rotate_reverse(bitarray_t* const bitarray,
+  const size_t bit_offset,
+  const size_t bit_length,
+  const ssize_t bit_right_amount) {
+  assert(bit_offset + bit_length <= bitarray->bit_sz);
+  if (bit_length == 0) return;
+
+  // Reverse the first part of the subarray:
+  bitarray_reverse(bitarray, bit_offset, bit_right_amount);
+  // Reverse the second part of the subarray:
+  bitarray_reverse(bitarray, bit_offset + bit_right_amount, bit_length - bit_right_amount);
+  // Reverse the whole subarray:
+  bitarray_reverse(bitarray, bit_offset, bit_length);
 }

@@ -42,6 +42,8 @@ void debugging();
 
 void create_reverse_bit_table();
 
+void create_reverse_in_place_bit_table();
+
 // ******************************* Functions ********************************
 
 int main(int argc, char** argv) {
@@ -151,12 +153,45 @@ void debugging() {
 void create_reverse_bit_table() {
   int num_bits = 8;
   unsigned int reverse_num;
+
+  unsigned int power = 1;
+  unsigned int powers[8] = { 2, 4, 8, 16, 32, 64, 128, 256 };
   for (unsigned int num = 0; num < 256; num++) {
+    if (num > powers[power]) power++;
     reverse_num = 0;
     for (int i = 0; i < num_bits; i++) {
       if ((num & (1 << i)))
         reverse_num |= 1 << ((num_bits - 1) - i);
     }
-    printf("0x%X, ", reverse_num);
+    reverse_num >>= (8 - power);
+    printf("0x%.2d, ", reverse_num);
+    if (num % 16 == 15) printf("\n");
   }
+}
+
+void create_reverse_in_place_bit_table() {
+  int num_bits = 8;
+  unsigned int reverse_num, num = 0;
+  for (unsigned int pow = 0; pow < num_bits; pow++) {
+    for (unsigned int prv = pow; prv > 0; prv--) {
+      num++;
+      reverse_num = 0;
+      for (int i = 0; i < num_bits; i++) {
+        if ((num & (1 << i)))
+          reverse_num |= 1 << ((num_bits - 1) - i);
+      }
+      printf("0x%X, ", reverse_num);
+    }
+    printf("\n");
+  }
+
+  // for (unsigned int num = 0; num < 256; num++) {
+  //   reverse_num = 0;
+  //   for (int i = 0; i < num_bits; i++) {
+  //     if ((num & (1 << i)))
+  //       reverse_num |= 1 << ((num_bits - 1) - i);
+  //   }
+  //   reverse_num >>
+  //     printf("0x%X, ", reverse_num);
+  // }
 }

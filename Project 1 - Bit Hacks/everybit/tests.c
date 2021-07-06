@@ -190,6 +190,13 @@ void bitarray_fprint(FILE* const stream,
   }
 }
 
+void bitarray_value_fprint(FILE* const stream,
+  const unsigned char value) {
+  for (int i = 0; i < 8; i++) {
+    printf("%d", !!((value << i) & 0x80));
+  }
+}
+
 static void testutil_expect_internal(const char* bitstring,
   const char* const func_name,
   const int line) {

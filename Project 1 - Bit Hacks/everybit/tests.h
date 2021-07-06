@@ -47,5 +47,9 @@ void parse_and_run_tests(const char* filename, int min_test);
 void bitarray_fprint(FILE* const stream,
     const bitarray_t* const bitarray);
 
+// Prints a string representation of a bit array (as a numerical value).
+void bitarray_value_fprint(FILE* const stream,
+    const unsigned char value);
+
 #endif  // TESTS_H
 

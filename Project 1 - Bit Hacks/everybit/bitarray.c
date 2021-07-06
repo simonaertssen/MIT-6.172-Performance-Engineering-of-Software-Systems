@@ -203,7 +203,7 @@ unsigned char bitarray_get_bits(const bitarray_t* const bitarray,
   const size_t bit_index,
   const size_t bit_length) {
   assert(bit_index < bitarray->bit_sz);
-  return (bitarray->buf[bit_index / 8] & bitmask_range(bit_index, bit_length)) >> bit_length;
+  return (bitarray->buf[bit_index / 8] & bitmask_range(bit_index, bit_length));
 }
 
 // Indexes into a bit array, setting the byte at the specified zero-based index.
@@ -284,6 +284,7 @@ static unsigned char bitmask_range(const size_t bit_index, const size_t bit_leng
   for (size_t i = bit_index; i < bit_length; i++) {
     output |= 1 << (bit_index % 8);
   }
+  
   return output;
 }
 
@@ -366,11 +367,11 @@ static void bitarray_reverse(bitarray_t* const bitarray,
   bitarray_fprint(stdout, bitarray);
   printf(" with offset = %zu and length = %zu\n", bit_offset, bit_length);
 
-  unsigned char byte_gotten = bitarray_get_bits(bitarray, bit_offset, bit_length);
-  printf("Relevant bits: %u\n", byte_gotten);
+  unsigned char bits_gotten = bitarray_get_bits(bitarray, bit_offset, bit_length);
+  printf("Relevant bits: %u\n", bits_gotten);
 
-  unsigned char byte_rvrsed = reverse_bits(byte_gotten);
-  printf("Reversed bits: %u\n", byte_rvrsed);
+  unsigned char bits_rvrsed = reverse_bits(bits_gotten);
+  printf("Reversed bits: %u\n", bits_rvrsed);
 
   bitarray_set_bits(bitarray, bit_offset, bit_length,
     reverse_bits(bitarray_get_bits(bitarray, bit_offset, bit_length)));

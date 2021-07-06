@@ -110,7 +110,7 @@ static void bitarray_rotate_reverse(bitarray_t* const bitarray,
   const ssize_t bit_right_amount);
 
 // Reverse bits of a byte using a precomputed table.
-unsigned char reverse_byte(unsigned char byte);
+unsigned char reverse_bits(unsigned char byte);
 
 // Reverse a subarray using an offset and a length.
 static void bitarray_reverse(bitarray_t* const bitarray,
@@ -334,7 +334,7 @@ static void bitarray_rotate_cyclic(bitarray_t* const bitarray,
   }
 }
 
-unsigned char reverse_byte(unsigned char byte) {
+unsigned char reverse_bits(unsigned char byte) {
   static const unsigned char t[256] = {
   0x00, 0x80, 0x40, 0xC0, 0x20, 0xA0, 0x60, 0xE0, 0x10, 0x90, 0x50, 0xD0, 0x30, 0xB0, 0x70, 0xF0,
   0x08, 0x88, 0x48, 0xC8, 0x28, 0xA8, 0x68, 0xE8, 0x18, 0x98, 0x58, 0xD8, 0x38, 0xB8, 0x78, 0xF8,
@@ -362,17 +362,18 @@ static void bitarray_reverse(bitarray_t* const bitarray,
   assert(bit_offset + bit_length <= bitarray->bit_sz);
   if (bit_length == 0) return;
 
-  unsigned char byte_gotten = bitarray_get_byte(bitarray, bit_offset);
-
   printf("\nBitarray coming in: ");
   bitarray_fprint(stdout, bitarray);
   printf(" with offset = %zu and length = %zu\n", bit_offset, bit_length);
 
-  printf("Relevant bits: %u\n", bitarray_get_byte(bitarray, bit_offset));
+  unsigned char byte_gotten = bitarray_get_bits(bitarray, bit_offset, bit_length);
+  printf("Relevant bits: %u\n", byte_gotten);
 
-  printf("Reversed bits: %u\n", reverse_byte(bitarray_get_byte(bitarray, bit_offset)));
+  unsigned char byte_rvrsed = reverse_bits(byte_gotten);
+  printf("Reversed bits: %u\n", byte_rvrsed);
 
-  bitarray_set_byte(bitarray, bit_offset, reverse_byte(bitarray_get_byte(bitarray, bit_offset)));
+  bitarray_set_bits(bitarray, bit_offset, bit_length,
+    reverse_bits(bitarray_get_bits(bitarray, bit_offset, bit_length)));
   printf("\n");
 }
 

@@ -195,7 +195,7 @@ void bitarray_set(bitarray_t* const bitarray,
 }
 
 // Indexes into a bit array, retreiving the byte at the specified zero-based index.
-bool bitarray_get_byte(const bitarray_t* const bitarray, const size_t byte_index) {
+unsigned char bitarray_get_byte(const bitarray_t* const bitarray, const size_t byte_index) {
   assert(byte_index < bitarray->bit_sz);
   return bitarray->buf[byte_index];
 }
@@ -345,6 +345,14 @@ static void bitarray_reverse(bitarray_t* const bitarray,
   const size_t bit_length) {
   assert(bit_offset + bit_length <= bitarray->bit_sz);
   if (bit_length == 0) return;
+
+  printf("Bitarray: ");
+  bitarray_fprint(stdout, bitarray);
+  printf("\n");
+
+  printf("Relevant bits: %u\n", bitarray_get_byte(bitarray, bit_offset));
+
+  printf("Reversed bits: %u\n", reverse_byte(bitarray_get_byte(bitarray, bit_offset)));
 
   bitarray_set_byte(bitarray, bit_offset, reverse_byte(bitarray_get_byte(bitarray, bit_offset)));
 }

@@ -57,7 +57,7 @@ void bitarray_set(bitarray_t* const bitarray,
     const bool value);
 
 // Indexes into a bit array, retreiving the byte at the specified zero-based index.
-bool bitarray_get_byte(const bitarray_t* const bitarray, const size_t byte_index);
+unsigned char bitarray_get_byte(const bitarray_t* const bitarray, const size_t byte_index);
 
 // Indexes into a bit array, setting the byte at the specified zero-based index.
 void bitarray_set_byte(bitarray_t* const bitarray,

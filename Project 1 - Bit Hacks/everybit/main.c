@@ -130,6 +130,11 @@ void debugging() {
     bitarray_set(test_bitarray, i, current_bit);
   }
 
+  bitarray_fprint(stdout, test_bitarray); printf("\n");
+  bitarray_set_bits(test_bitarray, 0, 5, 32);
+  bitarray_fprint(stdout, test_bitarray); printf("\n");
+  return;
+
   size_t bit_offset = 3;
   size_t bit_length = 5;
   size_t bit_right_shift_amount = 1;

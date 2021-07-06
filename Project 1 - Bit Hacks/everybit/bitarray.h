@@ -65,7 +65,7 @@ unsigned char bitarray_get_bits(const bitarray_t* const bitarray,
 void bitarray_set_bits(bitarray_t* const bitarray,
     const size_t byte_index,
     const size_t bit_length,
-    const bool value);
+    const unsigned char value);
 
 // Rotates a subarray.
 //

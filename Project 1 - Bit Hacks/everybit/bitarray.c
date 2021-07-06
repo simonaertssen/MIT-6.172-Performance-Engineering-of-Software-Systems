@@ -220,7 +220,7 @@ void bitarray_set_bits(bitarray_t* const bitarray,
   bitarray_value_fprint(stdout, value);
   printf("\n");
   // bitarray->buf[bit_index / 8] = (bitarray->buf[bit_index / 8] & ~mask) | (value ? mask : 0);
-  bitarray->buf[bit_index / 8] = (value & mask);
+  bitarray->buf[bit_index / 8] = reverse_bits(value & mask);
 }
 
 void bitarray_randfill(bitarray_t* const bitarray) {
@@ -288,14 +288,9 @@ static char bitmask(const size_t bit_index) {
 
 static unsigned char bitmask_range(const size_t bit_index, const size_t bit_length) {
   unsigned char output = 0;
-  // printf("\nMask:");
   for (size_t i = bit_index; i < bit_index + bit_length; i++) {
     output |= 1 << (i % 8);
   }
-  // bitarray_value_fprint(stdout, output);
-  // printf("\n");
-
-
   return output;
 }
 

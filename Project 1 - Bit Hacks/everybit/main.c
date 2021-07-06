@@ -131,7 +131,7 @@ void debugging() {
   }
 
   bitarray_fprint(stdout, test_bitarray); printf("\n");
-  bitarray_set_bits(test_bitarray, 0, 5, 32);
+  bitarray_set_bits(test_bitarray, 0, 5, 6);
   bitarray_fprint(stdout, test_bitarray); printf("\n");
   return;
 

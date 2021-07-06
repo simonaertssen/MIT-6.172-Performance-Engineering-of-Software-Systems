@@ -152,20 +152,26 @@ void debugging() {
 
 void create_reverse_bit_table() {
   int num_bits = 8;
-  unsigned int reverse_num;
+  unsigned char reverse_num;
 
-  unsigned int power = 1;
-  unsigned int powers[8] = { 2, 4, 8, 16, 32, 64, 128, 256 };
-  for (unsigned int num = 0; num < 256; num++) {
-    if (num > powers[power]) power++;
+  unsigned char power = 0;
+  unsigned char powers[9] = { 1, 2, 4, 8, 16, 32, 64, 128, 256 };
+  for (unsigned char num = 0; num < 255; num++) {
+    printf("num = %.2u", num);
+    if (num >= powers[power]) printf("\npwr = %.2u", ++power);
+    printf("   ");
+
     reverse_num = 0;
     for (int i = 0; i < num_bits; i++) {
       if ((num & (1 << i)))
         reverse_num |= 1 << ((num_bits - 1) - i);
     }
-    reverse_num >>= (8 - power);
-    printf("0x%.2d, ", reverse_num);
-    if (num % 16 == 15) printf("\n");
+    bitarray_value_fprint(stdout, reverse_num); printf("   ");
+    reverse_num >>= num_bits - power;
+    bitarray_value_fprint(stdout, reverse_num); printf("   ");
+    // printf("%.3d", reverse_num);
+    // if (num % 16 == 15) printf("\n");
+    printf("\n");
   }
 }
 

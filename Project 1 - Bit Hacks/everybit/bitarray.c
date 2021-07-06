@@ -203,7 +203,7 @@ unsigned char bitarray_get_bits(const bitarray_t* const bitarray,
   const size_t bit_index,
   const size_t bit_length) {
   assert(bit_index < bitarray->bit_sz);
-  return (bitarray->buf[bit_index / 8] & bitmask_range(bit_index, bit_length));
+  return (bitarray->buf[bit_index / 8] & bitmask_range(bit_index, bit_length)) >> bit_length;
 }
 
 // Indexes into a bit array, setting the byte at the specified zero-based index.
@@ -281,10 +281,14 @@ static char bitmask(const size_t bit_index) {
 
 static unsigned char bitmask_range(const size_t bit_index, const size_t bit_length) {
   unsigned char output = 0;
-  for (size_t i = bit_index; i < bit_length; i++) {
-    output |= 1 << (bit_index % 8);
+  // printf("\nMask:");
+  for (size_t i = bit_index; i < bit_index + bit_length; i++) {
+    output |= 1 << (i % 8);
   }
-  
+  // bitarray_value_fprint(stdout, output);
+  // printf("\n");
+
+
   return output;
 }
 
@@ -368,10 +372,12 @@ static void bitarray_reverse(bitarray_t* const bitarray,
   printf(" with offset = %zu and length = %zu\n", bit_offset, bit_length);
 
   unsigned char bits_gotten = bitarray_get_bits(bitarray, bit_offset, bit_length);
-  printf("Relevant bits: %u\n", bits_gotten);
+  printf("Relevant bits: ");
+  bitarray_value_fprint(stdout, bits_gotten); printf("\n");
 
   unsigned char bits_rvrsed = reverse_bits(bits_gotten);
-  printf("Reversed bits: %u\n", bits_rvrsed);
+  printf("Reversed bits: ");
+  bitarray_value_fprint(stdout, bits_rvrsed); printf("\n");
 
   bitarray_set_bits(bitarray, bit_offset, bit_length,
     reverse_bits(bitarray_get_bits(bitarray, bit_offset, bit_length)));
@@ -392,20 +398,20 @@ static void bitarray_rotate_reverse(bitarray_t* const bitarray,
   bitarray_fprint(stdout, bitarray);
   printf("\n");
 
-  printf("First part reversed: ");
   bitarray_reverse(bitarray, bit_offset, bit_right_amount);
+  printf("First part reversed: ");
   bitarray_fprint(stdout, bitarray);
   printf("\n");
 
   // Reverse the second part of the subarray:
-  printf("Second part reversed: ");
   bitarray_reverse(bitarray, bit_offset + bit_right_amount, bit_length - bit_right_amount);
+  printf("Second part reversed: ");
   bitarray_fprint(stdout, bitarray);
   printf("\n");
 
   // Reverse the whole subarray:
-  printf("All reversed: ");
   bitarray_reverse(bitarray, bit_offset, bit_length);
+  printf("All reversed: ");
   bitarray_fprint(stdout, bitarray);
   printf("\n");
 }

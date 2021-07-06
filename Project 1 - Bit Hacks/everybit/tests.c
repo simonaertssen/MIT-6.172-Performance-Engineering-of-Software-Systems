@@ -192,6 +192,7 @@ void bitarray_fprint(FILE* const stream,
 
 void bitarray_value_fprint(FILE* const stream,
   const unsigned char value) {
+  printf("%.3u ", value);
   for (int i = 0; i < 8; i++) {
     printf("%d", !!((value << i) & 0x80));
   }

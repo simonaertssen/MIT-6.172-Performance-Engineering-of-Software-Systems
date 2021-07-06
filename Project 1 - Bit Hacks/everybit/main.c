@@ -130,18 +130,18 @@ void debugging() {
     bitarray_set(test_bitarray, i, current_bit);
   }
 
-  bitarray_fprint(stdout, test_bitarray); printf("\n");
-  bitarray_set_bits(test_bitarray, 0, 5, 6);
-  bitarray_fprint(stdout, test_bitarray); printf("\n");
-  return;
+  // bitarray_fprint(stdout, test_bitarray); printf("\n");
+  // bitarray_set_bits(test_bitarray, 0, 5, 6);
+  // bitarray_fprint(stdout, test_bitarray); printf("\n");
+  // return;
 
-  size_t bit_offset = 3;
-  size_t bit_length = 5;
-  size_t bit_right_shift_amount = 1;
+  size_t bit_offset = 1;
+  size_t bit_length = 6;
+  size_t bit_right_shift_amount = 2;
   bitarray_rotate(test_bitarray, bit_offset, bit_length, bit_right_shift_amount);
 
   printf("We had:   %s\n", bitstring_value);
-  printf("Expected: 11010010\n");
+  printf("Expected: 10010101\n");
   printf("Actual:   ");
   bitarray_fprint(stdout, test_bitarray);
   printf("\n");

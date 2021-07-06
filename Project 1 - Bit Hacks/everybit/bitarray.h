@@ -57,11 +57,14 @@ void bitarray_set(bitarray_t* const bitarray,
     const bool value);
 
 // Indexes into a bit array, retreiving the byte at the specified zero-based index.
-unsigned char bitarray_get_byte(const bitarray_t* const bitarray, const size_t byte_index);
+unsigned char bitarray_get_bits(const bitarray_t* const bitarray,
+    const size_t byte_index,
+    const size_t bit_length);
 
 // Indexes into a bit array, setting the byte at the specified zero-based index.
-void bitarray_set_byte(bitarray_t* const bitarray,
+void bitarray_set_bits(bitarray_t* const bitarray,
     const size_t byte_index,
+    const size_t bit_length,
     const bool value);
 
 // Rotates a subarray.

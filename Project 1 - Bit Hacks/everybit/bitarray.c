@@ -193,21 +193,27 @@ void bitarray_set(bitarray_t* const bitarray,
   // get the byte; we then bitwise-and the byte with an appropriate mask
   // to clear out the bit we're about to set.  We bitwise-or the result
   // with a byte that has either a 1 or a 0 in the correct place.
-  bitarray->buf[bit_index / 8] = (bitarray->buf[bit_index / 8] & ~bitmask(bit_index)) | (value ? bitmask(bit_index) : 0);
+  unsigned char mask = bitmask(bit_index);
+  bitarray->buf[bit_index / 8] = (bitarray->buf[bit_index / 8] & ~mask) | (value ? mask : 0);
 }
 
 // Indexes into a bit array, retreiving the byte at the specified zero-based index.
-unsigned char bitarray_get_byte(const bitarray_t* const bitarray, const size_t byte_index) {
-  assert(byte_index < bitarray->bit_sz);
-  return bitarray->buf[byte_index];
+// Remove the right bits if we wish to get the correct numerical value.
+unsigned char bitarray_get_bits(const bitarray_t* const bitarray,
+  const size_t bit_index,
+  const size_t bit_length) {
+  assert(bit_index < bitarray->bit_sz);
+  return (bitarray->buf[bit_index / 8] & bitmask_range(bit_index, bit_length)) >> bit_length;
 }
 
 // Indexes into a bit array, setting the byte at the specified zero-based index.
-void bitarray_set_byte(bitarray_t* const bitarray,
-  const size_t byte_index,
+void bitarray_set_bits(bitarray_t* const bitarray,
+  const size_t bit_index,
+  const size_t bit_length,
   const bool value) {
-  assert(byte_index < bitarray->bit_sz);
-  bitarray->buf[byte_index] = (char)value;
+  assert(bit_index < bitarray->bit_sz);
+  unsigned char mask = bitmask_range(bit_index, bit_length);
+  bitarray->buf[bit_index / 8] = (bitarray->buf[bit_index / 8] & ~mask) | (value ? mask : 0);
 }
 
 void bitarray_randfill(bitarray_t* const bitarray) {
@@ -355,6 +361,8 @@ static void bitarray_reverse(bitarray_t* const bitarray,
   const size_t bit_length) {
   assert(bit_offset + bit_length <= bitarray->bit_sz);
   if (bit_length == 0) return;
+
+  unsigned char byte_gotten = bitarray_get_byte(bitarray, bit_offset);
 
   printf("\nBitarray coming in: ");
   bitarray_fprint(stdout, bitarray);

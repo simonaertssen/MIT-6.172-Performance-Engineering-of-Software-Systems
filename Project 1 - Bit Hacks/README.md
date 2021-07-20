@@ -8,9 +8,9 @@ Here, the performance and speedup is given per adjustment:
 | Description | Execution time (s) | Speedup (relative) | Speedup (absolute) |
 | - | - | - | - |
 | Ben Bitdiddle's implementation (naive) | 32.892855 | 1 | 1 |
-| Cyclic approach | 0.003664 | x8977 | x8977 |
-| Precomputed bitmap table | 0.003346 | x 1.01 | x9831 |
-| Reversal approach | 0.000069 | x 49 | x476708 |
+| Cyclic approach | 0.003664 | x 8977 | x 8977 |
+| Precomputed bitmap table | 0.003346 | x 1.01 | x 9831 |
+| Reversal approach | 0.000069 | x 49 | x 476708 |
 
 Yes. You read that right. A speedup of about 4.7 million.
 
@@ -264,4 +264,7 @@ As we can use byte shifts, this should be much faster than the circular approach
     a  m  l  k | j  i  h  g | f  e  d  c | b  n  o  p | q  r  s  t | u  v  w  x | y  z
     0  1  2  3   4  5  6  7   8  9  10 11  12 13 14 15  16 17 18 19  20 21 22 23  24 25
 
-And now the first subarray is reversed!
+And now the first subarray is reversed! This constitutes the basic operation of reversing a subarray. 
+
+### 6.3. Results
+`-s` now yields 32 tiers, `-m` 37 tiers and `-l` 41 tiers. This is also huge improvement! From 19 to 41 tiers for the heaviest test has raised the maximum array length from around 3KB to around 19MB. That is a performance increase of about 6330 times. Well done!

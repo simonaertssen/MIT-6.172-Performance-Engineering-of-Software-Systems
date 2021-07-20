@@ -1,7 +1,9 @@
 # Project 1 Writeup:
 
 # Performance improvements:
-The most important result in this writeup is the performance we obtain with every new algorithm. Here, the performance and speedup is given per adjustment:
+The most important result in this writeup is the performance we obtain with every new algorithm. An array of size 192 KiB is created, and the subarray has an offset of 46368 bits, a right shift of 75025 bits, and a length of 121393 bits.
+
+Here, the performance and speedup is given per adjustment:
 
 | Description | Execution time (s) | Speedup (relative) | Speedup (absolute) |
 | - | - | - | - |

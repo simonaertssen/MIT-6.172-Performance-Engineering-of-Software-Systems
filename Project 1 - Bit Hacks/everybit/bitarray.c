@@ -109,11 +109,11 @@ static void bitarray_rotate_reverse(bitarray_t* const bitarray,
   const size_t bit_length,
   const ssize_t bit_right_amount);
 
-// Reverse bits of a byte using a precomputed table.
-unsigned char reverse_bits(unsigned char byte);
+// Reverse all bits of a single byte using a precomputed table.
+unsigned char reverse_single_byte(unsigned char byte);
 
 // Reverse a subarray using an offset and a length.
-static void bitarray_reverse(bitarray_t* const bitarray,
+static void bitarray_reverse_subarray(bitarray_t* const bitarray,
   const size_t bit_offset,
   const size_t bit_length);
 
@@ -130,8 +130,6 @@ static void bitarray_reverse(bitarray_t* const bitarray,
 // not matter.
 static char bitmask(const size_t bit_index);
 
-// We also need a version that computes bitmasks for multiple bits at once
-static unsigned char bitmask_range(const size_t bit_index, const size_t bit_length);
 
 // ******************************* Functions ********************************
 
@@ -198,37 +196,20 @@ void bitarray_set(bitarray_t* const bitarray,
 }
 
 // Indexes into a bit array, retreiving the byte at the specified zero-based index.
-// Remove the right bits if we wish to get the correct numerical value.
-unsigned char bitarray_get_bits(const bitarray_t* const bitarray,
+unsigned char bitarray_get_byte(const bitarray_t* const bitarray,
   const size_t bit_index,
   const size_t bit_length) {
   assert(bit_index < bitarray->bit_sz);
-  return (bitarray->buf[bit_index / 8] & bitmask_range(bit_index, bit_length));
+  return (unsigned char)bitarray->buf[byte_index];;
 }
 
 // Indexes into a bit array, setting the byte at the specified zero-based index.
-void bitarray_set_bits(bitarray_t* const bitarray,
+void bitarray_set_byte(bitarray_t* const bitarray,
   const size_t bit_index,
   const size_t bit_length,
   const unsigned char value) {
   assert(bit_index < bitarray->bit_sz);
-  unsigned char mask = bitmask_range(bit_index, bit_length);
-  printf("Mask:  ");
-  bitarray_value_fprint(stdout, mask);
-  printf("\n");
-  printf("Value: ");
-  bitarray_value_fprint(stdout, value);
-  printf("\n");
-  printf("array:     ");
-  bitarray_fprint(stdout, bitarray);
-  printf("\n");
-
-  // bitarray->buf[bit_index / 8] = (bitarray->buf[bit_index / 8] & ~mask) | (value ? mask : 0);
-  bitarray->buf[bit_index / 8] = (bitarray->buf[bit_index / 8] & ~mask) | (value & mask);
-
-  printf("array:     ");
-  bitarray_fprint(stdout, bitarray);
-  printf("\n");
+  bitarray->buf[byte_index] = (char)value;
 }
 
 void bitarray_randfill(bitarray_t* const bitarray) {
@@ -295,14 +276,6 @@ static inline char bitmask(const size_t bit_index) {
   return t[bit_index % 8];
 }
 
-static unsigned char bitmask_range(const size_t bit_index, const size_t bit_length) {
-  unsigned char output = 0;
-  for (size_t i = bit_index; i < bit_index + bit_length; i++) {
-    output |= 1 << (i % 8);
-  }
-  return output;
-}
-
 
 // ********************** Optimised functions ***********************
 
@@ -350,7 +323,7 @@ static void bitarray_rotate_cyclic(bitarray_t* const bitarray,
   }
 }
 
-unsigned char reverse_bits(unsigned char byte) {
+unsigned char reverse_single_byte(unsigned char byte) {
   static const unsigned char t[256] = {
   0x00, 0x80, 0x40, 0xC0, 0x20, 0xA0, 0x60, 0xE0, 0x10, 0x90, 0x50, 0xD0, 0x30, 0xB0, 0x70, 0xF0,
   0x08, 0x88, 0x48, 0xC8, 0x28, 0xA8, 0x68, 0xE8, 0x18, 0x98, 0x58, 0xD8, 0x38, 0xB8, 0x78, 0xF8,
@@ -372,26 +345,32 @@ unsigned char reverse_bits(unsigned char byte) {
   return (unsigned char)t[byte];
 }
 
-static void bitarray_reverse(bitarray_t* const bitarray,
+static void bitarray_reverse_subarray(bitarray_t* const bitarray,
   const size_t bit_offset,
   const size_t bit_length) {
   assert(bit_offset + bit_length <= bitarray->bit_sz);
   if (bit_length == 0) return;
 
-  printf("\nBitarray coming in: ");
-  bitarray_fprint(stdout, bitarray);
-  printf(" with offset = %zu and length = %zu\n", bit_offset, bit_length);
+  // Get the first, second and last bytes
+  size_t start_byte = bit_offset / 8;
+  size_t second_byte = start_byte + 8;
+  size_t end_bit = bit_offset + bit_length - 1;
+  size_t end_byte = end_bit / 8;
 
-  unsigned char bits_gotten = bitarray_get_bits(bitarray, bit_offset, bit_length);
-  printf("Relevant bits: ");
-  bitarray_value_fprint(stdout, bits_gotten); printf("\n");
+  // Compute the indices of the trailing bits
+  size_t shift_start = modulo(8 - bit_offset, 8);
+  size_t shift_end = (end_bit + 1) % 8;
 
-  unsigned char bits_rvrsed = reverse_bits(bits_gotten) >> (4 - bit_length);
-  printf("Reversed bits: ");
-  bitarray_value_fprint(stdout, bits_rvrsed); printf("\n");
+  // Reverse whole bytes at once
+  ssize_t shift = shift_end - shift_start;
+  for (size_t b = second_byte; b <= (second_byte + end_byte) / 2; b++) {
+    unsigned char temp = reverse_byte(bitarray_get_byte(bitarray, second_byte + end_byte - b));
+    bitarray_set_byte(bitarray, start + end - b, reverse_byte(bitarray_get_byte(bitarray, b)));
+    bitarray_set_byte(bitarray, b, temp);
+  }
 
-  bitarray_set_bits(bitarray, bit_offset, bit_length, bits_gotten);
-  printf("\n");
+
+
 }
 
 

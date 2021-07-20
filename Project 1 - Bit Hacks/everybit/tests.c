@@ -285,19 +285,21 @@ int timed_rotation(const double time_limit_seconds) {
     const size_t bit_right_shift_amount = fibs[tier_num + 1];
     const size_t bit_length = fibs[tier_num + 2];
     const size_t bit_sz = fibs[tier_num + 3];
-    assert(bit_sz > bit_length);
-    assert(bit_length > bit_right_shift_amount);
-    assert(bit_right_shift_amount > bit_offset);
-    assert(bit_sz > bit_offset + bit_length);
+    // assert(bit_sz > bit_length);
+    // assert(bit_length > bit_right_shift_amount);
+    // assert(bit_right_shift_amount > bit_offset);
+    // assert(bit_sz > bit_offset + bit_length);
 
-    // Initialize a new bit_array
-    testutil_newrand(bit_sz, 6172);
+    // // Initialize a new bit_array
+    // testutil_newrand(bit_sz, 6172);
 
-    // Time the duration of a rotation
-    const clockmark_t start_time = ktiming_getmark();
-    testutil_rotate(bit_offset, bit_length, bit_right_shift_amount);
-    const clockmark_t end_time = ktiming_getmark();
-    double diff_seconds = ktiming_diff_usec(&start_time, &end_time) / 1000000000.0;
+    // // Time the duration of a rotation
+    // const clockmark_t start_time = ktiming_getmark();
+    // testutil_rotate(bit_offset, bit_length, bit_right_shift_amount);
+    // const clockmark_t end_time = ktiming_getmark();
+    // double diff_seconds = ktiming_diff_usec(&start_time, &end_time) / 1000000000.0;
+
+    double = timed_rotation_variable(bit_offset, bit_right_shift_amount, bit_length, bit_sz);
 
     //char *str_size = NULL;
     char buf[20];
@@ -329,6 +331,27 @@ int timed_rotation(const double time_limit_seconds) {
   // Return the last tier that was succesful.
   return tier_num - 1;
 }
+
+double timed_rotation_variable(const size_t bit_offset,
+  const size_t bit_right_shift_amount,
+  const size_t bit_length,
+  const size_t bit_sz) {
+  assert(bit_sz > bit_length);
+  assert(bit_length > bit_right_shift_amount);
+  assert(bit_right_shift_amount > bit_offset);
+  assert(bit_sz > bit_offset + bit_length);
+
+  // Initialize a new bit_array
+  testutil_newrand(bit_sz, 6172);
+
+  // Time the duration of a rotation
+  const clockmark_t start_time = ktiming_getmark();
+  testutil_rotate(bit_offset, bit_length, bit_right_shift_amount);
+  const clockmark_t end_time = ktiming_getmark();
+  double diff_seconds = ktiming_diff_usec(&start_time, &end_time) / 1000000000.0;
+  return diff_seconds;
+}
+
 
 static bool boolfromchar(const char c) {
   assert(c == '0' || c == '1');

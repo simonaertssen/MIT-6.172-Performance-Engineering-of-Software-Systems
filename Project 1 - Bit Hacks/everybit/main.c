@@ -62,10 +62,22 @@ int main(int argc, char** argv) {
       retval = EXIT_SUCCESS;
       goto cleanup;
     case 'd':
+      // -d runs a small program for debugging purposes
       debugging();
+      retval = EXIT_SUCCESS;
       goto cleanup;
     case 'c':
+      // -c creates a table for one of the optimised routines
       create_reverse_bit_table();
+      retval = EXIT_SUCCESS;
+      goto cleanup;
+    case 'p':
+      // -p measures the execution time for a large bitarray to measure progress in seconds
+      printf("---- RESULTS ----\n");
+      printf("Completed the\n",
+        timed_rotation(0.01));
+      printf("---- END RESULTS ----\n");
+      retval = EXIT_SUCCESS;
       goto cleanup;
     case 's':
       // -s runs the short rotation performance test.
@@ -111,7 +123,8 @@ void print_usage(const char* const argv_0) {
     "\t    (note: the provided -[s/m/l] options only test performance and NOT correctness.)\n"
     "\t -t tests/default\tRun alltests in the testfile tests/default\n"
     "\t -n 1 -t tests/default\tRun test 1 in the testfile tests/default\n"
-    "\t -d Run a small program in debugging mode\n",
+    "\t -d Run a small program in debugging mode\n"
+    "\t -p Measure execution time on a large bitarray\n",
     argv_0);
 }
 

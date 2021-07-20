@@ -75,7 +75,7 @@ int main(int argc, char** argv) {
       // -p measures the execution time for a large bitarray to measure progress in seconds
       printf("---- RESULTS ----\n");
       printf("Completed the test in %f seconds\n",
-        timed_rotation_variable(75025, 121393, 196418, 317811));
+        timed_rotation_variable(46368, 75025, 121393, 196418));
       printf("---- END RESULTS ----\n");
       retval = EXIT_SUCCESS;
       goto cleanup;

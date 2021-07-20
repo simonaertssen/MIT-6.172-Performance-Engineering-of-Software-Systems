@@ -1,6 +1,13 @@
 # Project 1 Writeup:
 
-# T
+# Performance improvements:
+The most important result in this writeup is the performance we obtain with every new algorithm. Here, the performance and speedup is given per adjustment:
+
+| Description | Execution time (s) | Speedup (relative) | Speedup (absolute) |
+| - | - | - | - |
+| Ben Bitdiddle's implementation (naive) | 32.892855 | 1 | 1 |
+| Cyclic approach | 0.004579 | 7183x | 7183x |
+
 ## Understanding the test suite
 ### Testing options
 With the `-s`, `-m` and `-l` options, increasing time limits are given for the everybit program to test performance. Testing with `-t` is only a test for correctness.

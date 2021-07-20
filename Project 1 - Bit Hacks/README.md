@@ -9,6 +9,7 @@ Here, the performance and speedup is given per adjustment:
 | - | - | - | - |
 | Ben Bitdiddle's implementation (naive) | 32.892855 | 1 | 1 |
 | Cyclic approach | 0.003664 | x8977 | x8977 |
+| Precomputed bitmas table | 0.003346 | x 1.01 | x9830 |
 
 --- 
 ## 1. Understanding the test suite

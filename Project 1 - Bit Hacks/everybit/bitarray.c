@@ -290,14 +290,10 @@ size_t modulo(const ssize_t n, const size_t m) {
   return (size_t)result;
 }
 
-static char bitmask(const size_t bit_index) {
-  return 1 << (bit_index % 8);
+static inline char bitmask(const size_t bit_index) {
+  static const unsigned char t[8] = { 1, 2, 4, 8, 16, 32, 64, 128 };
+  return t[bit_index % 8];
 }
-
-// static char bitmask(const size_t bit_index) {
-//   static const unsigned char t[8] = { 1, 2, 4, 8, 16, 32, 64, 128 };
-//   return t[bit_index % 8];
-// }
 
 static unsigned char bitmask_range(const size_t bit_index, const size_t bit_length) {
   unsigned char output = 0;

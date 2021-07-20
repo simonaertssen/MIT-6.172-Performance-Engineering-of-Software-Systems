@@ -9,7 +9,10 @@ Here, the performance and speedup is given per adjustment:
 | - | - | - | - |
 | Ben Bitdiddle's implementation (naive) | 32.892855 | 1 | 1 |
 | Cyclic approach | 0.003664 | x8977 | x8977 |
-| Precomputed bitmas table | 0.003346 | x 1.01 | x9830 |
+| Precomputed bitmap table | 0.003346 | x 1.01 | x9831 |
+| Reversal approach | 0.000069 | x 49 | x476708 |
+
+Yes. You read that right. A speedup of about 4.7 million.
 
 --- 
 ## 1. Understanding the test suite

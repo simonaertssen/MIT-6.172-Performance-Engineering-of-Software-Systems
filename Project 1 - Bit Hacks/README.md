@@ -1,6 +1,6 @@
 # Project 1 Writeup:
 
-# Performance improvements:
+## 0. Performance improvements:
 The most important result in this writeup is the performance we obtain with every new algorithm. An array of size 192 KiB is created, and the subarray has an offset of 46368 bits, a right shift of 75025 bits, and a length of 121393 bits.
 
 Here, the performance and speedup is given per adjustment:
@@ -11,18 +11,18 @@ Here, the performance and speedup is given per adjustment:
 | Cyclic approach | 0.004579 | 7183x | 7183x |
 
 --- 
-## Understanding the test suite
-### Testing options
+## 1. Understanding the test suite
+### 1.1. Testing options
 With the `-s`, `-m` and `-l` options, increasing time limits are given for the everybit program to test performance. Testing with `-t` is only a test for correctness.
 
-### Allocating arrays
+### 1.2. Allocating arrays
 At all times only one array pointer is used, globally declared under the name `test_bitarray`. The memory buffer is freed at every test and filled with random bits.
 
 The bitarrays are allocated in steps using a Fibonacci sequence:
 - a bitarray with a size of 5 bytes is tested, with a subarray of 3 bits, shifted by 2 places, using an offset of 1.
 - a bitarray with a size of 8 bytes is tested, with a subarray of 5 bits, shifted by 3 places, using an offset of 2.
 
-## Program functionality
+## 2. Program functionality
 How does `everybit` actually work? Let's first look at the call trace of the tests:
 
 `main > timed_rotation > testutil_rotate > bitarray_rotate > bitarray_rotate_left > bitarray_rotate_left_one`
@@ -47,10 +47,10 @@ So: if we have the bitarray `0b00101101` and we wish to set a value of `1` (`tru
     
     It is unclear why so many steps are needed but we will not touch the functionality here.
 
-## Initial performance of the program on my laptop
+## 3. Initial performance of the program on my laptop
 `-s` yields 14 tiers, `-m` 15 tiers and `-l` 18 tiers. This is a simple test.
 
-### Setting up Instruments.
+### 3.1. Setting up Instruments.
 We need to count events as they are occuring on the microarchitecture. It is believed that my [laptop](https://en.wikipedia.org/wiki/MacBook_Pro) has a Broadwell microarchitecture.
 
 `system_profiler SPHardwareDataType` reveils:
@@ -103,12 +103,12 @@ Using Instruments for profiling the `-l` option we can see:
 
 However, using Instruments we cannot measure all of the performance events at once, like one does with Valgrind. It is better to start development on the laptop and benchmark on the cluster.
 
-## Performance measured on the cluster
+## 4. Performance measured on the cluster
 We need to change the compiler to `gcc` as there is no `clang` on the cluster and we cannot seem to install it.
 
 `-s` yields 14 tiers, `-m` 16 tiers and `-l` 19 tiers. This is a simple test.
 
-### Performance tests
+### 4.1. Performance tests
 `valgrind --tool=cachegrind --branch-sim=yes ./everybit -l`
 
     ==11746== Cachegrind, a cache and branch-prediction profiler
@@ -163,13 +163,13 @@ We need to change the compiler to `gcc` as there is no `clang` on the cluster an
 So it seems like there are very few cache misses and branch mispredictions, that is already really good! However, the performance is also impacted by measuring it. Now we can start looking at how changes influence the performance.
 
 --- 
-## Initial ideas
+## 5. Initial ideas on improving performance
 - Use a temporary value as we move each value around in the bitarray.
 - Remove complete revolutions by checking first: is `modulo(-bit_right_amount, bit_length) == 0`?
 - Inline some of the more simple functions, like `bitmask`, `bitarray_get_bit_sz` and `bitarray_get`.
 - Use `__restrict__` as a keyword for the global array.
 
-## Initial performance improvements
+## 5.1. Initial performance improvements
 ### Inlining
 The functions `bitmask`, `bitarray_get_bit_sz` and `bitarray_get` were inlined but no performance increase was observed. Removed again.
 
@@ -180,7 +180,7 @@ No performance increase when using keyword `restrict`. Removed again.
 Check whether there is actually a modification needed: if `modulo(-bit_right_amount, bit_length) == 0` then the bits would be shifted right by as many bits as there are in the subarray. No optimisations there either.
 
 --- 
-## Cyclic approach
+## 6. Cyclic approach
 Instead of cycling through the array and moving every bit one by one, we immediately move every bit to its desired position. We literally hop across the array `left_amount` of steps per iteration and move each value along. That requires us to save the value of the item to be replaced in a temporary value, indexed by its position in the array.
 
 So for the array `10010110` where we apply `r 2 5 2`, we expect `10110100`. We then simply start rotating every bit two places:
@@ -201,7 +201,7 @@ So for the array `10010110` where we apply `r 2 5 2`, we expect `10110100`. We t
 
 After some testing it became clear that a left shift was preventing this algorithm from working correctly. A right shift was needed by removing the `-` from the modulo in the `bitarray_rotate` wrapper, and now it seems to work. However, not all tests were passed! Let us take a look.
 
-### Difficulties: what is wrong?
+### 6.1. Difficulties: what is wrong?
 We have problems when the subarray length and the number of shift steps are not coprime. What happens is that a cycle within the array exists, so that the `prv` and `nxt` pointers cycle through the same values:
 
             Array now: 100001010000, prv = 0, nxt = 3, x = 1, y = 0 
@@ -213,7 +213,7 @@ We have problems when the subarray length and the number of shift steps are not 
 
 How can we prevent this? We need to remember which indices have already been picked, and we can simply do this with the first index that ever produced a cycle. 
 
-### Register cycles!
+### 6.2. Register cycles!
 The idea is to register how many cycles there are, and what period they have, using the remainder after division. In that way, we can easily track in what cycle we are by shifting a whole period and then increasing the `prv` pointer. Because we need to take care of left and right shifts, we need also need to check whether there are cycles going the other way. Example: take a bit length of 12, shifted twice to the right produces two cycles with a period of 6:
 
     0 -> 2 -> 4 -> 6 -> 8 -> 10 -> 0
@@ -221,19 +221,19 @@ The idea is to register how many cycles there are, and what period they have, us
 
 However, if we shift 10 times to the right (or twice to the left) then the cycles just go in the opposite direction!
 
-### Results
+### 6.4. Results
 `-s` now yields 23 tiers, `-m` 28 tiers and `-l` 32 tiers. This is a huge improvement! From 19 to 32 tiers for the heaviest test has raised the maximum array length from around 3KB to around 2MB. That is a performance increase of about 680 times. Well done!
 
-### Further ideas
+### 6.5. Further ideas
 One could register whether a left or a right shift is closest to the end result. Why shift `n` bit `n-1` places to the right if you can also shift them once to the left? However, this would require almost duplicate code, so we won't go into this now.
 
 --- 
-## Reversal approach
+## 7. Reversal approach
 Finally, there is a clever approach that moves every bit twice without using auxiliary memory. Treating the string to be rotated as `ab`, observe the identity `(a^R b^R)^R = ba`, where `R` is the operation that reverses a string. The “reverse” operation can be accomplished using only constant storage. Thus, with 3 reversals of bit strings, the string can be rotated.
 
-### Precomputing the table
+### 7.1. Precomputing the table
 This is easy, we can simply pluck off a program from [here](https://www.geeksforgeeks.org/write-an-efficient-c-program-to-reverse-bits-of-a-number/). What happens is that for every number between 0 and 255 we test every bit, if there is one bit at index `i` then set a `1` at the index `8 - 1 - i`.
 
-### How does it work?
+### 7.2. How does it work?
 We will start with arrays of 8 bits, for simplicity. So for the array `10010110` where we apply `r 2 5 2`, we expect `10110100`. If we take the subarray `01011` then we divide it into `01` and `011`. We reverse the bits like `10` and `110`, and put them together as `110` and `10` and we get `10110100`. Easy!
 

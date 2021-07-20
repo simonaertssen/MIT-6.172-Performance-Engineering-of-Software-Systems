@@ -74,8 +74,17 @@ int main(int argc, char** argv) {
     case 'p':
       // -p measures the execution time for a large bitarray to measure progress in seconds
       printf("---- RESULTS ----\n");
-      printf("Completed the test in %f seconds\n",
-        timed_rotation_variable(46368, 75025, 121393, 196418));
+      double runtime = timed_rotation_variable(46368, 75025, 121393, 196418);
+      int max_runtime = 5.0;
+      if (runtime < max_runtime) {
+        int max_reps = (max_runtime - runtime) / runtime; // Now the test will run in the maximum runtime
+        for (int i = 0; i < max_reps; i++) {
+          runtime += timed_rotation_variable(46368, 75025, 121393, 196418);
+        }
+        runtime /= max_reps + 1;
+      }
+
+      printf("Completed the test in %f seconds\n", runtime);
       printf("---- END RESULTS ----\n");
       retval = EXIT_SUCCESS;
       goto cleanup;

@@ -294,6 +294,11 @@ static char bitmask(const size_t bit_index) {
   return 1 << (bit_index % 8);
 }
 
+// static char bitmask(const size_t bit_index) {
+//   static const unsigned char t[8] = { 1, 2, 4, 8, 16, 32, 64, 128 };
+//   return t[bit_index % 8];
+// }
+
 static unsigned char bitmask_range(const size_t bit_index, const size_t bit_length) {
   unsigned char output = 0;
   for (size_t i = bit_index; i < bit_index + bit_length; i++) {

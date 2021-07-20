@@ -8,7 +8,7 @@ Here, the performance and speedup is given per adjustment:
 | Description | Execution time (s) | Speedup (relative) | Speedup (absolute) |
 | - | - | - | - |
 | Ben Bitdiddle's implementation (naive) | 32.892855 | 1 | 1 |
-| Cyclic approach | 0.004579 | 7183x | 7183x |
+| Cyclic approach | 0.003664 | x8977 | x8977 |
 
 --- 
 ## 1. Understanding the test suite

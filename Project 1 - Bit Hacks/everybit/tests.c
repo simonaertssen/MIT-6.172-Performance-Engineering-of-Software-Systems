@@ -299,7 +299,7 @@ int timed_rotation(const double time_limit_seconds) {
     // const clockmark_t end_time = ktiming_getmark();
     // double diff_seconds = ktiming_diff_usec(&start_time, &end_time) / 1000000000.0;
 
-    double = timed_rotation_variable(bit_offset, bit_right_shift_amount, bit_length, bit_sz);
+    double diff_seconds = timed_rotation_variable(bit_offset, bit_right_shift_amount, bit_length, bit_sz);
 
     //char *str_size = NULL;
     char buf[20];

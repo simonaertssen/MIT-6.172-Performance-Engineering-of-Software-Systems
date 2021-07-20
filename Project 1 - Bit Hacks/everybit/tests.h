@@ -39,6 +39,11 @@
  // than time_limit_seconds to complete.
 int timed_rotation(const double time_limit_seconds);
 
+// Implement the timing functionality within another function for testing
+double timed_rotation_variable(const size_t bit_offset,
+    const size_t bit_right_shift_amount,
+    const size_t bit_length,
+    const size_t bit_sz);
 
 // Runs the testsuite specified in a given file.
 void parse_and_run_tests(const char* filename, int min_test);

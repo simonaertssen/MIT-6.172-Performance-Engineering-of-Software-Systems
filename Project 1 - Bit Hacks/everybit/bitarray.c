@@ -110,7 +110,7 @@ static void bitarray_rotate_reverse(bitarray_t* const bitarray,
   const ssize_t bit_right_amount);
 
 // Reverse all bits of a single byte using a precomputed table.
-unsigned char reverse_single_byte(unsigned char byte);
+unsigned char reverse_byte(unsigned char byte);
 
 // Reverse a subarray using an offset and a length.
 static void bitarray_reverse_subarray(bitarray_t* const bitarray,
@@ -233,10 +233,10 @@ void bitarray_rotate(bitarray_t* const bitarray,
   if (k == 0) return;
 
   // cyclic rotation: prevent moving these bits one by one, but move immediately to the right place
-  bitarray_rotate_cyclic(bitarray, bit_offset, bit_length, k);
+  // bitarray_rotate_cyclic(bitarray, bit_offset, bit_length, k);
 
   // reversal rotation: reverse the bits of each byte
-  // bitarray_rotate_reverse(bitarray, bit_offset, bit_length, k);
+  bitarray_rotate_reverse(bitarray, bit_offset, bit_length, k);
 }
 
 static void bitarray_rotate_left(bitarray_t* const bitarray,
@@ -321,7 +321,7 @@ static void bitarray_rotate_cyclic(bitarray_t* const bitarray,
   }
 }
 
-unsigned char reverse_single_byte(unsigned char byte) {
+unsigned char reverse_byte(unsigned char byte) {
   static const unsigned char t[256] = {
   0x00, 0x80, 0x40, 0xC0, 0x20, 0xA0, 0x60, 0xE0, 0x10, 0x90, 0x50, 0xD0, 0x30, 0xB0, 0x70, 0xF0,
   0x08, 0x88, 0x48, 0xC8, 0x28, 0xA8, 0x68, 0xE8, 0x18, 0x98, 0x58, 0xD8, 0x38, 0xB8, 0x78, 0xF8,
@@ -391,19 +391,19 @@ static void bitarray_rotate_reverse(bitarray_t* const bitarray,
   bitarray_fprint(stdout, bitarray);
   printf("\n");
 
-  bitarray_reverse(bitarray, bit_offset, bit_right_amount);
+  bitarray_reverse_subarray(bitarray, bit_offset, bit_right_amount);
   printf("First part reversed: ");
   bitarray_fprint(stdout, bitarray);
   printf("\n");
 
   // Reverse the second part of the subarray:
-  bitarray_reverse(bitarray, bit_offset + bit_right_amount, bit_length - bit_right_amount);
+  bitarray_reverse_subarray(bitarray, bit_offset + bit_right_amount, bit_length - bit_right_amount);
   printf("Second part reversed: ");
   bitarray_fprint(stdout, bitarray);
   printf("\n");
 
   // Reverse the whole subarray:
-  bitarray_reverse(bitarray, bit_offset, bit_length);
+  bitarray_reverse_subarray(bitarray, bit_offset, bit_length);
   printf("All reversed: ");
   bitarray_fprint(stdout, bitarray);
   printf("\n");

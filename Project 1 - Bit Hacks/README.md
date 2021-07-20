@@ -10,6 +10,7 @@ Here, the performance and speedup is given per adjustment:
 | Ben Bitdiddle's implementation (naive) | 32.892855 | 1 | 1 |
 | Cyclic approach | 0.004579 | 7183x | 7183x |
 
+--- 
 ## Understanding the test suite
 ### Testing options
 With the `-s`, `-m` and `-l` options, increasing time limits are given for the everybit program to test performance. Testing with `-t` is only a test for correctness.
@@ -161,6 +162,7 @@ We need to change the compiler to `gcc` as there is no `clang` on the cluster an
 
 So it seems like there are very few cache misses and branch mispredictions, that is already really good! However, the performance is also impacted by measuring it. Now we can start looking at how changes influence the performance.
 
+--- 
 ## Initial ideas
 - Use a temporary value as we move each value around in the bitarray.
 - Remove complete revolutions by checking first: is `modulo(-bit_right_amount, bit_length) == 0`?
@@ -177,6 +179,7 @@ No performance increase when using keyword `restrict`. Removed again.
 ### Checking
 Check whether there is actually a modification needed: if `modulo(-bit_right_amount, bit_length) == 0` then the bits would be shifted right by as many bits as there are in the subarray. No optimisations there either.
 
+--- 
 ## Cyclic approach
 Instead of cycling through the array and moving every bit one by one, we immediately move every bit to its desired position. We literally hop across the array `left_amount` of steps per iteration and move each value along. That requires us to save the value of the item to be replaced in a temporary value, indexed by its position in the array.
 
@@ -224,6 +227,7 @@ However, if we shift 10 times to the right (or twice to the left) then the cycle
 ### Further ideas
 One could register whether a left or a right shift is closest to the end result. Why shift `n` bit `n-1` places to the right if you can also shift them once to the left? However, this would require almost duplicate code, so we won't go into this now.
 
+--- 
 ## Reversal approach
 Finally, there is a clever approach that moves every bit twice without using auxiliary memory. Treating the string to be rotated as `ab`, observe the identity `(a^R b^R)^R = ba`, where `R` is the operation that reverses a string. The “reverse” operation can be accomplished using only constant storage. Thus, with 3 reversals of bit strings, the string can be rotated.
 

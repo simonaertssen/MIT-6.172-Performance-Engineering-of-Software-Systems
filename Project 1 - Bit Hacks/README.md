@@ -237,3 +237,27 @@ This is easy, we can simply pluck off a program from [here](https://www.geeksfor
 ### 7.2. How does it work?
 We will start with arrays of 8 bits, for simplicity. So for the array `10010110` where we apply `r 2 5 2`, we expect `10110100`. If we take the subarray `01011` then we divide it into `01` and `011`. We reverse the bits like `10` and `110`, and put them together as `110` and `10` and we get `10110100`. Easy!
 
+Let's take a look at a larger array and cut it up in pieces of 4 bits:
+
+    a  b  c  d | e  f  g  h | i  j  k  l | m  n  o  p | q  r  s  t | u  v  w  x | y  z
+    0  1  2  3   4  5  6  7   8  9  10 11  12 13 14 15  16 17 18 19  20 21 22 23  24 25
+       |____________________________________|_____________________________|
+
+We now want to shift the subarray, starting at offset 1 with a length of 20, 12 bits to the right. As said before, this consists of three reverse operations. What does such a reverse operation do?
+
+Let us take the first subarray to be precise. First, we take the "bytes" (consisting of 4 bits in this example) and rotate them in the reversed order:
+
+    a  b  c  d | l  k  j  i | h  g  f  e | m  n  o  p | q  r  s  t | u  v  w  x | y  z
+    0  1  2  3   4  5  6  7   8  9  10 11  12 13 14 15  16 17 18 19  20 21 22 23  24 25
+
+Secondly, we need to circularly shift by `(4 - offset%4) - (offset+bit_shift)%4 = 4 - 1 - (21%4) = 4 - 1 - 1 = 2` to the left to make space for the ends:
+
+    a  b  l  k | j  i  h  g | f  e  d  c | m  n  o  p | q  r  s  t | u  v  w  x | y  z
+    0  1  2  3   4  5  6  7   8  9  10 11  12 13 14 15  16 17 18 19  20 21 22 23  24 25
+
+Lastly, we need to switch the remaining ends, `(offset+bit_shift)%4` in total:
+
+    a  m  l  k | j  i  h  g | f  e  d  c | b  n  o  p | q  r  s  t | u  v  w  x | y  z
+    0  1  2  3   4  5  6  7   8  9  10 11  12 13 14 15  16 17 18 19  20 21 22 23  24 25
+
+And now the first subarray is reversed!

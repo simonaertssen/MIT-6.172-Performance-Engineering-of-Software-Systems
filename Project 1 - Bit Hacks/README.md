@@ -7,7 +7,7 @@ Here, the performance and speedup is given per adjustment:
 
 | Description | Execution time (s) | Speedup (relative) | Speedup (absolute) |
 | - | - | - | - |
-| Ben Bitdiddle's implementation (naive) | 32.892855 | 1 | 1 |
+| Ben Bitdiddle's implementation (naive) | 32.892855 | x 1 | x 1 |
 | Cyclic approach | 0.003664 | x 8977 | x 8977 |
 | Precomputed bitmap table | 0.003346 | x 1.01 | x 9831 |
 | Reversal approach | 0.000069 | x 49 | x 476708 |

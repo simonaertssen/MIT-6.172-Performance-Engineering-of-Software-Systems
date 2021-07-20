@@ -197,18 +197,16 @@ void bitarray_set(bitarray_t* const bitarray,
 
 // Indexes into a bit array, retreiving the byte at the specified zero-based index.
 unsigned char bitarray_get_byte(const bitarray_t* const bitarray,
-  const size_t bit_index,
-  const size_t bit_length) {
-  assert(bit_index < bitarray->bit_sz);
+  const size_t byte_index) {
+  assert(byte_index < bitarray->bit_sz);
   return (unsigned char)bitarray->buf[byte_index];;
 }
 
 // Indexes into a bit array, setting the byte at the specified zero-based index.
 void bitarray_set_byte(bitarray_t* const bitarray,
-  const size_t bit_index,
-  const size_t bit_length,
+  const size_t byte_index,
   const unsigned char value) {
-  assert(bit_index < bitarray->bit_sz);
+  assert(byte_index < bitarray->bit_sz);
   bitarray->buf[byte_index] = (char)value;
 }
 
@@ -361,15 +359,21 @@ static void bitarray_reverse_subarray(bitarray_t* const bitarray,
   size_t shift_start = modulo(8 - bit_offset, 8);
   size_t shift_end = (end_bit + 1) % 8;
 
+  printf("Initial array: ");
+  bitarray_fprint(stdout, bitarray);
+
   // Reverse whole bytes at once
   ssize_t shift = shift_end - shift_start;
+  size_t temp_index;
   for (size_t b = second_byte; b <= (second_byte + end_byte) / 2; b++) {
-    unsigned char temp = reverse_byte(bitarray_get_byte(bitarray, second_byte + end_byte - b));
-    bitarray_set_byte(bitarray, start + end - b, reverse_byte(bitarray_get_byte(bitarray, b)));
+    temp_index = second_byte + end_byte - b;
+    unsigned char temp = reverse_byte(bitarray_get_byte(bitarray, temp_index));
+    bitarray_set_byte(bitarray, temp_index, reverse_byte(bitarray_get_byte(bitarray, b)));
     bitarray_set_byte(bitarray, b, temp);
   }
 
-
+  printf("after array: ");
+  bitarray_fprint(stdout, bitarray);
 
 }
 

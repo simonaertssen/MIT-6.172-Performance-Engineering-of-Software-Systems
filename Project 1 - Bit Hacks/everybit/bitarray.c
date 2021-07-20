@@ -222,15 +222,16 @@ void bitarray_rotate(bitarray_t* const bitarray,
   // Convert a rotate left or right to a left rotate only:
   // bitarray_rotate_left(bitarray, bit_offset, bit_length, modulo(-bit_right_amount, bit_length));
 
+  // Cyclic rotation: prevent moving these bits one by one, but move immediately to the right place
   // Check whether we actually need to shift the array or not: eliminate
   // multiple full rotations.
-  size_t k = modulo(bit_right_amount, bit_length);
-  if (k == 0) return;
-
-  // cyclic rotation: prevent moving these bits one by one, but move immediately to the right place
+  // size_t k = modulo(bit_right_amount, bit_length);
+  // if (k == 0) return;
   // bitarray_rotate_cyclic(bitarray, bit_offset, bit_length, k);
 
-  // reversal rotation: reverse the bits of each byte
+  // Reversal rotation: reverse the bits of each byte
+  size_t k = modulo(-bit_right_amount, bit_length);
+  if (k == 0) return;
   bitarray_rotate_reverse(bitarray, bit_offset, bit_length, k);
 }
 
@@ -354,11 +355,10 @@ void bitarray_reverse_subarray(bitarray_t* const bitarray,
 
   // First, reverse whole bytes at once by looping from left and right over bytes in the array
   size_t temp_index;
-  unsigned char temp, byte;
+  unsigned char temp;
   for (size_t b = start; b <= (start + end) / 2; b++) {
     temp_index = start + end - b;
-    byte = bitarray_get_byte(bitarray, temp_index);
-    temp = reverse_byte(byte);
+    temp = reverse_byte(bitarray_get_byte(bitarray, temp_index));
     bitarray_set_byte(bitarray, temp_index, reverse_byte(bitarray_get_byte(bitarray, b)));
     bitarray_set_byte(bitarray, b, temp);
   }
@@ -376,35 +376,73 @@ void bitarray_reverse_subarray(bitarray_t* const bitarray,
 
   // Now we can take care of the offset by shifting everything over.
   // Save first and last bytes to account for the shifting that will occur.
-  unsigned char x, y, reverse;
-  for (size_t i = end; i >= start; i--) {
-    if (i == start) {
-      // Then we reached the beginning of the array and we only need the shigted values.
-      reverse = reverse_byte((unsigned char)(bitarray_get_byte(bitarray, i))) >> shift;
-      bitarray_set_byte(bitarray, i, reverse_byte(reverse));
-      break;
+  // unsigned char x, y, reverse;
+  // for (size_t i = end; i >= start; i--) {
+  //   if (i == start) {
+  //     // Then we reached the beginning of the array and we only need the shigted values.
+  //     reverse = reverse_byte((unsigned char)(bitarray_get_byte(bitarray, i))) >> shift;
+  //     bitarray_set_byte(bitarray, i, reverse_byte(reverse));
+  //     break;
+  //   }
+  //   else {
+  //     // Get the byte at index a and shift it. Then get the 'next' byte and shift it over 
+  //     // as many places as we have lost information in x. Here is how we retrieve info between iterations.
+  //     x = reverse_byte((unsigned char)(bitarray_get_byte(bitarray, i))) >> shift;
+  //     y = reverse_byte((unsigned char)(bitarray_get_byte(bitarray, i - 1))) << (8 - shift);
+  //     // OR values with lost information will produce the right result.
+  //     bitarray_set_byte(bitarray, i, reverse_byte((unsigned char)(x | y)));
+  //   }
+  // }
+  if (shift > 0) {
+    for (size_t a = end; a >= start; a--) {
+      if (a == start) {
+        unsigned char reverse = (unsigned char)(reverse_byte((unsigned char)(bitarray_get_byte(bitarray, a))) >> shift);
+        bitarray_set_byte(bitarray, a, reverse_byte(reverse));
+        break;
+      }
+      else {
+        unsigned char x = reverse_byte((unsigned char)(bitarray_get_byte(bitarray, a))) >> shift;
+        unsigned char y = reverse_byte((unsigned char)(bitarray_get_byte(bitarray, a - 1))) << (8 - shift);
+        bitarray_set_byte(bitarray, a, reverse_byte((unsigned char)(x | y)));
+      }
     }
-    else {
-      // Get the byte at index a and shift it. Then get the 'next' byte and shift it over 
-      // as many places as we have lost information in x. Here is how we retrieve info between iterations.
-      x = reverse_byte((unsigned char)(bitarray_get_byte(bitarray, i))) >> shift;
-      y = reverse_byte((unsigned char)(bitarray_get_byte(bitarray, i - 1))) << (8 - shift);
-      // OR values with lost information will produce the right result.
-      bitarray_set_byte(bitarray, i, reverse_byte((unsigned char)(x | y)));
+    //shift right
+  }
+  else if (shift < 0) {
+    for (size_t a = start; a <= end; a++) {
+      if (a == end) {
+        unsigned char reverse = (unsigned char)(reverse_byte((unsigned char)(bitarray_get_byte(bitarray, a))) << (-shift));
+        bitarray_set_byte(bitarray, a, reverse_byte(reverse));
+      }
+      else {
+        unsigned char x = reverse_byte((unsigned char)(bitarray_get_byte(bitarray, a))) << (-shift);
+        unsigned char y = reverse_byte((unsigned char)(bitarray_get_byte(bitarray, a + 1))) >> (8 + shift);
+        bitarray_set_byte(bitarray, a, reverse_byte((unsigned char)(x | y)));
+      }
     }
   }
 
   // Now restore the start bits: remove redundant info with shifts
-  size_t ss = shift_start, ss8 = 8 - shift_start;
+  ssize_t ss = shift_start, ss8 = 8 - shift_start;
   unsigned char start_a = (unsigned char)(first >> ss) << ss;
   unsigned char start_b = (unsigned char)(reverse_byte((unsigned char)(bitarray_get_byte(bitarray, start))) << ss8) >> ss8;
   bitarray_set_byte(bitarray, start, reverse_byte(start_a | start_b));
 
   // Now restore the end bits: remove redundant info with shifts
-  size_t se = shift_start, se8 = 8 - shift_end;
+  ssize_t se = shift_start, se8 = 8 - shift_end;
   unsigned char end_a = (unsigned char)(last << se) >> se;
   unsigned char end_b = (unsigned char)(reverse_byte((unsigned char)(bitarray_get_byte(bitarray, end))) >> se8) << se8;
   bitarray_set_byte(bitarray, end, reverse_byte(end_a | end_b));
+
+  //  //restore start bits
+  // unsigned char start_a = (unsigned char)(first >> shift_start) << shift_start;
+  // unsigned char start_b = (unsigned char)(reverse_byte((unsigned char)(bitarray_get_byte(bitarray, start))) << (8 - shift_start)) >> (8 - shift_start);
+  // bitarray_set_byte(bitarray, start, reverse_byte(start_a | start_b));
+
+  // //restore end bits
+  // unsigned char end_a = (unsigned char)(last << shift_end) >> shift_end;
+  // unsigned char end_b = (unsigned char)(reverse_byte((unsigned char)(bitarray_get_byte(bitarray, end))) >> (8 - shift_end)) << (8 - shift_end);
+  // bitarray_set_byte(bitarray, end, reverse_byte(end_a | end_b));
 }
 
 

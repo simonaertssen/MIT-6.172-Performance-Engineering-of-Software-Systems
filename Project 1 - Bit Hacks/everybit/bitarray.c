@@ -112,11 +112,6 @@ static void bitarray_rotate_reverse(bitarray_t* const bitarray,
 // Reverse all bits of a single byte using a precomputed table.
 unsigned char reverse_byte(unsigned char byte);
 
-// Reverse a subarray using an offset and a length.
-static void bitarray_reverse_subarray(bitarray_t* const bitarray,
-  const size_t bit_offset,
-  const size_t bit_length);
-
 // Produces a mask which, when ANDed with a byte, retains only the
 // bit_index th byte.
 //
@@ -343,39 +338,41 @@ unsigned char reverse_byte(unsigned char byte) {
   return (unsigned char)t[byte];
 }
 
-static void bitarray_reverse_subarray(bitarray_t* const bitarray,
+void bitarray_reverse_subarray(bitarray_t* const bitarray,
   const size_t bit_offset,
   const size_t bit_length) {
   assert(bit_offset + bit_length <= bitarray->bit_sz);
-  if (bit_length == 0) return;
+  // if (bit_length == 0) return;
 
   // Get the first, second and last bytes
   size_t start_byte = bit_offset / 8;
-  size_t second_byte = start_byte + 8;
   size_t end_bit = bit_offset + bit_length - 1;
   size_t end_byte = end_bit / 8;
 
-  // Compute the indices of the trailing bits
-  size_t shift_start = modulo(8 - bit_offset, 8);
-  size_t shift_end = (end_bit + 1) % 8;
+  // printf("Initial array: ");
+  // bitarray_fprint(stdout, bitarray);
+  // printf("\n");
 
-  printf("Initial array: ");
-  bitarray_fprint(stdout, bitarray);
-  printf("\n");
-
-  // Reverse whole bytes at once
+  // First, reverse whole bytes at once
   ssize_t shift = shift_end - shift_start;
   size_t temp_index;
-  for (size_t b = second_byte; b <= (second_byte + end_byte) / 2; b++) {
-    temp_index = second_byte + end_byte - b;
+  for (size_t b = start_byte; b <= (start_byte + end_byte) / 2; b++) {
+    printf("b = %zu\n", b);
+    temp_index = start_byte + end_byte - b;
     unsigned char temp = reverse_byte(bitarray_get_byte(bitarray, temp_index));
     bitarray_set_byte(bitarray, temp_index, reverse_byte(bitarray_get_byte(bitarray, b)));
     bitarray_set_byte(bitarray, b, temp);
   }
 
-  printf("after array: ");
-  bitarray_fprint(stdout, bitarray);
-  printf("\n");
+  // printf("after array: ");
+  // bitarray_fprint(stdout, bitarray);
+  // printf("\n");
+
+  // Compute the indices of the trailing bits
+  size_t shift_start = modulo(8 - bit_offset, 8);
+  size_t shift_end = (end_bit + 1) % 8;
+
+  // Now take care of switching the first and last bits
 }
 
 

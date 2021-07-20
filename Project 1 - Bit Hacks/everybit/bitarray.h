@@ -65,6 +65,11 @@ void bitarray_set_byte(bitarray_t* const bitarray,
     const size_t byte_index,
     const unsigned char value);
 
+// Reverse a subarray using an offset and a length.
+void bitarray_reverse_subarray(bitarray_t* const bitarray,
+    const size_t bit_offset,
+    const size_t bit_length);
+
 // Rotates a subarray.
 //
 // bit_offset is the index of the start of the subarray

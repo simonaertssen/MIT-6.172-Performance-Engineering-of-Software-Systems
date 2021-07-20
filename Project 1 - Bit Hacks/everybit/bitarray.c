@@ -342,7 +342,7 @@ void bitarray_reverse_subarray(bitarray_t* const bitarray,
   const size_t bit_offset,
   const size_t bit_length) {
   assert(bit_offset + bit_length <= bitarray->bit_sz);
-  // if (bit_length == 0) return;
+  if (bit_length == 0) return;
 
   // Get the first, second and last bytes
   size_t start_byte = bit_offset / 8;
@@ -354,7 +354,6 @@ void bitarray_reverse_subarray(bitarray_t* const bitarray,
   // printf("\n");
 
   // First, reverse whole bytes at once
-  ssize_t shift = shift_end - shift_start;
   size_t temp_index;
   for (size_t b = start_byte; b <= (start_byte + end_byte) / 2; b++) {
     printf("b = %zu\n", b);
@@ -371,8 +370,13 @@ void bitarray_reverse_subarray(bitarray_t* const bitarray,
   // Compute the indices of the trailing bits
   size_t shift_start = modulo(8 - bit_offset, 8);
   size_t shift_end = (end_bit + 1) % 8;
+  ssize_t shift = shift_end - shift_start;
 
   // Now take care of switching the first and last bits
+  bitarray_rotate_cyclic(bitarray, bit_offset, bit_length, shift);
+
+  // Now switch the remaining bits
+
 }
 
 

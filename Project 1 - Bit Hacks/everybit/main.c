@@ -51,7 +51,7 @@ int main(int argc, char** argv) {
   char optchar;
   opterr = 0;
   int selected_test = -1;
-  while ((optchar = getopt(argc, argv, "n:t:cdsml")) != -1) {
+  while ((optchar = getopt(argc, argv, "n:t:pcdsml")) != -1) {
     switch (optchar) {
     case 'n':
       selected_test = atoi(optarg);
@@ -75,7 +75,7 @@ int main(int argc, char** argv) {
       // -p measures the execution time for a large bitarray to measure progress in seconds
       printf("---- RESULTS ----\n");
       printf("Completed the test in %f seconds\n",
-        timed_rotation_variable(20365011074, 32951280099, 53316291173, 86267571272));
+        timed_rotation_variable(75025, 121393, 196418, 317811));
       printf("---- END RESULTS ----\n");
       retval = EXIT_SUCCESS;
       goto cleanup;

@@ -1,5 +1,6 @@
 # Project 1 Writeup:
 
+# T
 ## Understanding the test suite
 ### Testing options
 With the `-s`, `-m` and `-l` options, increasing time limits are given for the everybit program to test performance. Testing with `-t` is only a test for correctness.

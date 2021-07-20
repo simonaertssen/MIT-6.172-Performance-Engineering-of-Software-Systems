@@ -246,18 +246,18 @@ void bitarray_rotate(bitarray_t* const bitarray,
   if (bit_length == 0) return;
 
   // Convert a rotate left or right to a left rotate only:
-  // bitarray_rotate_left(bitarray, bit_offset, bit_length, modulo(-bit_right_amount, bit_length));
+  bitarray_rotate_left(bitarray, bit_offset, bit_length, modulo(-bit_right_amount, bit_length));
 
   // Check whether we actually need to shift the array or not: eliminate
   // multiple full rotations.
-  size_t k = modulo(bit_right_amount, bit_length);
-  if (k == 0) return;
+  // size_t k = modulo(bit_right_amount, bit_length);
+  // if (k == 0) return;
 
   // cyclic rotation: prevent moving these bits one by one, but move immediately to the right place
   // bitarray_rotate_cyclic(bitarray, bit_offset, bit_length, k);
 
   // reversal rotation: reverse the bits of each byte
-  bitarray_rotate_reverse(bitarray, bit_offset, bit_length, k);
+  // bitarray_rotate_reverse(bitarray, bit_offset, bit_length, k);
 }
 
 static void bitarray_rotate_left(bitarray_t* const bitarray,

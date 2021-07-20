@@ -361,6 +361,7 @@ static void bitarray_reverse_subarray(bitarray_t* const bitarray,
 
   printf("Initial array: ");
   bitarray_fprint(stdout, bitarray);
+  printf("\n");
 
   // Reverse whole bytes at once
   ssize_t shift = shift_end - shift_start;
@@ -374,7 +375,7 @@ static void bitarray_reverse_subarray(bitarray_t* const bitarray,
 
   printf("after array: ");
   bitarray_fprint(stdout, bitarray);
-
+  printf("\n");
 }
 
 

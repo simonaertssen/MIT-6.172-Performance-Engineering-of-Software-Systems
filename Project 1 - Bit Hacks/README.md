@@ -251,12 +251,12 @@ Let us take the first subarray to be precise. First, we take the "bytes" (consis
     a  b  c  d | l  k  j  i | h  g  f  e | m  n  o  p | q  r  s  t | u  v  w  x | y  z
     0  1  2  3   4  5  6  7   8  9  10 11  12 13 14 15  16 17 18 19  20 21 22 23  24 25
 
-Secondly, we need to circularly shift by `(4 - offset%4) - (offset+bit_shift)%4 = 4 - 1 - (21%4) = 4 - 1 - 1 = 2` to the left to make space for the ends:
+Secondly, we need to circularly shift by `(4 - offset%4) - (offset+length)%4 = 4 - 1 - (21%4) = 4 - 1 - 1 = 2` to the left to make space for the ends:
 
     a  b  l  k | j  i  h  g | f  e  d  c | m  n  o  p | q  r  s  t | u  v  w  x | y  z
     0  1  2  3   4  5  6  7   8  9  10 11  12 13 14 15  16 17 18 19  20 21 22 23  24 25
 
-Lastly, we need to switch the remaining ends, `(offset+bit_shift)%4` in total:
+Lastly, we need to switch the remaining ends, `(offset+length)%4` in total:
 
     a  m  l  k | j  i  h  g | f  e  d  c | b  n  o  p | q  r  s  t | u  v  w  x | y  z
     0  1  2  3   4  5  6  7   8  9  10 11  12 13 14 15  16 17 18 19  20 21 22 23  24 25

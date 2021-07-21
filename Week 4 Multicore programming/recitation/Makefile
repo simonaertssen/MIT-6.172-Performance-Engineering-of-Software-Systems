@@ -15,7 +15,7 @@ else
 	CFLAGS += -O3 -DNDEBUG
 endif
 
-ifeq ($(PARALLELIZE), 1)
+ifeq ($(PARALLEL), 1)
 	CFLAGS += -Xpreprocessor -fopenmp
 	LDFLAGS += -lomp
 endif
@@ -40,7 +40,7 @@ all: $(TARGETS:=.o)
 	$(CC) $(CFLAGS) -c $<
 
 fib: fib.o
-	$(CC) -o fib $(LDFLAGS)
+	$(CC) -o fib fib.o $(CFLAGS) $(LDFLAGS)
 
 transpose: transpose.o
 	$(CC) -o transpose transpose.o $(LDFLAGS)

@@ -2,13 +2,12 @@ CC := clang
 
 TARGETS = fib transpose qsort
 
-# CFLAGS := -Wall -g -std=gnu11
-CFLAGS:= -Wall -Wextra -Wfloat-equal -Wundef -Wcast-align -Wwrite-strings \
+CFLAGS := -Wall -g -std=gnu11
+#CFLAGS:= -Wall -Wextra -Wfloat-equal -Wundef -Wcast-align -Wwrite-strings \
 			-Wmissing-declarations -Wredundant-decls -Wshadow \
 			-Woverloaded-virtual -g -std=gnu11
-OTHER_CFLAGS ?=
 
-LDFLAGS := # -lrt
+# LDFLAGS := -lrt
 
 ifeq ($(DEBUG),1)
 	CFLAGS += -O0
@@ -35,14 +34,13 @@ ifneq ($(CFLAGS),$(OLD_CFLAGS))
 	@echo "$(CFLAGS)" > $@
 endif
 
-
 all: $(TARGETS:=.o)
 
 %.o: %.c .cflags
 	$(CC) $(CFLAGS) -c $<
 
 fib: fib.o
-	$(CC) -o fib fib.o $(LDFLAGS)
+	$(CC) -o fib $(LDFLAGS)
 
 transpose: transpose.o
 	$(CC) -o transpose transpose.o $(LDFLAGS)

@@ -1,4 +1,4 @@
-CC := clang
+CC := gcc
 
 TARGETS = fib transpose qsort
 

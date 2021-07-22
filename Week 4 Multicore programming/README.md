@@ -1,4 +1,5 @@
 ## Recitation
+Installed cilkplus by following the instructions here: <https://cilkplus.github.io/>
 ### Checkoff Item 1
 For a program running on a single core, we run `time ./fib 45` and obtain:
     

@@ -18,13 +18,16 @@ typedef struct Matrix {
  */
 Matrix* zeros(uint16_t n_rows, uint16_t n_cols) {
     Matrix* matrix = (Matrix*)malloc(sizeof(Matrix));
+    if (matrix == NULL) printf("Failed to malloc...\n");
     matrix->rows = n_rows;
     matrix->cols = n_cols;
     // Allocate memory for the data, and fill with zeros.
     // matrix->data = (double*) calloc(n_cols*n_rows, sizeof(double));
     uint8_t** data = (uint8_t**)malloc(sizeof(uint8_t*) * n_rows);
+    if (data == NULL) printf("Failed to malloc...\n");
     for (uint16_t x = 0; x < n_rows; x++) {
         data[x] = (uint8_t*)calloc(n_cols, sizeof(uint8_t));
+        if (data[x] == NULL) printf("Failed to malloc...\n");
     }
     matrix->data = data;
     return matrix;
@@ -40,9 +43,11 @@ Matrix* zeros(uint16_t n_rows, uint16_t n_cols) {
  */
 Matrix* fill(uint8_t* data, uint16_t n_rows, uint16_t n_cols) {
     Matrix* matrix = zeros(n_rows, n_cols);
+    printf("n_rows = %d, n_cols = %d \n", n_rows, n_cols);
+    // printf("data[0] = %d, data[%d] = %d.\n", data[0], n_rows * n_cols, data[0]);
     for (uint16_t x = 0; x < n_rows; x++) {
         for (uint16_t y = 0; y < n_cols; y++) {
-            matrix->data[x][y] = data[n_cols * x + y];
+            matrix->data[x][y] = 0; //*(data + (n_cols * x + y));
         }
     }
     return matrix;
@@ -61,7 +66,6 @@ void free_matrix(Matrix* m) {
 void print_matrix(Matrix* m) {
     for (uint16_t x = 0; x < m->rows; x++) {
         for (uint16_t y = 0; y < m->cols; y++) {
-            // printf("%.2f\t", m->data[m->cols*x+y]);
             printf("%d\t", m->data[x][y]);
         }
         printf("\n");
@@ -81,15 +85,9 @@ stored at the address a' = Nm+n.
 @param arr Array to be transposed.
 */
 void transpose(Matrix* arr) {
-    // Switch rows/cols (to ensure matrix is properly printed) 
-    int tmp_rows = arr->rows;
-    arr->rows = arr->cols;
-    arr->cols = tmp_rows;
-
-    for (uint16_t i = 0; i < arr->rows; i++) {
-        for (uint16_t j = 0; j < arr->cols; j++) {
-            // Original memory location before permutation: a = Mn + m 
-            // uint8_t* orig_addr = (arr->data[arr->cols * i + j]);
+    // Serial program:
+    for (uint16_t i = 1; i < arr->rows; i++) {
+        for (uint16_t j = 0; j < i; j++) {
             uint8_t tmp = arr->data[i][j];
             arr->data[i][j] = arr->data[j][i];
             arr->data[j][i] = tmp;
@@ -113,13 +111,16 @@ void transpose(Matrix* arr) {
 
 int main(int argc, char* argv[]) {
     uint16_t N = atoi(argv[1]);
-    uint8_t a[N * N];
+    uint8_t* a = (uint8_t*)calloc(N * N, sizeof(uint8_t));
+    if (a == NULL) printf("Failed to malloc...\n");
+
     for (uint32_t i = 0; i < N * N; i++) {
         a[i] = (rand() % (255 - 0 + 1)) + 0; // generate random number between [0,255]
     }
+
     Matrix* orig = fill(a, N, N);
-    print_matrix(orig);
+    // print_matrix(orig);
     transpose(orig);
-    print_matrix(orig);
+    // print_matrix(orig);
     free_matrix(orig);
 }

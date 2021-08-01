@@ -2,7 +2,8 @@ CC := clang
 
 TARGETS = queens
 
-CFLAGS:= -Wall -Wextra -Wfloat-equal -Wundef -Wcast-align -Wwrite-strings \
+CFLAGS := -Wall -g -std=gnu11
+#CFLAGS:= -Wall -Wextra -Wfloat-equal -Wundef -Wcast-align -Wwrite-strings \
 			-Wmissing-declarations -Wredundant-decls -Wshadow \
 			-Woverloaded-virtual -g -std=gnu11
 OTHER_CFLAGS ?=
@@ -43,5 +44,8 @@ all: $(TARGETS:=.o)
 queens: queens.o
 	$(CC) -o queens queens.o $(LDFLAGS) $(LDFLAGS)
 
+reductions: reductions.o
+	$(CC) -o reductions reductions.o $(LDFLAGS) $(LDFLAGS)
+
 clean::
-	rm -rf queens *.o *.s .cflags perf.data */perf.data cachegrind.out.* *.dSYM/
+	rm -rf queens reductions *.o *.s .cflags perf.data */perf.data cachegrind.out.* *.dSYM/

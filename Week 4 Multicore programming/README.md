@@ -48,3 +48,4 @@ That is a small speedup! The `private` directive declares data to have a separat
 
 ---
 ## Homework
+The way `queens.c` works is by using a `1` bit to represent a queen's position, in a 8-bit number. First, we check whether all rows have a queen, by AND-ing with 255 (`0xFF`). Then, `poss` is nonzero if any bit in `row`, `left` or `right` is NOT set yet (that is why we NOT all ORs and AND with 255). `place` contains the location where a queen is put, as we do not use all of the available bits in the 4-byte integer. We then need to try a row where the place is taken.

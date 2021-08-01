@@ -2,9 +2,6 @@
  * Determine number of ways to place N queens on a NxN chess board so
  * that no queen can attack another (i.e., no two queens in any row,
  * column, or diagonal).
- *
- * TODO: Implement parallelizable queens.
- * TODO: Fix race conditions.
  */
 
 #include <stdio.h>
@@ -25,7 +22,7 @@ void try(int row, int left, int right) {
     }
 }
 
-int main(int argc, char* argv[]) {
+int main() {
     try(0, 0, 0);
     printf("There are %d solutions. \n", count);
     return 0;

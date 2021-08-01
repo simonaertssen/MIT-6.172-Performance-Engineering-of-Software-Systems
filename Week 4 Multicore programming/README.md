@@ -38,6 +38,13 @@ Testing the serial approach, `time ./transpose 10000` yields:
     user    0m1.614s
     sys     0m0.080s
 
+Using the parallel version we simply go down to:
+
+    real    0m1.392s
+    user    0m2.689s
+    sys     0m0.140s
+
+That is a small speedup! The `private` directive declares data to have a separate copy in the memory of each thread. The `num_threads` directive sets the number of threads to be used for that parallel section. The `schedule` directive is a specification of how iterations of associated loops are divided into contiguous non-empty subsets.
 
 ---
 ## Homework

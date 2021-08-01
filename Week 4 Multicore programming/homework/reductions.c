@@ -9,34 +9,32 @@ We will take different reductions on consecutive numbers.
 #include "omp.h"
 #include "./fasttime.h"
 
-#define N 100000000
-#define NUM_THREADS 1
+#define NUM_THREADS 10
 
-void reduce_ADD(void);
-void reduce_MUL(void);
-void reduce_AND(void);
-void reduce_OR_(void);
+void reduce_ADD(uint64_t);
+void reduce_MUL(uint64_t);
+void reduce_AND(uint64_t);
+void reduce_OR_(uint64_t);
 
 int main(int argc, char* argv[]) {
-
-    reduce_ADD();
-
+    uint64_t N = 1000000000000000;
+    reduce_ADD(N);
     return 0;
 }
 
-void reduce_ADD(void) {
+void reduce_ADD(uint64_t N) {
     size_t i;
     uint64_t result = 0;
     fasttime_t start_time, endin_time;
 
     // Parallel execution 
     start_time = gettime();
-#pragma omp parallel for reduction(+ : result)
+#pragma omp parallel for reduction(+ : result) num_threads(1)
     for (i = 0; i < N; i++) {
         result += i;
     }
     endin_time = gettime();
-    printf("%s: parall %f s\n", __func__, tdiff(start_time, endin_time));
+    printf("%s: parall %f secs has value %llu\n", __func__, tdiff(start_time, endin_time), result);
 
     // Serial execution 
     start_time = gettime();
@@ -44,8 +42,7 @@ void reduce_ADD(void) {
         result -= i;
     }
     endin_time = gettime();
-    printf("%s: serial %f s\n", __func__, tdiff(start_time, endin_time));
-
+    printf("%s: serial %f secs has value %llu\n", __func__, tdiff(start_time, endin_time), result);
 
     // Check results
     if (result != 0) printf("Error in function %s, result is not correct.\n", __func__);

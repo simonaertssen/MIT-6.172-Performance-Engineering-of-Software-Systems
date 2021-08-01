@@ -2,7 +2,7 @@ CC := clang
 
 TARGETS = queens
 
-CFLAGS := -Wall -g -std=gnu11
+CFLAGS := -Wall -g -std=gnu11 -ffast-math -Wno-unused-variable
 #CFLAGS:= -Wall -Wextra -Wfloat-equal -Wundef -Wcast-align -Wwrite-strings \
 			-Wmissing-declarations -Wredundant-decls -Wshadow \
 			-Woverloaded-virtual -g -std=gnu11

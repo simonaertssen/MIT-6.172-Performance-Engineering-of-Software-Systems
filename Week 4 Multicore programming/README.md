@@ -20,13 +20,18 @@ After parallelisation, we obtain:
     user    2m37.992s
     sys     0m33.100s
 
-This is significanlty slower! The number of spawn/task calls has a large overhead. We can easily coarsen the program by testing if `n` is small enough and then performing the computations serially. We then obtain:
+This is significanlty slower! The number of spawn/task calls has a large overhead. 
+
+### Checkoff Item 2
+We can easily coarsen the program by testing if `n` is small enough and then performing the computations serially. We then obtain:
 
     real    0m2.247s
     user    0m8.327s
     sys     0m0.032s
 
-### Checkoff Item 2
+This is not really a speedup, but perhaps we could finetune the coarsness.
+
+### Checkoff Item 3
 
 ---
 ## Homework

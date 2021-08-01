@@ -43,10 +43,10 @@ fib: fib.o
 	$(CC) -o fib fib.o $(CFLAGS) $(LDFLAGS)
 
 transpose: transpose.o
-	$(CC) -o transpose transpose.o $(LDFLAGS)
+	$(CC) -o transpose transpose.o $(CFLAGS) $(LDFLAGS)
 
 qsort: qsort.o
-	$(CC) -o qsort qsort.o $(LDFLAGS) $(LDFLAGS)
+	$(CC) -o qsort qsort.o $(CFLAGS) $(LDFLAGS)
 
 clean::
 	rm -rf fib transpose qsort *.o *.s .cflags perf.data */perf.data cachegrind.out.* *.dSYM/

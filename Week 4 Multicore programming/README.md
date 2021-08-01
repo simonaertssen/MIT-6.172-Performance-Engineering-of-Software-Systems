@@ -32,6 +32,12 @@ We can easily coarsen the program by testing if `n` is small enough and then per
 This is not really a speedup, but perhaps we could finetune the coarsness.
 
 ### Checkoff Item 3
+Testing the serial approach, `time ./transpose 10000` yields:
+
+    real    0m1.705s
+    user    0m1.614s
+    sys     0m0.080s
+
 
 ---
 ## Homework

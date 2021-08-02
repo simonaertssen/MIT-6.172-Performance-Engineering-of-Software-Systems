@@ -17,35 +17,55 @@ void reduce_AND(uint64_t);
 void reduce_OR_(uint64_t);
 
 int main(int argc, char* argv[]) {
-    uint64_t N = 1000000000000000;
+    uint64_t N = 1000000000;
     reduce_ADD(N);
     return 0;
 }
 
 void reduce_ADD(uint64_t N) {
     size_t i;
-    uint64_t result = 0;
+    uint64_t parall_result = 0;
+    uint64_t serial_result = 0;
     fasttime_t start_time, endin_time;
 
-    // Parallel execution 
+    // Test addition
     start_time = gettime();
-#pragma omp parallel for reduction(+ : result) num_threads(1)
+#pragma omp parallel for reduction(+ : parall_result) num_threads(NUM_THREADS)
     for (i = 0; i < N; i++) {
-        result += i;
+        parall_result += i;
     }
     endin_time = gettime();
-    printf("%s: parall %f secs has value %llu\n", __func__, tdiff(start_time, endin_time), result);
+    printf("%s: parall ADD in %f secs\n", __func__, tdiff(start_time, endin_time));
 
-    // Serial execution 
     start_time = gettime();
     for (i = 0; i < N; i++) {
-        result -= i;
+        serial_result += i;
     }
     endin_time = gettime();
-    printf("%s: serial %f secs has value %llu\n", __func__, tdiff(start_time, endin_time), result);
+    printf("%s: serial ADD in %f secs\n", __func__, tdiff(start_time, endin_time));
 
     // Check results
-    if (result != 0) printf("Error in function %s, result is not correct.\n", __func__);
+    if (parall_result != serial_result) printf("Error in function %s, result is not correct.\n", __func__);
+
+    // Test subtraction
+    start_time = gettime();
+#pragma omp parallel for reduction(- : parall_result) num_threads(NUM_THREADS)
+    for (i = 0; i < N; i++) {
+        parall_result -= i;
+    }
+    endin_time = gettime();
+    printf("%s: parall SUB in %f secs\n", __func__, tdiff(start_time, endin_time));
+
+    start_time = gettime();
+    for (i = 0; i < N; i++) {
+        serial_result += i;
+    }
+    endin_time = gettime();
+    printf("%s: serial SUB in %f secs\n", __func__, tdiff(start_time, endin_time));
+
+    // Check results
+    if (parall_result != 0 | serial_result != 0 | parall_result != serial_result)
+        printf("Error in function %s, result is not correct.\n", __func__);
 
     return;
 }

@@ -86,7 +86,7 @@ void transpose(Matrix* arr) {
     uint16_t i, j;
     // Parallel section:
 #ifdef _OPENMP
-#pragma omp parallel for private(i, j) num_threads(8) schedule(static, 2)
+#pragma omp parallel for private(i, j) num_threads(8) schedule(dynamic)
     for (i = 1; i < arr->rows; i++) {
         for (j = 0; j < i; j++) {
             uint8_t tmp = arr->data[i][j];

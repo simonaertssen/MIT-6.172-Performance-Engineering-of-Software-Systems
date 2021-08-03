@@ -18,9 +18,9 @@ The **Span Law** states that the work per processor is always at least the work 
 The **speedup** of a program is how much faster the same program runs on more than one processor:
 <img src="https://render.githubusercontent.com/render/math?math=\frac{T_1}{T_P}">
 
-The **parallelism** of a program is the maximum speedup we can get in the program (the average amount of work per step in the program):
+The **parallelism** of a program is the maximum speedup we can get in the program:
 <img src="https://render.githubusercontent.com/render/math?math=\frac{T_1}{T_{\infty}}">
-
+It is also seen as the average amount of work per step in the program.
 
 ## Greedy Scheduling
 
@@ -34,6 +34,7 @@ In this proof, the workload performed by all processors in all complete steps is
 
 
 ### Write-up 2: 
+We need to compute some bounds on the different values of `T`. `T_1` is smaller than `T_P * P` (work law), so from `T_4` we get that `T_1` = 4*100 = 400 and from `T_64` we get that `T_1` = 64 * 10 = 640. It is clear that 400 is the lowest bound on `T_1`. For `T_f`, we only know that it is at least 10. Rearranging some terms in theorem 27.1, we can compute `T_f` as at least 100 - 400/4
+10 - 64/10
 
-
-
+The lowest possible value of parallelism is 400 / 10 = 40. The highest possible value of parallelism is 640/10 = 64.

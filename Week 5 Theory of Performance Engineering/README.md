@@ -4,8 +4,11 @@ This week, we will be taking a look at some of the theory behind our approaches 
 As a quick recap, here are some of the important metrics:
 
 T_P = execution time on P processors.
+
 T_1 = execution time on 1 processor (total amount of work in the program).
+
 T_f = execution time on an infinite amount of processors. Also called span / critical-path length / computational depth.
+
 
 ## Greedy Scheduling
 

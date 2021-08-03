@@ -10,10 +10,13 @@ As a quick recap, here are some of the important definitions:
 When we speak of *execution time*, we also mean the *work* of the program.
 
 The **Work Law** states that the work per processor is always at least the total work divided by the number of processors:
-<img src="https://render.githubusercontent.com/render/math?math=T_p \geq \frac{T_1}{P}">
+<a href="https://www.codecogs.com/eqnedit.php?latex=T_{p}&space;\geq&space;\frac{T_{1}}{P}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?T_{p}&space;\geq&space;\frac{T_{1}}{P}" title="T_{p} \geq \frac{T_{1}}{P}" /></a>
 
 The **Span Law** states that the work per processor is always at least the work on an infinite number of processors:
-<img src="https://render.githubusercontent.com/render/math?math=T_p \geq T_{\infty}">
+<img src="https://latex.codecogs.com/gif.latex?T_{p}&space;\geq&space;T_{\infty}" title="T_{p} \geq T_{\infty}" />
+
+[latex]T_{p} \geq T_{\infty}[/latex]
+
 
 ## Greedy Scheduling
 

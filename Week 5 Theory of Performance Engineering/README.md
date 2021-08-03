@@ -17,6 +17,7 @@ The **Span Law** states that the work per processor is always at least the work 
 
 [latex]T_{p} \geq T_{\infty}[/latex]
 
+![Awesome equation](https://latex.codecogs.com/gif.latex?\inline&space;\gamma=sin(\alpha)*\boldsymbol{q}^{2}&plus;\lim_{\beta\rightarrow&space;\infty&space;})
 
 ## Greedy Scheduling
 

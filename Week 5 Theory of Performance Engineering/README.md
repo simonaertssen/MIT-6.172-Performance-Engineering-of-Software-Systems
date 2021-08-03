@@ -3,26 +3,21 @@ This week, we will be taking a look at some of the theory behind our approaches 
 
 As a quick recap, here are some of the important definitions:
 
-    T_P = execution time on P processors.
+    <img src="https://render.githubusercontent.com/render/math?math=T_p"> = execution time on P processors.
     T_1 = execution time on 1 processor (total amount of work in the program).
     T_f = execution time on an infinite amount of processors. Also called span / critical-path length / computational depth.
 
 When we speak of *execution time*, we also mean the *work* of the program.
 
 The **Work Law** states that the work per processor is always at least the total work divided by the number of processors:
-<a href="https://www.codecogs.com/eqnedit.php?latex=T_{p}&space;\geq&space;\frac{T_{1}}{P}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?T_{p}&space;\geq&space;\frac{T_{1}}{P}" title="T_{p} \geq \frac{T_{1}}{P}" /></a>
+<img src="https://render.githubusercontent.com/render/math?math=T_p \geq \frac{T_1}{P}">
 
 The **Span Law** states that the work per processor is always at least the work on an infinite number of processors:
-<img src="https://latex.codecogs.com/gif.latex?T_{p}&space;\geq&space;T_{\infty}" title="T_{p} \geq T_{\infty}" />
-
-[latex]T_{p} \geq T_{\infty}[/latex]
-
-![Awesome equation](https://latex.codecogs.com/gif.latex?\inline&space;\gamma=sin(\alpha)*\boldsymbol{q}^{2}&plus;\lim_{\beta\rightarrow&space;\infty&space;})
+<img src="https://render.githubusercontent.com/render/math?math=T_p \geq T_{\infty}">
 
 ## Greedy Scheduling
 
 ### Write-up 1: Solve Exercise 27.1-3 on Page 791 in Chapter 27 of CLRS.
 *Prove that a greedy scheduler achieves the following time bound, which is slightly stronger than the bound proven in Theorem 27.1:*
-<img src="https://render.githubusercontent.com/render/math?math=T_p \leq \frac{T_1 - T_{\infty}}{P} %2B T_{\infty}">
+<img src="https://render.githubusercontent.com/render/math?math=T_p \leq \frac{T_1 - T_{\infty}}{P} %20 T_{\infty}">
 
-<a href="https://www.codecogs.com/eqnedit.php?latex=\mathcal{W}(A,f)&space;=&space;(T,\bar{f})" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\mathcal{W}(A,f)&space;=&space;(T,\bar{f})" title="\mathcal{W}(A,f) = (T,\bar{f})" /></a>

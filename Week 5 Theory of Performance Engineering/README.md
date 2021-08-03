@@ -15,12 +15,25 @@ The **Work Law** states that the work per processor is always at least the total
 The **Span Law** states that the work per processor is always at least the work on an infinite number of processors:
 <img src="https://render.githubusercontent.com/render/math?math=T_p \geq T_{\infty}">
 
+The **speedup** of a program is how much faster the same program runs on more than one processor:
+<img src="https://render.githubusercontent.com/render/math?math=\frac{T_1}{T_P}">
+
+The **parallelism** of a program is the maximum speedup we can get in the program (the average amount of work per step in the program):
+<img src="https://render.githubusercontent.com/render/math?math=\frac{T_1}{T_{\infty}}">
+
+
 ## Greedy Scheduling
 
 ### Write-up 1: Solve Exercise 27.1-3 on Page 791 in Chapter 27 of CLRS.
 *Prove that a greedy scheduler achieves the following time bound, which is slightly stronger than the bound proven in Theorem 27.1:*
 <img src="https://render.githubusercontent.com/render/math?math=T_p \leq \frac{T_1 - T_{\infty}}{P} %2B T_{\infty}">
 
-In theorem 27.1 (page 782) the following is proven: <img src="https://render.githubusercontent.com/render/math?math=T_{P} \leq T_{1} / P  %2B T_{\infty}">
+In theorem 27.1 (page 782) the following is proven: <img src="https://render.githubusercontent.com/render/math?math=T_{P} \leq \frac{T_{1}}{P} %2B T_{\infty}">. The proof considers the ampount of complete and incomplete steps, where respectively, all processors are active, or some are not, due to the number of available tasks in parallel.
+
+In this proof, the workload performed by all processors in all complete steps is `T_1`. However, the workload is actually `T_1 - T_f`, if we assume we still need to incorporate `T_f` in the total workload of incomplete steps. Hence, the proof follows.
+
+
+### Write-up 2: 
+
 
 

@@ -1,5 +1,5 @@
 # Theory of Performance Engineering
-This week, we will be taking a look at some of the theory behind our approaches to parallelise programs. It is important to set the GitHub theme to 'light' as there is no support yet for math equations in the 'dark' mode.
+This week, we will be taking a look at some of the theory behind our approaches to parallelise programs. It is important to set the GitHub theme to 'light' as there is no support yet for math equations in the 'dark' mode. Solutions to the book 'Introduction To Algorithms' can be found [here](https://walkccc.me/CLRS/).
 
 As a quick recap, here are some of the important definitions:
 
@@ -32,6 +32,11 @@ In theorem 27.1 (page 782) the following is proven: <img src="https://render.git
 
 In this proof, the workload performed by all processors in all complete steps is `T_1`. However, the workload is actually `T_1 - T_f`, if we assume we still need to incorporate `T_f` in the total workload of incomplete steps. Hence, the proof follows.
 
+From another point of view: suppose that there are x incomplete steps in a run of the program. Since each of these steps causes at least one unit of work to be done, we have that there is at most (`T1`− x) units of work done in the complete steps. Then, we suppose by contradiction that the number of complete steps is strictly greater than 
+<img src="https://render.githubusercontent.com/render/math?math=\left\lfloor\left(T_{1}-x\right) / P\right\rfloor">
+
+Then, we have that the total amount of work done during the complete steps is
+<img src="https://render.githubusercontent.com/render/math?math=P \cdot\left(\left\lfloor\left(T_{1}-x\right) / P\right\rfloor+1\right)=P\left\lfloor\left(T_{1}-x\right) / P=\left(T_{1}-x\right)-\left(\left(T_{1}-x\right) \bmod P\right)+P>T_{1}-x\right">.
 
 ### Write-up 2: 
 We need to compute some bounds on the different values of `T`. `T_1` is smaller than `T_P * P` (work law), so from `T_4` we get that `T_1` = 4*100 = 400 and from `T_64` we get that `T_1` = 64 * 10 = 640. It is clear that 400 is the lowest bound on `T_1`. For `T_f`, we only know that it is at least 10. Rearranging some terms in theorem 27.1, we can compute `T_f` as at least 100 - 400/4

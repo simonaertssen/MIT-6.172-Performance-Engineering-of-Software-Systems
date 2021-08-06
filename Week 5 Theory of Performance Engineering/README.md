@@ -54,8 +54,5 @@ For `T_f`, we only know that it is smaller or equal to 10. The lowest possible v
 Using the work law, we can compute the respective `T_1` as at least 80*4 = 320, and `T_f` as maximum 9. Then for `P` = 10, we have a contradiction that 42 is less or equal to (320 - 9)/10 + 9 = 40.
 
 
-### Write-up 4: Solve Exercise 27.1-5 on Page 791 in Chapter 27 of CLRS.
+### Write-up 4: Solve Exercise 27.1-5 on Page 791 in Chapter 27 of CLRS
 By the work law for `P` = 4, we have that `T_1` is at least 320. By the span law for `P` = 64, we have that `T_f` is at most 10. Now we will use the inequality from Exercise 27.1-3 to derive a contradiction. For `P` = 10, we have that 42 is less or eaqual to (320 - `T_f`)/10 + `T_f`. Equivalently, this states that `T_f` is greater or equal to 10/9*10, which contradicts that `T_f` is at most 10.
-
-
-## Multithreaded Matrix Multiplication

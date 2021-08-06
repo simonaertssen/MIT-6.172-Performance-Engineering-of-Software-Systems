@@ -62,6 +62,17 @@ By the work law for `P` = 4, we have that `T_1` is at least 320. By the span law
 
 ## Multithreaded matrix multiplication
 
-### Write-up 5: Solve Exercise 27.2-5 on Page 796 in Chapter 27 of CLRS
+### Write-up 5: 
 > Give pseudocode for an efficient multithreaded algorithm that transposes an n x n matrix in place by using divide-and-conquer to divide the matrix recursively into four n/2 x n/2 submatrices. Analyze your algorithm.
 
+Let's think about this algorithm first. Let's begin with the whole matrix. A matrix A consisting of four blocks has a transpose:
+
+    A_00  A_10    A_00  A_01
+    A_01  A_11    A_10  A_11
+
+We need to divide each block into four pieces and switch the appropriate blocks.
+
+```c
+MatrixTranspose(A, row, col, dim) {
+}
+```

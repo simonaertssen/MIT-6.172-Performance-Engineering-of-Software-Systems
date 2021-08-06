@@ -1,5 +1,5 @@
 # Theory of Performance Engineering
-This week, we will be taking a look at some of the theory behind our approaches to parallelise programs. It is important to set the GitHub theme to 'light' as there is no support yet for math equations in the 'dark' mode. Solutions to the book 'Introduction To Algorithms' can be found [here](https://walkccc.me/CLRS/).
+This week, we will be taking a look at some of the theory behind our approaches to parallelise programs. It is important to set the GitHub theme to 'light' as there is no support yet for math equations in the 'dark' mode. Solutions to the book 'Introduction To Algorithms' can be found [here](https://github.com/Kelvinson/CLRS-1).
 
 As a quick recap, here are some of the important definitions:
 
@@ -45,8 +45,17 @@ The second inequality comes by noting that the middle expression, as a function 
 
 
 ### Write-up 2: 
-
-#### Part 1:
 We need to compute some bounds on the different values of `T`. `T_1` is smaller than `T_P * P` (work law), so from `T_4` we get that `T_1` = at least 4*100 = 400 and from `T_64` we get that `T_1` = at least 64 * 10 = 640. It is clear that 400 is the lowest bound on `T_1`. 
 
 For `T_f`, we only know that it is smaller or equal to 10. The lowest possible value of parallelism is then 400 / 10 = 40. The highest possible value of parallelism is 640/10 = 64.
+
+
+### Write-up 3:
+Using the work law, we can compute the respective `T_1` as at least 80*4 = 320, and `T_f` as maximum 9. Then for `P` = 10, we have a contradiction that 42 is less or equal to (320 - 9)/10 + 9 = 40.
+
+
+### Write-up 4: Solve Exercise 27.1-5 on Page 791 in Chapter 27 of CLRS.
+By the work law for `P` = 4, we have that `T_1` is at least 320. By the span law for `P` = 64, we have that `T_f` is at most 10. Now we will use the inequality from Exercise 27.1-3 to derive a contradiction. For `P` = 10, we have that 42 is less or eaqual to (320 - `T_f`)/10 + `T_f`. Equivalently, this states that `T_f` is greater or equal to 10/9*10, which contradicts that `T_f` is at most 10.
+
+
+## Multithreaded Matrix Multiplication

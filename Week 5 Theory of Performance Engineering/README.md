@@ -36,7 +36,7 @@ From another point of view: suppose that there are x incomplete steps in a run o
 <img src="https://render.githubusercontent.com/render/math?math=\left\lfloor\left(T_{1}-x\right) / P\right\rfloor">
 
 Then, we have that the total amount of work done during the complete steps is
-<img src="https://render.githubusercontent.com/render/math?math=P \cdot\left(\left\lfloor\left(T_{1}-x\right) / P\right\rfloor+1\right)=P\left\lfloor\left(T_{1}-x\right) / P=\left(T_{1}-x\right)-\left(\left(T_{1}-x\right) \mod P\right)%2BP>T_{1}-x\right">.
+<img src="https://render.githubusercontent.com/render/math?math=P \cdot\left(\left\lfloor\left(T_{1}-x\right) / P\right\rfloor+1\right)=P\left\lfloor\left(T_{1}-x\right) / P \right\rfloor=\left(T_{1}-x\right)-\left(\left(T_{1}-x\right) \mod P\right)%2BP>T_{1}-x\right">.
 
 ### Write-up 2: 
 We need to compute some bounds on the different values of `T`. `T_1` is smaller than `T_P * P` (work law), so from `T_4` we get that `T_1` = 4*100 = 400 and from `T_64` we get that `T_1` = 64 * 10 = 640. It is clear that 400 is the lowest bound on `T_1`. For `T_f`, we only know that it is at least 10. Rearranging some terms in theorem 27.1, we can compute `T_f` as at least 100 - 400/4

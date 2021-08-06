@@ -36,10 +36,10 @@ From another point of view: suppose that there are x incomplete steps in a run o
 <img src="https://render.githubusercontent.com/render/math?math=\left\lfloor\left(T_{1}-x\right) / P\right\rfloor">
 
 Then, we have that the total amount of work done during the complete steps is
-<img src="https://render.githubusercontent.com/render/math?math=P \cdot\left(\left\lfloor\left(T_{1}-x\right) / P\right\rfloor+1\right)=P\left\lfloor\left(T_{1}-x\right) / P \right\rfloor %2B P=\left(T_{1}-x\right)-\left(\left(T_{1}-x\right) \mod P\right) %2B P > T_{1}-x">.
+<img src="https://render.githubusercontent.com/render/math?math=P \cdot\left(\left\lfloor\left(T_{1}-x\right) / P\right\rfloor %2B 1\right)=P\left\lfloor\left(T_{1}-x\right) / P \right\rfloor %2B P=\left(T_{1}-x\right)-\left(\left(T_{1}-x\right) \mod P\right) %2B P > T_{1}-x">.
 
 This is a contradiction because there are only (`T1` − x) units of work done during the complete steps, which is less than the amount we would be doing. Notice that since `T_f`​ is a bound on the total number of both kinds of steps, it is a bound on the number of incomplete steps, x, so,
-<img src="https://render.githubusercontent.com/render/math?math=T_{P} \leq\left\lfloor\left(T_{1}-x\right) / P\right\rfloor+x \leq\left\lfloor\left(T_{1}-T_{\infty}\right) / P\right\rfloor+T_{\infty}">
+<img src="https://render.githubusercontent.com/render/math?math=T_{P} \leq\left\lfloor\left(T_{1}-x\right) / P\right\rfloor %2B x \leq\left\lfloor\left(T_{1}-T_{\infty}\right) / P\right\rfloor %2B T_{\infty}">
 
 The second inequality comes by noting that the middle expression, as a function of x is monotonically increasing, and so is bounded by the largest value of x that is possible, namely `T_f`.
 

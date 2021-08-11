@@ -23,7 +23,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <cilk/cilk.h>
+ // #include <cilk/cilk.h>
 
 
 #include "./fasttime.h"
@@ -40,7 +40,7 @@ static char* DEFAULT_INPUT_FILE_PATH = "input/mit.in";
 static char* input_file_path;
 
 // For non-graphic version
-void lineMain(LineDemo *lineDemo) {
+void lineMain(LineDemo* lineDemo) {
   // Loop for updating line movement simulation
   while (true) {
     if (!LineDemo_update(lineDemo)) {
@@ -49,7 +49,7 @@ void lineMain(LineDemo *lineDemo) {
   }
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   int optchar;
 #ifndef PROFILE_BUILD
   bool graphicDemoFlag = false;
@@ -60,14 +60,14 @@ int main(int argc, char *argv[]) {
   // Process command line options.
   while ((optchar = getopt(argc, argv, "gi")) != -1) {
     switch (optchar) {
-      case 'g':
+    case 'g':
 #ifndef PROFILE_BUILD
-        graphicDemoFlag = true;
+      graphicDemoFlag = true;
 #endif
-        break;
-      default:
-        printf("Ignoring unrecognized option: %c\n", optchar);
-        continue;
+      break;
+    default:
+      printf("Ignoring unrecognized option: %c\n", optchar);
+      continue;
     }
   }
 
@@ -89,13 +89,14 @@ int main(int argc, char *argv[]) {
 
   if (remaining_args > 1) {
     input_file_path = argv[2];
-  } else {
+  }
+  else {
     input_file_path = DEFAULT_INPUT_FILE_PATH;
   }
   printf("Input file path is: %s\n", input_file_path);
 
   // Create and initialize the Line simulation environment.
-  LineDemo *lineDemo = LineDemo_new();
+  LineDemo* lineDemo = LineDemo_new();
   LineDemo_setInputFile(input_file_path);
   LineDemo_initLine(lineDemo);
   LineDemo_setNumFrames(lineDemo, numFrames);
@@ -106,7 +107,8 @@ int main(int argc, char *argv[]) {
   // Run demo.
   if (graphicDemoFlag) {
     graphicMain(argc, argv, lineDemo, false);
-  } else {
+  }
+  else {
     lineMain(lineDemo);
   }
 #else
@@ -118,11 +120,11 @@ int main(int argc, char *argv[]) {
   // Output results.
   printf("---- RESULTS ----\n");
   printf("Elapsed execution time: %fs\n",
-         tdiff(start_time, end_time));
+    tdiff(start_time, end_time));
   printf("%u Line-Wall Collisions\n",
-         LineDemo_getNumLineWallCollisions(lineDemo));
+    LineDemo_getNumLineWallCollisions(lineDemo));
   printf("%u Line-Line Collisions\n",
-         LineDemo_getNumLineLineCollisions(lineDemo));
+    LineDemo_getNumLineLineCollisions(lineDemo));
   printf("---- END RESULTS ----\n");
 
   // delete objects

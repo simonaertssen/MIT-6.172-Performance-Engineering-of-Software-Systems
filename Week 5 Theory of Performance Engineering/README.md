@@ -73,6 +73,24 @@ Let's think about this algorithm first. Let's begin with the whole matrix. A mat
 We need to divide each block into four pieces and switch the appropriate blocks.
 
 ```c
-MatrixTranspose(A, row, col, dim) {
+/* MatrixTranspose: Perform in-place, asynchronous matrix transpose. 
+@A = pointer to the first element of matrix A
+@row = row of the current submatrix
+@col = column of the current submatrix
+@size = size of the current submatrix
+*/
+MatrixTranspose(A, row, col, size) {
+    if (size == 1) {
+        // Then we have reached the smallest element of the matrix: the individual numbers.
+        return;
+    } else {
+        new_size = floor(size/2);
+        // Spawn two threads to split the matrix further, by taking the two diagonal blocks in the submatrix.
+        async task MatrixTranspose(A, row, col, new_size);
+        async task MatrixTranspose(A, row + new_size, col + new_size, size - new_size); // To be technically correct we need all elements
+
+        // Wait until tasks are finished
+        taskwait;
+    }
 }
 ```

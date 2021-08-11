@@ -26,6 +26,34 @@ Here, the performance and speedup is given per adjustment.
 --- 
 
 ## 1. Testing the number of collisions:
-As to verify that our improved algorithms are correct, we need to know how many collisions were detected for every animation. These measurements 
+As to verify that our improved algorithms are correct, we need to know how many collisions were detected for every animation. 
 
-| Animation | Line-Wall Collisions | Line-Line Collisions |
+These measurements are taken on 1000 frames:
+
+| Animation Name | Execution Time [s] | Line-Wall Collisions | Line-Line Collisions |
+| - | - | - | - |
+| apple.in_new | 8.685269s | 631 | 19729 | 
+| apple.in_old | 9.635677s | 655 | 18718 | 
+| beaver.in | 2.710521s | 7 | 758 | 
+| box.in | 5.078032s | 1379 | 36965 |
+| explosion.in | 11.922028s | 206 | 16837 |
+| koch.in | 
+| mit.in | 20.651894s | 170 | 2097 | 
+| sin_wave.in | 52.263763s | 504 | 280083 |
+| smalllines.in | 8.939444s | 5837 | 77802 | 
+
+These measurements are taken on 4000 frames:
+
+| Animation Name | Execution Time [s] | Line-Wall Collisions | Line-Line Collisions |
+| - | - | - | - |
+| apple.in_new | 37.828197 s | 2877 | 100951 | 
+| apple.in_old | 40.042296 s | 3116 | 103117 | 
+| beaver.in | 11.172757 s | 219 | 1798 |
+| box.in | 20.647474 s | 6236 | 101037 | 
+| explosion.in | 47.628453 s | 1310 | 42918 | 
+| koch.in | - | - | - | 
+| mit.in | - | – | - | 
+| sin_wave.in | - | - | - | 
+| smalllines.in | 36.266379s | 23895 | 338592 | 
+
+Unfortunately some of these animations took way too long to run at 4000 frames.

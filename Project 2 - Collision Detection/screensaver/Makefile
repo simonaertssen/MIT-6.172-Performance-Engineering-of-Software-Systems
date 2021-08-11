@@ -80,6 +80,9 @@ prof:		$(PROFILE_PRODUCT)
 lint:
 	python clint.py *.h *.c
 
+test: $(PRODUCT)
+	clear
+	python ../test.py $(PRODUCT)
 
 # How to clean up
 clean:

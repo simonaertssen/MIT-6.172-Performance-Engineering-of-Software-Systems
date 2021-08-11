@@ -73,24 +73,53 @@ Let's think about this algorithm first. Let's begin with the whole matrix. A mat
 We need to divide each block into four pieces and switch the appropriate blocks.
 
 ```c
-/* MatrixTranspose: Perform in-place, asynchronous matrix transpose. 
+/* MatrixTranspose: perform in-place, asynchronous matrix transpose. 
 @A = pointer to the first element of matrix A
 @row = row of the current submatrix
 @col = column of the current submatrix
 @size = size of the current submatrix
 */
-MatrixTranspose(A, row, col, size) {
+void MatrixTranspose(A, row, col, size) {
     if (size == 1) {
         // Then we have reached the smallest element of the matrix: the individual numbers.
         return;
     } else {
+        // Get size of each of the four submatrices:
         new_size = floor(size/2);
-        // Spawn two threads to split the matrix further, by taking the two diagonal blocks in the submatrix.
+
+        // Spawn two threads to split the matrix further, by taking the two diagonal blocks in the submatrix:
         async task MatrixTranspose(A, row, col, new_size);
         async task MatrixTranspose(A, row + new_size, col + new_size, size - new_size); // To be technically correct we need all elements
 
-        // Wait until tasks are finished
+        // Switch elements/submatrices in the matrix: A[0,1] switches with A[1,0]
+        MatrixSwap(A, row, col + new_size, size, row + new_size, col, size - new_size) ;
+
+        // Wait until tasks are finished:
+        taskwait;
+    }
+}
+
+/* MatrixSwap: perform in-place, asynchronous swapping of matrix elements. Swap the elements of the (size1 x size2) submatrix A[row1, row1] with the elements of the (size2 x size1) submatrix A[row2, row2].
+*/
+void MatrixSwap(A, row1, col1, size1, row2, col2, size2) {
+    if (size1 < size2) {
+        // Then continue deepening, as so we want to split up the largest of the two submatrices. size1 was thus the floored half of the original submatrix.
+        MatrixSwap(A, row2, col2, size2, row1, col1, size1);
+    } else if (size1 == 1) {
+        // Then also size2 must be 1 and we are only dealing with 1 element at a time.
+        temp = A[row1, col1];
+        A[row1, col1] = A[row2, col2];
+        A[row2, col2] = temp;
+    } else {
+        // The first submatrix is the largest and we will swap its submatrices:
+        new_size = floor(size1/2);
+        async task MatrixSwap(A, row2, col2, size2, row1, col1, new_size);
+        MatrixSwap(A, row2, col2 + new_size, size2, row1 + new_size, col1, size1 - new_size);
+
+        // Wait until tasks are finished:
         taskwait;
     }
 }
 ```
+
+Call the algorithm with `MatrixTranspose(A, 0, 0, n)` if `A` has size `n*n`.

@@ -26,39 +26,43 @@
 #include <stdlib.h>
 
 int IntersectionEventNode_compareData(IntersectionEventNode* node1,
-                                      IntersectionEventNode* node2) {
+  IntersectionEventNode* node2) {
   if (compareLines(node1->l1, node2->l1) < 0) {
     return -1;
-  } else if (compareLines(node1->l1, node2->l1) == 0) {
+  }
+  else if (compareLines(node1->l1, node2->l1) == 0) {
     if (compareLines(node1->l2, node2->l2) < 0) {
       return -1;
-    } else if (compareLines(node1->l2, node2->l2) == 0) {
+    }
+    else if (compareLines(node1->l2, node2->l2) == 0) {
       return 0;
-    } else {
+    }
+    else {
       return 1;
     }
-  } else {
+  }
+  else {
     return 1;
   }
 }
 
 void IntersectionEventNode_swapData(IntersectionEventNode* node1,
-                                    IntersectionEventNode* node2) {
-  {
-    Line* temp = node1->l1;
-    node1->l1 = node2->l1;
-    node2->l1 = temp;
-  }
-  {
-    Line* temp = node1->l2;
-    node1->l2 = node2->l2;
-    node2->l2 = temp;
-  }
-  {
-    IntersectionType temp = node1->intersectionType;
-    node1->intersectionType = node2->intersectionType;
-    node2->intersectionType = temp;
-  }
+  IntersectionEventNode* node2) {
+    {
+      Line* temp = node1->l1;
+      node1->l1 = node2->l1;
+      node2->l1 = temp;
+    }
+    {
+      Line* temp = node1->l2;
+      node1->l2 = node2->l2;
+      node2->l2 = temp;
+    }
+    {
+      IntersectionType temp = node1->intersectionType;
+      node1->intersectionType = node2->intersectionType;
+      node2->intersectionType = temp;
+    }
 }
 
 IntersectionEventList IntersectionEventList_make() {
@@ -69,11 +73,11 @@ IntersectionEventList IntersectionEventList_make() {
 }
 
 void IntersectionEventList_appendNode(
-    IntersectionEventList* intersectionEventList, Line* l1, Line* l2,
-    IntersectionType intersectionType) {
+  IntersectionEventList* intersectionEventList, Line* l1, Line* l2,
+  IntersectionType intersectionType) {
   assert(compareLines(l1, l2) < 0);
 
-  IntersectionEventNode* newNode = malloc(sizeof(IntersectionEventNode));
+  IntersectionEventNode* newNode = (IntersectionEventNode*)malloc(sizeof(IntersectionEventNode));
   if (newNode == NULL) {
     return;
   }
@@ -84,14 +88,15 @@ void IntersectionEventList_appendNode(
   newNode->next = NULL;
   if (intersectionEventList->head == NULL) {
     intersectionEventList->head = newNode;
-  } else {
+  }
+  else {
     intersectionEventList->tail->next = newNode;
   }
   intersectionEventList->tail = newNode;
 }
 
 void IntersectionEventList_deleteNodes(
-    IntersectionEventList* intersectionEventList) {
+  IntersectionEventList* intersectionEventList) {
   IntersectionEventNode* curNode = intersectionEventList->head;
   IntersectionEventNode* nextNode = NULL;
   while (curNode != NULL) {

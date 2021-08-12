@@ -58,12 +58,21 @@ int main(int argc, char* argv[]) {
   extern int optind;
 
   // Process command line options.
-  while ((optchar = getopt(argc, argv, "gi")) != -1) {
+  bool run_optimised = True;
+  while ((optchar = getopt(argc, argv, "guoi")) != -1) {
     switch (optchar) {
     case 'g':
 #ifndef PROFILE_BUILD
       graphicDemoFlag = true;
 #endif
+      break;
+    case 'u':
+      printf("Trying the unoptimised, original binary\n");
+      run_optimised = True;
+      break;
+    case 'o':
+      printf("Trying the optimised binary\n");
+      run_optimised = False;
       break;
     default:
       printf("Ignoring unrecognized option: %c\n", optchar);
@@ -97,7 +106,7 @@ int main(int argc, char* argv[]) {
 
   // Create and initialize the Line simulation environment.
   LineDemo* lineDemo = LineDemo_new();
-  LineDemo_setInputFile(input_file_path);
+  LineDemo_setInputFile((char*)input_file_path);
   LineDemo_initLine(lineDemo);
   LineDemo_setNumFrames(lineDemo, numFrames);
 

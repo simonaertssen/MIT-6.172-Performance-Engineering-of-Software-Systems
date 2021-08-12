@@ -12,7 +12,6 @@ import subprocess
 
 
 BINARY = './screensaver'
-QUIET = True
 
 
 def wait_for_test_process(proc, timeout):
@@ -25,7 +24,6 @@ def wait_for_test_process(proc, timeout):
     err_chunks = []
     while proc.returncode is None and time.time() < endtime:
         time.sleep(0.1)
-        err_chunks.append(os.read(proc.stderr.fileno(), 4096))
         proc.poll()
 
     # Kill the child if it hasn't stopped yet, and wait for it.
@@ -52,22 +50,18 @@ def wait_for_test_process(proc, timeout):
 
 
 def run_binary(binary, frames, input_file):
-    timeout = 30.0
-    num_timeouts = 0
-
+    timeout = 60*60.0
+    print(f'Timeout = {timeout}')
     done_testing = False
     # Run the binary in a subprocess
     while not done_testing:
-        proc = subprocess.Popen([binary, str(frames), input_file], 
+        proc = subprocess.Popen([binary, str(frames), input_file],
                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         (timed_out, lines) = wait_for_test_process(proc, timeout)
 
         # If there was a timeout, try it again
         if timed_out:
-            if num_timeouts > 3:
-                raise TimeoutError(f'{input_file} timed out {num_timeouts} times.')
-            timeout += 10
-            num_timeouts += 1
+            raise TimeoutError(f'Animation {input_file} timed out {num_timeouts} times.')
         elif proc.returncode != 0:
             raise ValueError(f'{input_file} returned {proc.returncode} error code.')
 
@@ -80,7 +74,7 @@ def run_binary(binary, frames, input_file):
     return numbers[1:]  # Drop the frame number
 
 
-def produce_test_table(frames=10):
+def produce_test_table(frames=10, verbose=False):
     output_filename = f'../test_output/test_table_{frames}.txt'
     output_file = open(output_filename, "w")
 
@@ -91,12 +85,11 @@ def produce_test_table(frames=10):
     for filename in os.listdir(input_directory):
         try:
             exc_time, l_w_coll, l_l_coll = run_binary(BINARY, frames, input_directory + filename)
-        except Exception as e:
-            print(e)
+        except Exception:
             exc_time, l_w_coll, l_l_coll = '-', '_', '_'
         current_output = f'| {filename} | {exc_time} s | {l_w_coll} | {l_l_coll} |\n'
         output += current_output
-        if not QUIET:
+        if verbose:
             print(current_output)
     output_file.write(output)
     output_file.close()
@@ -118,12 +111,14 @@ def test_correctness(frames):
 
 
 def main(args):
-    QUIET = True if '--quiet' in args else False
+    verbose = False if '--quiet' in args else True
     frames = 1000
     if '--table' in args:
-        produce_test_table(frames, QUIET)
+        index = args.index('--table') + 1
+        frames = args[index]
+        produce_test_table(frames, verbose)
     elif '--test' in args:
-        test_correctness(frames, QUIET)
+        test_correctness(frames, verbose)
 
 
 if __name__ == '__main__':

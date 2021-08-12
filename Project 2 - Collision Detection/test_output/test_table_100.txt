@@ -1,0 +1,11 @@
+| Animation Name | Execution Time [s]| Line-Wall Collisions | Line-Line Collisions |
+| - | - | - | - |
+| mit.in | 2.070340 s | 0 | 0 |
+| beaver.in | 0.272331 s | 0 | 473 |
+| box.in | 0.506379 s | 108 | 3384 |
+| apple.in_old | 0.818408 s | 101 | 2023 |
+| sin_wave.in | 4.034133 s | 100 | 4901 |
+| koch.in | 44.494545 s | 4 | 57 |
+| apple.in_new | 0.888050 s | 101 | 2013 |
+| explosion.in | 1.017892 s | 0 | 0 |
+| smalllines.in | 0.841149 s | 662 | 10075 |

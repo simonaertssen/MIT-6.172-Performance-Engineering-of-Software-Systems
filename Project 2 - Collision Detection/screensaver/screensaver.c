@@ -36,8 +36,8 @@
 #ifndef PROFILE_BUILD
 #include "./graphic_stuff.h"
 #endif
-static char* DEFAULT_INPUT_FILE_PATH = "input/mit.in";
-static char* input_file_path;
+char const* DEFAULT_INPUT_FILE_PATH = "input/mit.in";
+char const* input_file_path;
 
 // For non-graphic version
 void lineMain(LineDemo* lineDemo) {

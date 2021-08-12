@@ -37,10 +37,11 @@ These measurements are taken on 1000 frames:
 | beaver.in | 2.710521s | 7 | 758 | 
 | box.in | 5.078032s | 1379 | 36965 |
 | explosion.in | 11.922028s | 206 | 16837 |
-| koch.in | 
+| koch.in | 449.353282 s | 1088 | 5256 |
 | mit.in | 20.651894s | 170 | 2097 | 
 | sin_wave.in | 52.263763s | 504 | 280083 |
 | smalllines.in | 8.939444s | 5837 | 77802 | 
+
 
 These measurements are taken on 4000 frames:
 

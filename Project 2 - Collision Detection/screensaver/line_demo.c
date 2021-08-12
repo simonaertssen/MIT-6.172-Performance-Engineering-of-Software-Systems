@@ -1,4 +1,4 @@
-/** 
+/**
  * LineDemo.c -- main driver for the line simulation
  * Copyright (c) 2012 the Massachusetts Institute of Technology
  *
@@ -38,7 +38,7 @@ void LineDemo_setInputFile(char* input_file_path) {
 }
 
 LineDemo* LineDemo_new() {
-  LineDemo* lineDemo = malloc(sizeof(LineDemo));
+  LineDemo* lineDemo = (LineDemo*)malloc(sizeof(LineDemo));
   if (lineDemo == NULL) {
     return NULL;
   }
@@ -65,7 +65,7 @@ void LineDemo_createLines(LineDemo* lineDemo) {
   window_dimension vx;
   window_dimension vy;
   int isGray;
-  FILE *fin;
+  FILE* fin;
   fin = fopen(LineDemo_input_file_path, "r");
   if (fin == NULL) {
     fprintf(stderr, "Input file not found (%s)\n", LineDemo_input_file_path);
@@ -76,9 +76,9 @@ void LineDemo_createLines(LineDemo* lineDemo) {
   lineDemo->collisionWorld = CollisionWorld_new(numOfLines);
 
   while (EOF
-      != fscanf(fin, "(%lf, %lf), (%lf, %lf), %lf, %lf, %d\n", &px1, &py1, &px2,
-                &py2, &vx, &vy, &isGray)) {
-    Line *line = malloc(sizeof(Line));
+    != fscanf(fin, "(%lf, %lf), (%lf, %lf), %lf, %lf, %d\n", &px1, &py1, &px2,
+      &py2, &vx, &vy, &isGray)) {
+    Line* line = (Line*)malloc(sizeof(Line));
 
     // convert window coordinates to box coordinates
     windowToBox(&line->p1.x, &line->p1.y, px1, py1);
@@ -88,7 +88,7 @@ void LineDemo_createLines(LineDemo* lineDemo) {
     velocityWindowToBox(&line->velocity.x, &line->velocity.y, vx, vy);
 
     // store color
-    line->color = (Color) isGray;
+    line->color = (Color)isGray;
 
     // store line ID
     line->id = lineId;

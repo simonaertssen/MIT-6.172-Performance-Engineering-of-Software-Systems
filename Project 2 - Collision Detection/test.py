@@ -41,8 +41,14 @@ def wait_for_test_process(proc, timeout):
     while chunk:
         chunk = os.read(proc.stderr.fileno(), 4096)
         err_chunks.append(chunk)
-    lines = ''.join(err_chunks).split('\n')
-    return (timed_out, lines)
+
+    # Check if there are any errors registered
+    if len(err_chunks) > 1 and err_chunks[0] != b'':
+        lines = b''.join(err_chunks)
+
+    # If not, then read from the stdout
+    lines = b''.join(proc.stdout.readlines())
+    return (timed_out, str(lines))
 
 
 def run_binary(binary, frames, input_file):
@@ -52,10 +58,9 @@ def run_binary(binary, frames, input_file):
     done_testing = False
     # Run the binary in a subprocess
     while not done_testing:
-        with open(os.devnull) as null:
-            proc = subprocess.Popen([binary, input_file],
-                                    stdout=null, stderr=subprocess.PIPE)
-            (timed_out, lines) = wait_for_test_process(proc, timeout)
+        proc = subprocess.Popen([binary, str(frames), input_file], 
+                                stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        (timed_out, lines) = wait_for_test_process(proc, timeout)
 
         # If there was a timeout, try it again
         if timed_out:
@@ -68,14 +73,14 @@ def run_binary(binary, frames, input_file):
 
         # Process the output lines
         numbers = re.findall(r"[-+]?\d*\.?\d+", lines)
-        print(numbers)
         if len(numbers) > 4:
             print("Found more than 4 integers in this output.")
             numbers = numbers[0:4]
+        done_testing = True
     return numbers[1:]  # Drop the frame number
 
 
-def produce_test_table(frames=1000):
+def produce_test_table(frames=10):
     output_filename = f'../test_output/test_table_{frames}.txt'
     output_file = open(output_filename, "w")
 
@@ -86,15 +91,18 @@ def produce_test_table(frames=1000):
     for filename in os.listdir(input_directory):
         try:
             exc_time, l_w_coll, l_l_coll = run_binary(BINARY, frames, input_directory + filename)
-        except Exception:
+        except Exception as e:
+            print(e)
             exc_time, l_w_coll, l_l_coll = '-', '_', '_'
-
-        output += f'| {filename} | {exc_time} s | {l_w_coll} | {l_l_coll} |\n'
+        current_output = f'| {filename} | {exc_time} s | {l_w_coll} | {l_l_coll} |\n'
+        output += current_output
+        if not QUIET:
+            print(current_output)
     output_file.write(output)
     output_file.close()
 
 
-def test_correctness():
+def test_correctness(frames):
     total_tests = 0
     total_passes = 0
     total_failed = 0
@@ -111,11 +119,12 @@ def test_correctness():
 
 def main(args):
     QUIET = True if '--quiet' in args else False
-
+    frames = 1000
     if '--table' in args:
-        produce_test_table()
+        produce_test_table(frames, QUIET)
     elif '--test' in args:
-        test_correctness()
+        test_correctness(frames, QUIET)
+
 
 if __name__ == '__main__':
     main(sys.argv)

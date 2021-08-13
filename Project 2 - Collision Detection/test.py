@@ -98,11 +98,14 @@ def produce_test_table(frames=10, verbose=False):
     output_file.close()
 
 
-def print_result(name, result, verbose):
+def print_result(name, result, speedup=0, verbose=True):
     """If result is True, print a green PASSED or red FAILED line otherwise."""
-    flag = GREEN + ' PASSED' if result is True else RED + ' FAILED'
     if verbose:
-        print(name + flag + END)
+        info = GREEN + ' PASSED' if result is True else RED + ' FAILED'
+        info += END
+        if speedup > 0:
+            info += f' with speedup of {speedup}.'
+        print(name + info)
     # if not result:
         # raise ValueError(intro + flag + END)
     return result
@@ -115,19 +118,19 @@ def test_correctness(frames, verbose):
 
     # First test the box.in animation manually as a first line of defence
     file_name = input_directory + 'box.in'
-    _, l_w_coll, l_l_coll = run_binary(BINARY, 100, file_name)
-    result = print_result(file_name, l_w_coll == 108 and l_l_coll == 3384, verbose)
+    exc_time, l_w_coll, l_l_coll = run_binary(BINARY, 100, file_name)
+    result = print_result(file_name, l_w_coll == 108 and l_l_coll == 3384, 0.5 / exc_time, verbose)
     test_results[result*1] += 1
 
     # Now test the beaver.in animation manually as a first line of defence
     file_name = input_directory + 'beaver.in'
-    _, l_w_coll, l_l_coll = run_binary(BINARY, 1000, file_name)
-    result = print_result(file_name, l_w_coll == 7 and l_l_coll == 758, verbose)
+    exc_time, l_w_coll, l_l_coll = run_binary(BINARY, 1000, file_name)
+    result = print_result(file_name, l_w_coll == 7 and l_l_coll == 758, 2.5670 / exc_time, verbose)
     test_results[result*1] += 1
 
     # If we reached this point all tests should have passed:
     index = test_results.index(max(test_results))
-    print_result(f'{test_results[index]} / {sum(test_results)} tests', index == 1, True)
+    print_result(f'{test_results[index]} / {sum(test_results)} tests', index == 1, verbose=True)
 
 
 def main(args):

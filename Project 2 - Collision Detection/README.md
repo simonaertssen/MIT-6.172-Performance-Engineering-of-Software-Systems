@@ -60,4 +60,6 @@ These measurements are taken on 4000 frames:
 Unfortunately some of these animations took way too long to run at 4000 frames. A short test can just use some of the quick animations, to test if there is a priori any mistake at all.
 
 ## Precomputed line lengths
-A simple innovation is to precompute the line lengths and store them in the `Line` struct. In the `CollisionWorld_collisionSolver` the line lengths are used as masses for the computation of kinetic energy. Here, we can use a precomputation.
+A simple innovation is to precompute the line lengths and store them in the `Line` struct. In the `CollisionWorld_collisionSolver` the line lengths are used as masses for the computation of kinetic energy. Here, we can use a precomputation. If we also remove the computation of color from the script, we could also achieve a speedup. However, none of these ideas seem to measurably increase the speed of the script.
+
+## The QuadTree

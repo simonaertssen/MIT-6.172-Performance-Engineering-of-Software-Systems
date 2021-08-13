@@ -143,7 +143,7 @@ def test_speedup():
 def main(args):
     verbose = False if '--quiet' in args else True
     frames = 1000
- 
+
     if '--table' in args:
         produce_test_table(args[args.index('--table') + 1], verbose)
     elif '--test' in args:

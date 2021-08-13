@@ -20,7 +20,7 @@
  * SOFTWARE.
  **/
 
-// Simple 2D vector library
+ // Simple 2D vector library
 #ifndef VEC_H_
 #define VEC_H_
 

@@ -62,4 +62,8 @@ Unfortunately some of these animations took way too long to run at 4000 frames. 
 ## Precomputed line lengths
 A simple innovation is to precompute the line lengths and store them in the `Line` struct. In the `CollisionWorld_collisionSolver` the line lengths are used as masses for the computation of kinetic energy. Here, we can use a precomputation. If we also remove the computation of color from the script, we could also achieve a speedup. However, none of these ideas seem to measurably increase the speed of the script.
 
+## Bounding boxes
+Before computing the line intersections, we should compute whether the bounding boxes of the two lines and their parallellograms overlap. If not, then they are too far away.
+
+
 ## The QuadTree

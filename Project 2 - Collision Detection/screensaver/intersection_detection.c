@@ -23,6 +23,7 @@
 #include "./intersection_detection.h"
 
 #include <assert.h>
+#include <math.h>
 
 #include "./line.h"
 #include "./vec.h"
@@ -43,6 +44,24 @@ IntersectionType intersect(Line* l1, Line* l2, double time) {
   // Get the parallelogram.
   p1 = Vec_add(l2->p1, Vec_multiply(velocity, time));
   p2 = Vec_add(l2->p2, Vec_multiply(velocity, time));
+
+  // Quick test: check if lines are within each other's bounding box
+  // If not, then just return NO_INTERSECTION
+  vec_dimension min_l1_x = fmin(l1->p1.x, l1->p2.x);
+  vec_dimension max_l1_x = fmax(l1->p1.x, l1->p2.x);
+  vec_dimension min_l2_x = fmin(fmin(p1.x, p2.x), fmin(l2->p1.x, l2->p2.x));
+  vec_dimension max_l2_x = fmax(fmax(p1.x, p2.x), fmax(l2->p1.x, l2->p2.x));
+  if (max_l1_x < min_l2_x || min_l1_x > max_l2_x) {
+    return NO_INTERSECTION;
+  }
+
+  vec_dimension min_l1_y = fmin(l1->p1.y, l1->p2.y);
+  vec_dimension min_l2_y = fmin(fmin(p1.y, p2.y), fmin(l2->p1.y, l2->p2.y));
+  vec_dimension max_l1_y = fmax(l1->p1.y, l1->p2.y);
+  vec_dimension max_l2_y = fmax(fmax(p1.y, p2.y), fmax(l2->p1.y, l2->p2.y));
+  if (max_l1_y < min_l2_y || min_l1_y > max_l2_y) {
+    return NO_INTERSECTION;
+  }
 
   int num_line_intersections = 0;
   bool top_intersected = false;

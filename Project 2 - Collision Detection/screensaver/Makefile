@@ -82,6 +82,9 @@ lint:
 
 test: $(PRODUCT)
 	clear
+	python ../test.py --test
+
+testquiet: $(PRODUCT)
 	python ../test.py --test --quiet
 
 # How to clean up

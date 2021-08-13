@@ -29,12 +29,12 @@
 #include "./line.h"
 #include "./line_demo.h"
 
-static LineDemo *gLineDemo = NULL;
-XSegment *segments = NULL;
-XSegment *gray_segments = NULL;
+static LineDemo* gLineDemo = NULL;
+XSegment* segments = NULL;
+XSegment* gray_segments = NULL;
 
 
-Display *display;
+Display* display;
 
 Window window;
 Window root;
@@ -47,8 +47,8 @@ int visibility;
 int windowwidth;
 int windowheight;
 
-static void drawLineSegments(Display *display, Drawable drawable) {
-  Line *line;
+static void drawLineSegments(Display* display, Drawable drawable) {
+  Line* line;
   unsigned int nsegments;
   window_dimension px1;
   window_dimension py1;
@@ -89,7 +89,7 @@ static void drawLineSegments(Display *display, Drawable drawable) {
     boxToWindow(&px1, &py1, line->p1.x, line->p1.y);
     boxToWindow(&px2, &py2, line->p2.x, line->p2.y);
     // Set line color.
-    switch (line->color) {
+    /*switch (line->color) {
       case RED:
         // Convert doubles to short ints and store into segments.
         segments[red_segments_count].x1 = (int16_t) px1;
@@ -105,7 +105,7 @@ static void drawLineSegments(Display *display, Drawable drawable) {
         gray_segments[gray_segments_count].y2 = (int16_t) py2;
         gray_segments_count++;
         break;
-    }
+    }*/
   }
   XDrawSegments(display, drawable, red, segments, red_segments_count);
   XDrawSegments(display, drawable, gray, gray_segments, gray_segments_count);
@@ -119,70 +119,70 @@ static void checkEvent() {
   while ((XPending(display) > 0) || (block == true)) {
     XNextEvent(display, &event);
     switch (event.type) {
-      case ReparentNotify:
-        if (event.xreparent.window != window) {
-          break;
-        }
-        XSelectInput(display, event.xreparent.parent, StructureNotifyMask);
-        XSelectInput(display, parent, 0);
-        parent = event.xreparent.parent;
+    case ReparentNotify:
+      if (event.xreparent.window != window) {
         break;
+      }
+      XSelectInput(display, event.xreparent.parent, StructureNotifyMask);
+      XSelectInput(display, parent, 0);
+      parent = event.xreparent.parent;
+      break;
 
-      case UnmapNotify:
-        if ((event.xunmap.window != window)
-            && (event.xunmap.window != parent)) {
-          break;
-        }
+    case UnmapNotify:
+      if ((event.xunmap.window != window)
+        && (event.xunmap.window != parent)) {
+        break;
+      }
+      block = true;
+      break;
+
+    case VisibilityNotify:
+      if (event.xvisibility.window != window) {
+        break;
+      }
+      if (event.xvisibility.state == VisibilityFullyObscured) {
         block = true;
         break;
-
-      case VisibilityNotify:
-        if (event.xvisibility.window != window) {
-          break;
-        }
-        if (event.xvisibility.state == VisibilityFullyObscured) {
-          block = true;
-          break;
-        }
-        if ((event.xvisibility.state == VisibilityUnobscured)
-            && (visibility == 1)) {
-          visibility = 0;
-          block = false;
-          break;
-        }
-        if (event.xvisibility.state == VisibilityPartiallyObscured) {
-          visibility = 1;
-          block = false;
-        }
-        break;
-
-      case Expose:
+      }
+      if ((event.xvisibility.state == VisibilityUnobscured)
+        && (visibility == 1)) {
+        visibility = 0;
         block = false;
         break;
-
-      case MapNotify:
-        if ((event.xmap.window != window) && (event.xmap.window != parent)) {
-          break;
-        }
+      }
+      if (event.xvisibility.state == VisibilityPartiallyObscured) {
+        visibility = 1;
         block = false;
-        break;
+      }
+      break;
 
-      case ConfigureNotify:
-        if (event.xconfigure.window != window) {
-          break;
-        }
-        if ((windowwidth == event.xconfigure.width)
-            && (windowheight == event.xconfigure.height)) {
-          break;
-        }
-        windowwidth = event.xconfigure.width;
-        windowheight = event.xconfigure.height;
-        XClearWindow(display, window);
-        block = false;
-        break;
+    case Expose:
+      block = false;
+      break;
 
-      default:
+    case MapNotify:
+      if ((event.xmap.window != window) && (event.xmap.window != parent)) {
         break;
+      }
+      block = false;
+      break;
+
+    case ConfigureNotify:
+      if (event.xconfigure.window != window) {
+        break;
+      }
+      if ((windowwidth == event.xconfigure.width)
+        && (windowheight == event.xconfigure.height)) {
+        break;
+      }
+      windowwidth = event.xconfigure.width;
+      windowheight = event.xconfigure.height;
+      XClearWindow(display, window);
+      block = false;
+      break;
+
+    default:
+      break;
     }
   }
 }
@@ -197,14 +197,14 @@ static void graphicMainLoop(bool imageOnlyFlag) {
   }
 }
 
-static void graphicInit(int *argc, char *argv[]) {
+static void graphicInit(int* argc, char* argv[]) {
   // Initialization
   int64_t fgcolor;
   int64_t bgcolor;
   int64_t eventmask;
-  char *host;
+  char* host;
 
-  if ((host = ((char *) getenv("DISPLAY"))) == NULL) {
+  if ((host = ((char*)getenv("DISPLAY"))) == NULL) {
     perror("Error: No environment variable DISPLAY\n");
     exit(1);
   }
@@ -223,7 +223,7 @@ static void graphicInit(int *argc, char *argv[]) {
   windowwidth = WINDOW_WIDTH;
   windowheight = WINDOW_HEIGHT;
   window = XCreateSimpleWindow(display, root, 0, 0, windowwidth, windowheight,
-                               2, fgcolor, bgcolor);
+    2, fgcolor, bgcolor);
 
   eventmask = SubstructureNotifyMask;
   XSelectInput(display, window, eventmask);
@@ -234,7 +234,7 @@ static void graphicInit(int *argc, char *argv[]) {
   XSync(display, 0);
 }
 
-void graphicMain(int argc, char *argv[], LineDemo *lineDemo, bool imageOnlyFlag) {
+void graphicMain(int argc, char* argv[], LineDemo* lineDemo, bool imageOnlyFlag) {
   gLineDemo = lineDemo;
 
   // Initialization

@@ -88,7 +88,7 @@ void LineDemo_createLines(LineDemo* lineDemo) {
     velocityWindowToBox(&line->velocity.x, &line->velocity.y, vx, vy);
 
     // store color
-    line->color = (Color)isGray;
+    // line->color = (Color)isGray;
 
     // store length
     line->len = Vec_length(Vec_subtract(line->p1, line->p2));

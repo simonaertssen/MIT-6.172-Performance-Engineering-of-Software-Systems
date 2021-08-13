@@ -90,6 +90,9 @@ void LineDemo_createLines(LineDemo* lineDemo) {
     // store color
     line->color = (Color)isGray;
 
+    // store length
+    line->len = Vec_length(Vec_subtract(line->p1, line->p2));
+
     // store line ID
     line->id = lineId;
     lineId++;

@@ -129,6 +129,8 @@ void CollisionWorld_detectIntersection(CollisionWorld* collisionWorld) {
 
   // Test all line-line pairs to see if they will intersect before the
   // next time step.
+
+  // Here we need to use a quadtree to increase performance
   for (unsigned int i = 0; i < collisionWorld->numOfLines; i++) {
     Line* l1 = collisionWorld->lines[i];
 
@@ -251,8 +253,8 @@ void CollisionWorld_collisionSolver(CollisionWorld* collisionWorld,
   double v2Normal = Vec_dotProduct(l2->velocity, normal);
 
   // Compute the mass of each line (we simply use its length).
-  double m1 = Vec_length(Vec_subtract(l1->p1, l1->p2));
-  double m2 = Vec_length(Vec_subtract(l2->p1, l2->p2));
+  double m1 = l1->len; // Vec_length(Vec_subtract(l1->p1, l1->p2));
+  double m2 = l2->len; // Vec_length(Vec_subtract(l2->p1, l2->p2));
 
   // Perform the collision calculation (computes the new velocities along
   // the direction normal to the collision face such that momentum and

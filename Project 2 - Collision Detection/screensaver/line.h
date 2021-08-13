@@ -20,7 +20,7 @@
  * SOFTWARE.
  **/
 
-// Two-dimensional lines
+ // Two-dimensional lines
 #ifndef LINE_H_
 #define LINE_H_
 
@@ -59,6 +59,8 @@ struct Line {
 
   Color color;  // The line's color.
 
+  double len;  // The line length
+
   unsigned int id;  // Unique line ID.
 };
 typedef struct Line Line;
@@ -67,35 +69,37 @@ typedef struct Line Line;
 // -1 <=> line1 ordered before line2
 //  0 <=> line1 ordered the same as line2
 //  1 <=> line1 ordered after line2
-static inline int compareLines(Line *line1, Line *line2) {
+static inline int compareLines(Line* line1, Line* line2) {
   if (line1->id < line2->id) {
     return -1;
-  } else if (line1->id == line2->id) {
+  }
+  else if (line1->id == line2->id) {
     return 0;
-  } else {
+  }
+  else {
     return 1;
   }
 }
 
 // Convert graphical window coordinates to box coordinates.
-static inline void windowToBox(box_dimension *xout, box_dimension *yout,
-                               window_dimension x, window_dimension y) {
-  *xout = x / WINDOW_WIDTH * ((double) BOX_XMAX - BOX_XMIN) + BOX_XMIN;
-  *yout = y / WINDOW_HEIGHT * ((double) BOX_YMAX - BOX_YMIN) + BOX_YMIN;
+static inline void windowToBox(box_dimension* xout, box_dimension* yout,
+  window_dimension x, window_dimension y) {
+  *xout = x / WINDOW_WIDTH * ((double)BOX_XMAX - BOX_XMIN) + BOX_XMIN;
+  *yout = y / WINDOW_HEIGHT * ((double)BOX_YMAX - BOX_YMIN) + BOX_YMIN;
 }
 
 // Convert box coordinates to graphical window coordinates.
-static inline void boxToWindow(window_dimension *xout, window_dimension *yout,
-                               box_dimension x, box_dimension y) {
-  *xout = (x - BOX_XMIN) / ((double) BOX_XMAX - BOX_XMIN) * WINDOW_WIDTH;
-  *yout = (y - BOX_YMIN) / ((double) BOX_YMAX - BOX_YMIN) * WINDOW_HEIGHT;
+static inline void boxToWindow(window_dimension* xout, window_dimension* yout,
+  box_dimension x, box_dimension y) {
+  *xout = (x - BOX_XMIN) / ((double)BOX_XMAX - BOX_XMIN) * WINDOW_WIDTH;
+  *yout = (y - BOX_YMIN) / ((double)BOX_YMAX - BOX_YMIN) * WINDOW_HEIGHT;
 }
 
 // Convert graphical window velocity to box velocity.
-static inline void velocityWindowToBox(box_dimension *xout, box_dimension *yout,
-                                       window_dimension x, window_dimension y) {
-  *xout = x / WINDOW_WIDTH * ((double) BOX_XMAX - BOX_XMIN);
-  *yout = y / WINDOW_HEIGHT * ((double) BOX_YMAX - BOX_YMIN);
+static inline void velocityWindowToBox(box_dimension* xout, box_dimension* yout,
+  window_dimension x, window_dimension y) {
+  *xout = x / WINDOW_WIDTH * ((double)BOX_XMAX - BOX_XMIN);
+  *yout = y / WINDOW_HEIGHT * ((double)BOX_YMAX - BOX_YMIN);
 }
 
 #endif  // LINE_H_

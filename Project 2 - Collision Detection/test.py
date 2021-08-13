@@ -133,15 +133,23 @@ def test_correctness(frames, verbose):
     print_result(f'{test_results[index]} / {sum(test_results)} tests', index == 1, verbose=True)
 
 
+def test_speedup():
+    file_name = '../screensaver/input/koch.in'
+    exc_time, l_w_coll, l_l_coll = run_binary(BINARY, 1000, file_name)
+    print(f'Execution time = {exc_time}.')
+    print_result(file_name, l_w_coll == 1088 and l_l_coll == 5256, 449.35 / exc_time)
+
+
 def main(args):
     verbose = False if '--quiet' in args else True
     frames = 1000
+    
     if '--table' in args:
-        index = args.index('--table') + 1
-        frames = args[index]
-        produce_test_table(frames, verbose)
+        produce_test_table(args[args.index('--table') + 1], verbose)
     elif '--test' in args:
         test_correctness(frames, verbose)
+    elif '--speedup' in args:
+        test_speedup()
 
 
 if __name__ == '__main__':

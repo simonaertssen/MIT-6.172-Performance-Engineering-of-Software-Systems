@@ -87,6 +87,9 @@ test: $(PRODUCT)
 testquiet: $(PRODUCT)
 	python ../test.py --test --quiet
 
+speedup: $(PRODUCT)
+	python ../test.py --speedup
+
 # How to clean up
 clean:
 	$(RM) $(PRODUCT) $(PROFILE_PRODUCT) *.o *.out

@@ -58,12 +58,16 @@ void insert_line(Line* l, Quadtree* tree) {
     // Else, we need to allocate the children of this quadtree
     else {
         tree->children = (Quadtree*)malloc(sizeof(Quadtree) * QUAD);
-        for (unsigned int i = 0; i < QUAD; i++) {
-            double delta_x = 
-            double delta_y = 
-            tree->children[i] = initialise_quadtree(tree, double x_min, double y_min, double x_max, double y_max, unsigned int depth) {
-
+        // Make 2 loops of 2 to make four children, then we can compute the bounds more easily.
+        for (unsigned int i = 0; i < 2; ++i) {
+            for (unsigned int j = 0; j < 2; ++j) {
+                tree->children[i * 2 + j] = initialise_quadtree(tree,
+                    tree->p1.x + 0.5 * j * (tree->p2.x - tree->p1.x),
+                    tree->p1.y + 0.5 * i * (tree->p2.y - tree->p1.y),
+                    tree->p1.x + 0.5 * j * (tree->p2.x - tree->p1.x),
+                    tree->p1.y + 0.5 * i * (tree->p2.y - tree->p1.y),
+                    tree->depth + 1);
             }
         }
-
-    };
+    }
+};

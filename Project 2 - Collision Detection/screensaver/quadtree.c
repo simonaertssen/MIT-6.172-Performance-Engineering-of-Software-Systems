@@ -69,5 +69,7 @@ void insert_line(Line* l, Quadtree* tree) {
                     tree->depth + 1);
             }
         }
+
+        // Now reassign lines in the parent tree to the children
     }
 };

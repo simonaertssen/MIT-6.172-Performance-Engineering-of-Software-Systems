@@ -129,12 +129,15 @@ void CollisionWorld_lineWallCollision(CollisionWorld* collisionWorld) {
 
 void CollisionWorld_detectIntersection(CollisionWorld* collisionWorld) {
   IntersectionEventList intersectionEventList = IntersectionEventList_make();
+
   // Here we need to use a quadtree to increase performance
-  Quadtree* tree = new_quadtree(NULL, BOX_XMIN, BOX_YMIN, BOX_XMAX, BOX_YMAX, 0);
+  Quadtree* tree = make_quadtree(NULL, BOX_XMIN, BOX_YMIN, BOX_XMAX, BOX_YMAX, 0);
+  for (unsigned int i = 0; i < collisionWorld->numOfLines; i++) {
+    insert_line(collisionWorld->lines[i], tree);
+  }
 
   // Test all line - line pairs to see if they will intersect before the
   // next time step.
-
   for (unsigned int i = 0; i < collisionWorld->numOfLines; i++) {
     Line* l1 = collisionWorld->lines[i];
 
@@ -184,6 +187,9 @@ void CollisionWorld_detectIntersection(CollisionWorld* collisionWorld) {
       curNode->intersectionType);
     curNode = curNode->next;
   }
+
+  // Free the quadtree 
+  destroy_quadtree(tree);
 
   IntersectionEventList_deleteNodes(&intersectionEventList);
 }

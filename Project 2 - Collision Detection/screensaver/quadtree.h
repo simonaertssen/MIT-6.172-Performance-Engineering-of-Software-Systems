@@ -14,7 +14,7 @@ struct Quadtree {
     Quadtree* parent;
 
     // Quadtree quadrants as an array of children
-    Quadtree** children;
+    Quadtree* children;
 
     // Pointer to array of lines
     Line** lines;
@@ -30,10 +30,10 @@ struct Quadtree {
 };
 
 // Initialise a quadtree structure
-Quadtree initialise_quadtree(Quadtree* parent, double x_lo, double y_lo, double x_hi, double y_hi, unsigned int depth);
+Quadtree initialise_quadtree(Quadtree* parent, double x_min, double y_min, double x_max, double y_max, unsigned int depth);
 
 // Create a new quadtree
-Quadtree* make_quadtree(Quadtree* parent, double x_lo, double y_lo, double x_hi, double y_hi, unsigned int depth);
+Quadtree* make_quadtree(Quadtree* parent, double x_min, double y_min, double x_max, double y_max, unsigned int depth);
 void destroy_quadtree(Quadtree* tree);
 
 // inserts a line into a quadtree

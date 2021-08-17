@@ -7,7 +7,7 @@
 Quadtree initialise_quadtree(Quadtree* parent, double x_lo, double y_lo, double x_hi, double y_hi, unsigned int depth) {
     Quadtree new_tree = {
         .parent = parent, .children = NULL,
-        .lines = (Line**)malloc(sizeof(Line) * MAX_LINES),
+        .lines = (Line**)malloc(sizeof(Line*) * MAX_LINES),
         .num_lines = 0, .capacity = MAX_LINES, .depth = depth,
         .p1 = {.x = x_lo, .y = y_lo }, .p2 = {.x = x_hi, .y = y_hi }
     };
@@ -38,9 +38,9 @@ void destroy_quadtree(Quadtree* tree) {
 // inserts a line into a quadtree
 void insert_line(Line* l, Quadtree* tree) {
     // If we reached the maximum quadtree depth and have no more storage for lines,
-    // then double the capacity
+    // then double the capacity by reallocating memory.
     if (tree->depth == MAX_DEPTH && tree->num_lines == MAX_LINES) {
-        Line** tmp = (Line**)realloc(tree->lines, sizeof(Line) * tree->capacity * 2);
+        Line** tmp = (Line**)realloc(tree->lines, sizeof(Line*) * tree->capacity * 2);
         if (tmp == NULL) {
             free(tmp);
         }
@@ -53,11 +53,10 @@ void insert_line(Line* l, Quadtree* tree) {
     // If the tree has enough storage, then use it and add the line
     if (tree->num_lines < MAX_LINES) {
         tree->lines[tree->num_lines++] = l;
-        return;
     }
     // Else, we need to allocate the children of this quadtree
     else {
-        tree->children = (Quadtree**)malloc(sizeof(Quadtree) * QUAD);
+        tree->children = (Quadtree**)malloc(sizeof(Quadtree*) * QUAD);
     }
 
 };

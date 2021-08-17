@@ -32,6 +32,9 @@
 #include "./intersection_event_list.h"
 #include "./line.h"
 
+#include "./quadtree.h"
+
+
 CollisionWorld* CollisionWorld_new(const unsigned int capacity) {
   assert(capacity > 0);
 
@@ -126,11 +129,12 @@ void CollisionWorld_lineWallCollision(CollisionWorld* collisionWorld) {
 
 void CollisionWorld_detectIntersection(CollisionWorld* collisionWorld) {
   IntersectionEventList intersectionEventList = IntersectionEventList_make();
+  // Here we need to use a quadtree to increase performance
+  Quadtree* tree = new_quadtree(NULL, BOX_XMIN, BOX_YMIN, BOX_XMAX, BOX_YMAX, 0);
 
-  // Test all line-line pairs to see if they will intersect before the
+  // Test all line - line pairs to see if they will intersect before the
   // next time step.
 
-  // Here we need to use a quadtree to increase performance
   for (unsigned int i = 0; i < collisionWorld->numOfLines; i++) {
     Line* l1 = collisionWorld->lines[i];
 

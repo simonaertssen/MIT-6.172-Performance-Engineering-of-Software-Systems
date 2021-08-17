@@ -34,7 +34,7 @@ struct Quadtree {
 Quadtree initialise_quadtree(Quadtree* parent, double x_lo, double y_lo, double x_hi, double y_hi, unsigned int depth);
 
 // Create a new quadtree
-Quadtree new_quadtree(Quadtree* parent, double x_lo, double y_lo, double x_hi, double y_hi, unsigned int depth);
+Quadtree* new_quadtree(Quadtree* parent, double x_lo, double y_lo, double x_hi, double y_hi, unsigned int depth);
 
 // inserts a line into a quadtree
 void insert_line(Line* l, Quadtree* tree);

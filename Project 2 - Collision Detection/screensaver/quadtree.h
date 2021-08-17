@@ -4,7 +4,7 @@
 #include "./line.h"
 
 #define MAX_DEPTH 3
-#define MAX_ITEMS 32
+#define MAX_LINES 32
 
 typedef struct Quadtree Quadtree;
 
@@ -20,8 +20,7 @@ struct Quadtree {
 
     // Pointer to array of lines
     Line** lines;
-    unsigned int numOfLines; // Number of lines in the array
-    unsigned int capacity;   // Number of lines the array can hold
+    unsigned int numLines; // Number of lines in the array
 
     // Depth of the quadtree
     unsigned int depth;
@@ -30,6 +29,9 @@ struct Quadtree {
     Vec p1; // North-west point
     Vec p2; // South-east point
 };
+
+// Initialise a quadtree structure
+Quadtree initialise_quadtree(Quadtree* parent, double x_lo, double y_lo, double x_hi, double y_hi, unsigned int depth);
 
 // Create a new quadtree
 Quadtree new_quadtree(Quadtree* parent, double x_lo, double y_lo, double x_hi, double y_hi, unsigned int depth);

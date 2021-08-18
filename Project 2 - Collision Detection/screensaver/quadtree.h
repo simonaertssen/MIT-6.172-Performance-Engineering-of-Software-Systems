@@ -40,7 +40,7 @@ void destroy_quadtree(Quadtree* tree);
 void insert_line(Line* l, Quadtree* tree);
 
 // Test if line fits the current quadtree
-inline bool does_line_fit(Line* line, Quadtree* tree); __attribute__((always_inline));
+inline bool does_line_fit(Line* line, Quadtree* tree) __attribute__((always_inline));
 
 
 #endif  // QUADTREE_H_

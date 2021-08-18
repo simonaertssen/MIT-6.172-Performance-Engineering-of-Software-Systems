@@ -1,5 +1,6 @@
 #include "./quadtree.h"
 #include "./intersection_detection.h"
+#include "./intersection_event_list.h"
 
 #include "./line.h"
 
@@ -119,14 +120,35 @@ void insert_line(Line* l, Quadtree* tree) {
 };
 
 
-void detect_collisions(Quadtree* tree, unsigned int num_collisions) {
+void detect_collisions(Quadtree* tree, IntersectionEventList intersectionEventList, unsigned int num_collisions) {
+    // If there is no tree, we have an issue
     if (tree == NULL) return;
 
+    // If there are no children, check this tree
     if (tree->children == NULL) {
+        for (unsigned int i = 0; i < tree->num_lines; i++) {
+            Line* l1 = tree->lines[i];
+            for (unsigned int j = i + 1; j < tree->num_lines; j++) {
+                Line* l2 = tree->lines[j];
+
+                if (compareLines(l1, l2) >= 0) {
+                    Line* temp = l1;
+                    l1 = l2;
+                    l2 = temp;
+                }
+
+                IntersectionType intersectionType = intersect(l1, l2);
+                if (intersectionType != NO_INTERSECTION) {
+                    IntersectionEventList_appendNode(&intersectionEventList, l1, l2,
+                        intersectionType);
+                    num_collisions++;
+                }
+            }
+        }
     }
     else {
         for (unsigned int i = 0; i < QUAD; i++) {
-            detect_collisions(tree->children + i, num_collisions);
+            detect_collisions(tree->children + i, intersectionEventList, num_collisions);
         }
     }
 }

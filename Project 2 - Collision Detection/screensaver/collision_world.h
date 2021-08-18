@@ -27,7 +27,7 @@
 #include "./line.h"
 #include "./intersection_detection.h"
 
-#define TIME_STEP 1/2
+#define TIME_STEP 0.5
 
 
 struct CollisionWorld {

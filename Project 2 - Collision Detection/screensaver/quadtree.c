@@ -1,4 +1,6 @@
 #include "./quadtree.h"
+#include "./intersection_detection.h"
+
 #include "./line.h"
 
 #include <stdlib.h>
@@ -115,3 +117,16 @@ void insert_line(Line* l, Quadtree* tree) {
         }
     }
 };
+
+
+void detect_collisions(Quadtree* tree, unsigned int num_collisions) {
+    if (tree == NULL) return;
+
+    if (tree->children == NULL) {
+    }
+    else {
+        for (unsigned int i = 0; i < QUAD; i++) {
+            detect_collisions(tree->children + i, num_collisions);
+        }
+    }
+}

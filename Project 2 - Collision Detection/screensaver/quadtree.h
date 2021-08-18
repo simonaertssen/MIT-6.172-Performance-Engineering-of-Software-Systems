@@ -2,6 +2,7 @@
 #define QUADTREE_H_
 
 #include "./line.h"
+#include "./intersection_detection.h"
 
 #define QUAD 4
 #define MAX_DEPTH 3
@@ -41,6 +42,9 @@ void insert_line(Line* l, Quadtree* tree);
 
 // Test if line fits the current quadtree
 inline bool does_line_fit(Line* line, Quadtree* tree) __attribute__((always_inline));
+
+// Once the tree is filled, compute the collisions
+void detect_collisions(Quadtree* tree, unsigned int num_collisions);
 
 
 #endif  // QUADTREE_H_

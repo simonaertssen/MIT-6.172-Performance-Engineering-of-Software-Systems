@@ -18,7 +18,7 @@
  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE. 
+ * SOFTWARE.
  **/
 
 #ifndef COLLISIONWORLD_H_
@@ -27,9 +27,12 @@
 #include "./line.h"
 #include "./intersection_detection.h"
 
+#define TIME_STEP 1/2
+
+
 struct CollisionWorld {
   // Time step used for simulation
-  double timeStep;
+  // double timeStep;
 
   // Container that holds all the lines as an array of Line* lines.
   // This CollisionWorld owns the Line* lines.
@@ -53,11 +56,11 @@ unsigned int CollisionWorld_getNumOfLines(CollisionWorld* collisionWorld);
 
 // Add a line into the box.  Must be under capacity.
 // This CollisionWorld becomes owner of the Line* line.
-void CollisionWorld_addLine(CollisionWorld* collisionWorld, Line *line);
+void CollisionWorld_addLine(CollisionWorld* collisionWorld, Line* line);
 
 // Get a line from box.
 Line* CollisionWorld_getLine(CollisionWorld* collisionWorld,
-                             const unsigned int index);
+  const unsigned int index);
 
 // Update lines' situation in the box.
 void CollisionWorld_updateLines(CollisionWorld* collisionWorld);
@@ -73,16 +76,16 @@ void CollisionWorld_detectIntersection(CollisionWorld* collisionWorld);
 
 // Get total number of line-wall collisions.
 unsigned int CollisionWorld_getNumLineWallCollisions(
-    CollisionWorld* collisionWorld);
+  CollisionWorld* collisionWorld);
 
 // Get total number of line-line intersections.
 unsigned int CollisionWorld_getNumLineLineCollisions(
-    CollisionWorld* collisionWorld);
+  CollisionWorld* collisionWorld);
 
 // Update the two lines based on their intersection event.
 // Precondition: compareLines(l1, l2) < 0 must be true.
-void CollisionWorld_collisionSolver(CollisionWorld* collisionWorld, Line *l1,
-                                    Line *l2,
-                                    IntersectionType intersectionType);
+void CollisionWorld_collisionSolver(CollisionWorld* collisionWorld, Line* l1,
+  Line* l2,
+  IntersectionType intersectionType);
 
 #endif  // COLLISIONWORLD_H_

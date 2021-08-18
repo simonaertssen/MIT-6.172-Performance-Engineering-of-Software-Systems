@@ -21,6 +21,7 @@
  **/
 
 #include "./intersection_detection.h"
+#include "./collision_world.h"
 
 #include <assert.h>
 #include <math.h>
@@ -29,7 +30,7 @@
 #include "./vec.h"
 
  // Detect if lines l1 and l2 will intersect between now and the next time step.
-IntersectionType intersect(Line* l1, Line* l2, double time) {
+IntersectionType intersect(Line* l1, Line* l2) {
   assert(compareLines(l1, l2) < 0);
 
   Vec velocity;
@@ -42,8 +43,8 @@ IntersectionType intersect(Line* l1, Line* l2, double time) {
   velocity = Vec_subtract(l2->velocity, l1->velocity);
 
   // Get the parallelogram.
-  p1 = Vec_add(l2->p1, Vec_multiply(velocity, time));
-  p2 = Vec_add(l2->p2, Vec_multiply(velocity, time));
+  p1 = Vec_add(l2->p1, Vec_multiply(velocity, TIME_STEP));
+  p2 = Vec_add(l2->p2, Vec_multiply(velocity, TIME_STEP));
 
   // Quick test: check if lines are within each other's bounding box
   // If not, then just return NO_INTERSECTION

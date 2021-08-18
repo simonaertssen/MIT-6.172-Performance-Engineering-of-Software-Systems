@@ -34,7 +34,6 @@
 
 #include "./quadtree.h"
 
-
 CollisionWorld* CollisionWorld_new(const unsigned int capacity) {
   assert(capacity > 0);
 
@@ -45,7 +44,7 @@ CollisionWorld* CollisionWorld_new(const unsigned int capacity) {
 
   collisionWorld->numLineWallCollisions = 0;
   collisionWorld->numLineLineCollisions = 0;
-  collisionWorld->timeStep = 0.5;
+  // collisionWorld->timeStep = 0.5;
   collisionWorld->lines = (Line**)malloc(capacity * sizeof(Line*));
   collisionWorld->numOfLines = 0;
   return collisionWorld;
@@ -83,10 +82,9 @@ void CollisionWorld_updateLines(CollisionWorld* collisionWorld) {
 }
 
 void CollisionWorld_updatePosition(CollisionWorld* collisionWorld) {
-  double t = collisionWorld->timeStep;
   for (unsigned int i = 0; i < collisionWorld->numOfLines; i++) {
     Line* line = collisionWorld->lines[i];
-    Vec direction = Vec_multiply(line->velocity, t);
+    Vec direction = Vec_multiply(line->velocity, TIME_STEP);
 
     line->p1 = Vec_add(line->p1, direction);
     line->p2 = Vec_add(line->p2, direction);
@@ -139,6 +137,10 @@ void CollisionWorld_detectIntersection(CollisionWorld* collisionWorld) {
     insert_line(collisionWorld->lines[i], tree);
   }
 
+  unsigned int line_line_collisions = 0;
+  detect_collisions(tree, line_line_collisions);
+  collisionWorld->numLineLineCollisions = line_line_collisions;
+
   // Test all line - line pairs to see if they will intersect before the
   // next time step.
   for (unsigned int i = 0; i < collisionWorld->numOfLines; i++) {
@@ -155,8 +157,7 @@ void CollisionWorld_detectIntersection(CollisionWorld* collisionWorld) {
         l2 = temp;
       }
 
-      IntersectionType intersectionType =
-        intersect(l1, l2, collisionWorld->timeStep);
+      IntersectionType intersectionType = intersect(l1, l2);
       if (intersectionType != NO_INTERSECTION) {
         IntersectionEventList_appendNode(&intersectionEventList, l1, l2,
           intersectionType);

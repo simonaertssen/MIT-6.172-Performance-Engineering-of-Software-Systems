@@ -93,7 +93,7 @@ Vec Vec_divide(Vec vector, const double scalar) {
   return Vec_make(vector.x / scalar, vector.y / scalar);
 }
 
-vec_dimension Vec_dotProduct(Vec lhs, Vec rhs) {
+inline vec_dimension Vec_dotProduct(Vec lhs, Vec rhs) {
   return lhs.x * rhs.x + lhs.y * rhs.y;
 }
 

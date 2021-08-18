@@ -74,7 +74,7 @@ Vec Vec_multiply(Vec vector, const double scalar);
 Vec Vec_divide(Vec vector, const double scalar);
 
 // Computes the dot product of two vectors.
-inline vec_dimension Vec_dotProduct(Vec lhs, Vec rhs) __attribute__((always_inline));
+vec_dimension Vec_dotProduct(Vec lhs, Vec rhs) __attribute__((always_inline));
 
 // Computes the magnitude of the cross product of two vectors.
 inline vec_dimension Vec_crossProduct(Vec lhs, Vec rhs) __attribute__((always_inline));

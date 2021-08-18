@@ -54,8 +54,7 @@ struct Line {
   Vec p1;  // One endpoint of the line.
   Vec p2;  // The other endpoint of the line.
 
-  // The line's current velocity, in units of pixels per time step.
-  Vec velocity;
+  Vec velocity; // The line's current velocity, in units of pixels per time step.
 
   //Color color;  // The line's color.
 

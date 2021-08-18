@@ -26,12 +26,15 @@ Quadtree* make_quadtree(Quadtree* parent, double x_min, double y_min, double x_m
 
 void destroy_quadtree(Quadtree* tree) {
     // Check if children are allocated:
-    if (tree->children != NULL) {
+    if (tree->children == NULL) {
+        // Free the lines
+        free(tree->lines);
+    }
+    else {
+        // Destroy recursively
         for (unsigned int i = 0; i < QUAD; i++) {
             destroy_quadtree(tree->children + i);
         }
-        // Free the lines
-        free(tree->children->lines);
         // Free the tree
         free(tree->children);
     }
@@ -95,12 +98,14 @@ void insert_line(Line* l, Quadtree* tree) {
             // Use line position to find which child fits. Just try and fit for now,
             // an optimisation would be to compute the index of the quadrant.
             for (unsigned int j = 0; j < QUAD; j++) {
-                if (does_line_fit(tree->lines[i], tree->children + j))
+                if (does_line_fit(tree->lines[i], tree->children + j)) {
                     insert_line(tree->lines[i], tree->children + j);
+                    tree->lines[i] = NULL;
+                }
             }
         }
         // Empty the parent tree lines, as all lines are now distributed
-        free(tree->lines);
+        // free(tree->lines);
         tree->num_lines = 0;
 
         // Now add the line to the right child

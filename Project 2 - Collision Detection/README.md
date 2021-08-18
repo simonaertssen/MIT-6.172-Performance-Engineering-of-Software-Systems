@@ -1,7 +1,7 @@
 # Project 2 Writeup:
 
 ## 0. Performance improvements:
-The most important result in this writeup is the performance we obtain with every new algorithm. As we saw from our measurements, the `koch.in` animation takes the longest time to run: at 1000 frames it takes 449.35 seconds. Therefore, test performance with `./screensaver 1000 input/koch`.
+The most important result in this writeup is the performance we obtain with every new algorithm. As we saw from our measurements, the `koch.in` animation takes the longest time to run: at 1000 frames it takes 449.35 seconds. Therefore, test performance with `./screensaver 1000 input/koch.in`.
 
 Here, the performance and speedup is given per adjustment.
 
@@ -12,6 +12,7 @@ Here, the performance and speedup is given per adjustment.
 | SnailSpeed's implementation (naive) | 449.35 | x 1 | x 1 |
 | Precompute line lengths | 449.35 | x 1 | x 1 |
 | Check bounding boxes | 241.50 | x 1.86 | x 1.86 |
+| Inline vec.h | 241.50 | x 1 | x 1.86 |
 | Quadtree | | | |
 | Quadtree with maximum depth | | | |
 | Update Quadtree without destroying it | | | |

@@ -67,16 +67,16 @@ vec_dimension Vec_component(Vec vector1, Vec vector2);
 // Returns the vector projection of vector1 onto vector2.
 Vec Vec_projectOnto(Vec vector1, Vec vector2);
 
-bool Vec_equals(Vec lhs, Vec rhs);
+inline bool Vec_equals(Vec lhs, Vec rhs) __attribute__((always_inline));
 Vec Vec_add(Vec lhs, Vec rhs);
 Vec Vec_subtract(Vec lhs, Vec rhs);
 Vec Vec_multiply(Vec vector, const double scalar);
 Vec Vec_divide(Vec vector, const double scalar);
 
 // Computes the dot product of two vectors.
-vec_dimension Vec_dotProduct(Vec lhs, Vec rhs);
+inline vec_dimension Vec_dotProduct(Vec lhs, Vec rhs) __attribute__((always_inline));
 
 // Computes the magnitude of the cross product of two vectors.
-vec_dimension Vec_crossProduct(Vec lhs, Vec rhs);
+inline vec_dimension Vec_crossProduct(Vec lhs, Vec rhs) __attribute__((always_inline));
 
 #endif  // VEC_H_

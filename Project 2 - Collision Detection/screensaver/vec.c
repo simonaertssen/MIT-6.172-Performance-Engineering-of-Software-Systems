@@ -73,7 +73,7 @@ Vec Vec_projectOnto(Vec vector1, Vec vector2) {
 
 // ******************************* Arithmetic ********************************
 
-bool Vec_equals(Vec lhs, Vec rhs) {
+inline bool Vec_equals(Vec lhs, Vec rhs) {
   return lhs.x == rhs.x && lhs.y == rhs.y;
 }
 
@@ -97,6 +97,6 @@ vec_dimension Vec_dotProduct(Vec lhs, Vec rhs) {
   return lhs.x * rhs.x + lhs.y * rhs.y;
 }
 
-vec_dimension Vec_crossProduct(Vec lhs, Vec rhs) {
+inline vec_dimension Vec_crossProduct(Vec lhs, Vec rhs) {
   return lhs.x * rhs.y - lhs.y * rhs.x;
 }

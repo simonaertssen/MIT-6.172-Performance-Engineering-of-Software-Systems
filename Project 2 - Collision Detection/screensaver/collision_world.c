@@ -137,9 +137,8 @@ void CollisionWorld_detectIntersection(CollisionWorld* collisionWorld) {
     insert_line(collisionWorld->lines[i], tree);
   }
 
-  unsigned int line_line_collisions = 0;
-  detect_collisions(tree, intersectionEventList, line_line_collisions);
-  collisionWorld->numLineLineCollisions = line_line_collisions;
+  detect_collisions(tree, intersectionEventList, &collisionWorld->numLineLineCollisions);
+  assert(collisionWorld->numLineLineCollisions > 0);
 
   // Test all line - line pairs to see if they will intersect before the
   // next time step.

@@ -6,7 +6,7 @@
 
 #include <stdlib.h>
 #include <math.h>
-
+#include <stdio.h>
 
 // Initialise a quadtree structure
 Quadtree initialise_quadtree(Quadtree* parent, double x_min, double y_min, double x_max, double y_max, unsigned int depth) {
@@ -120,9 +120,10 @@ void insert_line(Line* l, Quadtree* tree) {
 };
 
 
-void detect_collisions(Quadtree* tree, IntersectionEventList intersectionEventList, unsigned int num_collisions) {
+void detect_collisions(Quadtree* tree, IntersectionEventList intersectionEventList, unsigned int* num_collisions) {
     // If there is no tree, we have an issue
     if (tree == NULL) return;
+    printf("%u, \n", *num_collisions);
 
     // If there are no children, check this tree
     if (tree->children == NULL) {
@@ -141,7 +142,7 @@ void detect_collisions(Quadtree* tree, IntersectionEventList intersectionEventLi
                 if (intersectionType != NO_INTERSECTION) {
                     IntersectionEventList_appendNode(&intersectionEventList, l1, l2,
                         intersectionType);
-                    num_collisions++;
+                    (*num_collisions)++;
                 }
             }
         }

@@ -45,7 +45,7 @@ inline bool does_line_fit(Line* line, Quadtree* tree) __attribute__((always_inli
 
 // Once the tree is filled, compute the collisions
 void detect_collisions(Quadtree* tree, IntersectionEventList intersectionEventList,
-    unsigned int num_collisions);
+    unsigned int* num_collisions);
 
 
 #endif  // QUADTREE_H_

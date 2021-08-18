@@ -86,8 +86,11 @@ void CollisionWorld_updatePosition(CollisionWorld* collisionWorld) {
   double t = collisionWorld->timeStep;
   for (unsigned int i = 0; i < collisionWorld->numOfLines; i++) {
     Line* line = collisionWorld->lines[i];
-    line->p1 = Vec_add(line->p1, Vec_multiply(line->velocity, t));
-    line->p2 = Vec_add(line->p2, Vec_multiply(line->velocity, t));
+    Vec direction = Vec_multiply(line->velocity, t);
+
+    line->p1 = Vec_add(line->p1, direction);
+    line->p2 = Vec_add(line->p2, direction);
+  
   }
 }
 

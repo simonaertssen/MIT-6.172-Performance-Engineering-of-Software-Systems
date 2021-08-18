@@ -36,7 +36,11 @@ Quadtree initialise_quadtree(Quadtree* parent, double x_min, double y_min, doubl
 Quadtree* make_quadtree(Quadtree* parent, double x_min, double y_min, double x_max, double y_max, unsigned int depth);
 void destroy_quadtree(Quadtree* tree);
 
-// inserts a line into a quadtree
+// Inserts a line into a quadtree
 void insert_line(Line* l, Quadtree* tree);
+
+// Test if line fits the current quadtree
+inline bool does_line_fit(Line* line, Quadtree* tree); __attribute__((always_inline));
+
 
 #endif  // QUADTREE_H_

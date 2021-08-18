@@ -2,6 +2,8 @@
 #include "./line.h"
 
 #include <stdlib.h>
+#include <math.h>
+
 
 // Initialise a quadtree structure
 Quadtree initialise_quadtree(Quadtree* parent, double x_min, double y_min, double x_max, double y_max, unsigned int depth) {
@@ -36,6 +38,22 @@ void destroy_quadtree(Quadtree* tree) {
 }
 
 
+// Check if line can fit inside a given Quadtree's boundaries
+inline bool does_line_fit(Line* line, Quadtree* tree) {
+    return
+        // check line at beginning of time step
+        (fmin(line->p1.x, line->p2.x) >= tree->p1.x) &&
+        (fmax(line->p1.x, line->p2.x) < tree->p2.x) &&
+        (fmin(line->p1.y, line->p2.y) >= tree->p1.y) &&
+        (fmax(line->p1.y, line->p2.y) < tree->p2.y) &&
+        // check line at end of time step of 0.5 (from collisionworld)
+        (fmin(line->p1.x, line->p2.x) + line->velocity.x * 0.5 >= tree->p1.x) &&
+        (fmax(line->p1.x, line->p2.x) + line->velocity.x * 0.5 < tree->p2.x) &&
+        (fmin(line->p1.y, line->p2.y) + line->velocity.y * 0.5 >= tree->p1.y) &&
+        (fmax(line->p1.y, line->p2.y) + line->velocity.y * 0.5 < tree->p2.y);
+}
+
+
 // inserts a line into a quadtree
 void insert_line(Line* l, Quadtree* tree) {
     // If we reached the maximum quadtree depth and have no more storage for lines,
@@ -54,6 +72,7 @@ void insert_line(Line* l, Quadtree* tree) {
     // If the tree has enough storage, then use it and add the line
     if (tree->num_lines < MAX_LINES) {
         tree->lines[tree->num_lines++] = l;
+        return;
     }
     // Else, we need to allocate the children of this quadtree
     else {
@@ -71,5 +90,13 @@ void insert_line(Line* l, Quadtree* tree) {
         }
 
         // Now reassign lines in the parent tree to the children
+        for (unsigned int i = 0; i < tree->num_lines; i++) {
+            // Use line position to find which child fits. Just try and fit for now,
+            // an optimisation would be to compute the index of the quadrant.
+            for (unsigned int j = 0; j < QUAD; j++) {
+                if (does_line_fit(tree->lines[i], tree->children + j))
+                    insert_line(tree->lines[i], tree->children + j);
+            }
+        }
     }
 };

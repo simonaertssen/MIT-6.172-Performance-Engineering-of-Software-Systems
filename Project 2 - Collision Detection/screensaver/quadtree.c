@@ -30,10 +30,11 @@ void destroy_quadtree(Quadtree* tree) {
         for (unsigned int i = 0; i < QUAD; i++) {
             destroy_quadtree(tree->children + i);
         }
+        // Free the lines
+        free(tree->children->lines);
+        // Free the tree
         free(tree->children);
     }
-    // Free the lines
-    free(tree->lines);
     if (tree->depth == 0) free(tree);
 }
 
@@ -97,6 +98,15 @@ void insert_line(Line* l, Quadtree* tree) {
                 if (does_line_fit(tree->lines[i], tree->children + j))
                     insert_line(tree->lines[i], tree->children + j);
             }
+        }
+        // Empty the parent tree lines, as all lines are now distributed
+        free(tree->lines);
+        tree->num_lines = 0;
+
+        // Now add the line to the right child
+        for (unsigned int j = 0; j < QUAD; j++) {
+            if (does_line_fit(l, tree->children + j))
+                insert_line(l, tree->children + j);
         }
     }
 };

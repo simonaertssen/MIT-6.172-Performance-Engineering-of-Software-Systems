@@ -120,12 +120,16 @@ def test_correctness(frames, verbose):
     file_name = input_directory + 'box.in'
     exc_time, l_w_coll, l_l_coll = run_binary(BINARY, 100, file_name)
     result = print_result(file_name, l_w_coll == 108 and l_l_coll == 3384, 0.5 / exc_time, verbose)
+    if not result:
+        print(f'Only found {l_w_coll}/108 line-wall and {l_l_coll}/3384 line-line collisions')
     test_results[result*1] += 1
 
     # Now test the beaver.in animation manually as a first line of defence
     file_name = input_directory + 'beaver.in'
     exc_time, l_w_coll, l_l_coll = run_binary(BINARY, 1000, file_name)
     result = print_result(file_name, l_w_coll == 7 and l_l_coll == 758, 2.5670 / exc_time, verbose)
+    if not result:
+        print(f'Only found {l_w_coll}/7 line-wall and {l_l_coll}/758 line-line collisions')
     test_results[result*1] += 1
 
     # If we reached this point all tests should have passed:

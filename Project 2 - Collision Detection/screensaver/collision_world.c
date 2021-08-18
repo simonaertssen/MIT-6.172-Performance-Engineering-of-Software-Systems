@@ -132,39 +132,39 @@ void CollisionWorld_detectIntersection(CollisionWorld* collisionWorld) {
   IntersectionEventList intersectionEventList = IntersectionEventList_make();
 
   // Here we need to use a quadtree to increase performance
-  // Quadtree* tree = make_quadtree(NULL, BOX_XMIN, BOX_YMIN, BOX_XMAX, BOX_YMAX, 0);
-  // for (unsigned int i = 0; i < collisionWorld->numOfLines; i++) {
-  //   insert_line(collisionWorld->lines[i], tree);
-  // }
+  Quadtree* tree = make_quadtree(NULL, BOX_XMIN, BOX_YMIN, BOX_XMAX, BOX_YMAX, 0);
+  for (unsigned int i = 0; i < collisionWorld->numOfLines; i++) {
+    insert_line(collisionWorld->lines[i], tree);
+  }
 
-  // unsigned int line_line_collisions = 0;
-  // detect_collisions(tree, intersectionEventList, line_line_collisions);
-  // collisionWorld->numLineLineCollisions = line_line_collisions;
+  unsigned int line_line_collisions = 0;
+  detect_collisions(tree, intersectionEventList, line_line_collisions);
+  collisionWorld->numLineLineCollisions = line_line_collisions;
 
   // Test all line - line pairs to see if they will intersect before the
   // next time step.
-  for (unsigned int i = 0; i < collisionWorld->numOfLines; i++) {
-    Line* l1 = collisionWorld->lines[i];
+  // for (unsigned int i = 0; i < collisionWorld->numOfLines; i++) {
+  //   Line* l1 = collisionWorld->lines[i];
 
-    for (unsigned int j = i + 1; j < collisionWorld->numOfLines; j++) {
-      Line* l2 = collisionWorld->lines[j];
+  //   for (unsigned int j = i + 1; j < collisionWorld->numOfLines; j++) {
+  //     Line* l2 = collisionWorld->lines[j];
 
-      // intersect expects compareLines(l1, l2) < 0 to be true.
-      // Swap l1 and l2, if necessary.
-      if (compareLines(l1, l2) >= 0) {
-        Line* temp = l1;
-        l1 = l2;
-        l2 = temp;
-      }
+  //     // intersect expects compareLines(l1, l2) < 0 to be true.
+  //     // Swap l1 and l2, if necessary.
+  //     if (compareLines(l1, l2) >= 0) {
+  //       Line* temp = l1;
+  //       l1 = l2;
+  //       l2 = temp;
+  //     }
 
-      IntersectionType intersectionType = intersect(l1, l2);
-      if (intersectionType != NO_INTERSECTION) {
-        IntersectionEventList_appendNode(&intersectionEventList, l1, l2,
-          intersectionType);
-        collisionWorld->numLineLineCollisions++;
-      }
-    }
-  }
+  //     IntersectionType intersectionType = intersect(l1, l2);
+  //     if (intersectionType != NO_INTERSECTION) {
+  //       IntersectionEventList_appendNode(&intersectionEventList, l1, l2,
+  //         intersectionType);
+  //       collisionWorld->numLineLineCollisions++;
+  //     }
+  //   }
+  // }
 
   // Sort the intersection event list.
   IntersectionEventNode* startNode = intersectionEventList.head;
@@ -193,7 +193,7 @@ void CollisionWorld_detectIntersection(CollisionWorld* collisionWorld) {
   }
 
   // Free the quadtree 
-  // destroy_quadtree(tree);
+  destroy_quadtree(tree);
 
   IntersectionEventList_deleteNodes(&intersectionEventList);
 }

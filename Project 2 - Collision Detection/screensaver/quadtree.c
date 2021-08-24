@@ -82,6 +82,7 @@ void insert_line(Line* l, Quadtree* tree) {
         // Add the line if there is enough capacity
         if (tree->num_lines < tree->capacity) {
             tree->lines[tree->num_lines++] = l;
+            printf("Line insert id = %u\n", l->id);
             return;
         }
 
@@ -121,7 +122,11 @@ void insert_line(Line* l, Quadtree* tree) {
     if (tree->children != NULL) {
         // Now add the line to the right child
         for (unsigned int j = 0; j < QUAD; j++) {
-            if (does_line_fit(l, tree->children + j)) insert_line(l, tree->children + j);
+            if (does_line_fit(l, tree->children + j)) {
+                insert_line(l, tree->children + j);
+                return;
+            }
+            printf("Line id = %u did not fit\n", l->id);
         }
     }
 }

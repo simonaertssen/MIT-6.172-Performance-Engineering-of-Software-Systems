@@ -39,6 +39,7 @@ void destroy_quadtree(Quadtree* tree);
 
 // Inserts a line into a quadtree
 void insert_line(Line* l, Quadtree* tree);
+unsigned int count_lines(Quadtree* tree);
 
 // Test if line fits the current quadtree
 inline bool does_line_fit(Line* line, Quadtree* tree) __attribute__((always_inline));

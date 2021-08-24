@@ -117,13 +117,25 @@ void insert_line(Line* l, Quadtree* tree) {
                 insert_line(l, tree->children + j);
         }
     }
-};
+}
+
+unsigned int count_lines(Quadtree* tree) {
+    if (tree->children == NULL) {
+        return tree->num_lines;
+    }
+
+    unsigned int num_lines = 0;
+    for (unsigned int j = 0; j < QUAD; j++) {
+        num_lines += count_lines(tree->children + j);
+    }
+    return num_lines;
+}
 
 
 void detect_collisions(Quadtree* tree, IntersectionEventList intersectionEventList, unsigned int* num_collisions) {
     // If there is no tree, we have an issue
     if (tree == NULL) return;
-    printf("%u, \n", *num_collisions);
+    printf("%u, \n", count_lines(tree));
 
     // If there are no children, check this tree
     if (tree->children == NULL) {

@@ -69,7 +69,7 @@ void insert_line(Line* l, Quadtree* tree) {
     if (tree->children == NULL) {
         // If we reached deep into the tree but there is no more space for a line, 
         // allocate more memory by doubling the capacity.
-        if (tree->depth == MAX_DEPTH && tree->num_lines == tree->capacity) {
+        if (tree->depth == MAX_DEPTH && tree->num_lines >= tree->capacity) {
             printf("Needed reallocate\n");
             Line** tmp = (Line**)realloc(tree->lines, sizeof(Line*) * tree->capacity * 2);
             if (tmp == NULL) free(tmp);
@@ -82,15 +82,12 @@ void insert_line(Line* l, Quadtree* tree) {
         // Add the line if there is enough capacity
         if (tree->num_lines < tree->capacity) {
             tree->lines[tree->num_lines++] = l;
+            return;
         }
 
-        // If we reach this, then we have a problem
-        printf("Problems...\n");
-
-    }
-    // If we do have children, then save the line in the correct child.
-    else {
-        printf("Allocated children at depth %u\n", tree->depth);
+        // If we reach this point, then we have are not at the maximum depth and there is no space for lines,
+        // so we need to allocate children of the tree.
+        printf("all ch dept = %u for line id = %u\n", tree->depth, l->id);
         tree->children = (Quadtree*)malloc(sizeof(Quadtree) * QUAD);
         // Make 2 loops of 2 to make four children, then we can compute the bounds more easily.
         for (unsigned int i = 0; i < 2; ++i) {
@@ -103,7 +100,6 @@ void insert_line(Line* l, Quadtree* tree) {
                     tree->depth + 1);
             }
         }
-
         // Now reassign lines in the parent tree to the children
         for (unsigned int i = 0; i < tree->num_lines; i++) {
             // Use line position to find which child fits. Just try and fit for now,
@@ -119,6 +115,14 @@ void insert_line(Line* l, Quadtree* tree) {
         // free(tree->lines);
         tree->num_lines = 0;
         tree->capacity = 0;
+    }
+
+    // If we do have children, then save the line in the correct child.
+    if (tree->children != NULL) {
+        // Now add the line to the right child
+        for (unsigned int j = 0; j < QUAD; j++) {
+            if (does_line_fit(l, tree->children + j)) insert_line(l, tree->children + j);
+        }
     }
 }
 

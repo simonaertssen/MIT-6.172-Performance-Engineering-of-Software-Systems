@@ -134,16 +134,6 @@ void CollisionWorld_detectIntersection(CollisionWorld* collisionWorld) {
   // Here we need to use a quadtree to increase performance
   Quadtree* tree = make_quadtree(NULL, BOX_XMIN, BOX_YMIN, BOX_XMAX, BOX_YMAX, 0);
 
-  Line* line1 = (Line*)malloc(sizeof(Line));
-  line1->p1 = Vec_make(0.0, 0.0);
-  line1->p2 = Vec_make(1.0, 0.0);
-  line1->velocity = Vec_make(1.0, 0.0);
-  line1->len = 0.1;
-  line1->id = 0;
-
-  insert_line(line1, tree);
-  insert_line(line1, tree);
-
   printf("num lines = %u \n", count_lines(tree));
   for (unsigned int i = 0; i < collisionWorld->numOfLines; i++) {
     insert_line(collisionWorld->lines[i], tree);

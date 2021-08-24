@@ -49,7 +49,7 @@ void destroy_quadtree(Quadtree* tree) {
 
 // Check if line can fit inside a given Quadtree's boundaries
 inline bool does_line_fit(Line* line, Quadtree* tree) {
-    bool result =
+    return
         (fmin(line->p1.x, line->p2.x) >= tree->p1.x) &&
         (fmax(line->p1.x, line->p2.x) < tree->p2.x) &&
         (fmin(line->p1.y, line->p2.y) >= tree->p1.y) &&
@@ -60,11 +60,11 @@ inline bool does_line_fit(Line* line, Quadtree* tree) {
         (fmin(line->p1.y, line->p2.y) + line->velocity.y * 0.5 >= tree->p1.y) &&
         (fmax(line->p1.y, line->p2.y) + line->velocity.y * 0.5 < tree->p2.y);
 
-    printf("Testing if [%f,%f] in [%f,%f] and [%f,%f] in [%f,%f]: %s\n",
-        fmin(line->p1.x, line->p2.x), fmax(line->p1.x, line->p2.x), tree->p1.x, tree->p2.x,
-        fmin(line->p1.y, line->p2.y), fmax(line->p1.y, line->p2.y), tree->p1.y, tree->p2.y,
-        result ? "true" : "false");
-    return result;
+    // printf("Testing if [%f,%f] in [%f,%f] and [%f,%f] in [%f,%f]: %s\n",
+    //     fmin(line->p1.x, line->p2.x), fmax(line->p1.x, line->p2.x), tree->p1.x, tree->p2.x,
+    //     fmin(line->p1.y, line->p2.y), fmax(line->p1.y, line->p2.y), tree->p1.y, tree->p2.y,
+    //     result ? "true" : "false");
+    // return result;
 }
 
 
@@ -106,24 +106,32 @@ void insert_line(Line* l, Quadtree* tree) {
             diffy = 0.5 * (tree->p2.y - tree->p1.y);
             miny = tree->p1.y + (i % 2) * diffy;
             maxy = tree->p2.y - (double)(!(i % 2)) * diffy;
-            printf("Grid[%d,%d]: x = [%f, %f], y = [%f, %f]\n", (i / 2), (i % 2), minx, maxx, miny, maxy);
+            // printf("Grid[%d,%d]: x = [%f, %f], y = [%f, %f]\n", (i / 2), (i % 2), minx, maxx, miny, maxy);
             tree->children[i] = initialise_quadtree(tree, minx, miny, maxx, maxy, tree->depth + 1);
         }
         // Now reassign lines in the parent tree to the children. Use line position to find which child fits. 
         // Just try and fit for now, an optimisation would be to compute the index of the quadrant.
+        // We need an additional buffer to hold the lines so we can set the lines in the tree to NULL.
+        Line** all_lines = (Line**)malloc(sizeof(Line*) * tree->num_lines);
+        for (unsigned int i = 0; i < tree->num_lines; i++) {
+            all_lines[i] = tree->lines[i];
+            // tree->lines[i] = NULL;
+        }
+
         for (unsigned int i = 0; i < tree->num_lines; i++) {
             for (unsigned int j = 0; j < QUAD; j++) {
-                if (does_line_fit(tree->lines[i], tree->children + j)) {
-                    insert_line(tree->lines[i], tree->children + j);
-                    // tree->lines[i] = NULL;
+                if (does_line_fit(all_lines[i], tree->children + j)) {
+                    insert_line(all_lines[i], tree->children + j);
+                    break;
                 }
-                if (j == QUAD - 1 && tree->lines[i] != NULL) printf("Line id = %u was not redistributed\n", tree->lines[i]->id);
+                if (j == QUAD - 1) printf("Line id = %u was not redistributed\n", tree->lines[i]->id);
             }
         }
         // Empty the parent tree lines, as all lines are now distributed
         // free(tree->lines);
         tree->num_lines = 0;
         tree->capacity = 0;
+        free(all_lines);
     }
 
     // If we do have children, then save the line l in the correct child.

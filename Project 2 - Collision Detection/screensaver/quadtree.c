@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <math.h>
 #include <stdio.h>
+#include <assert.h>
+
 
 // Initialise a quadtree structure
 Quadtree initialise_quadtree(Quadtree* parent, double x_min, double y_min, double x_max, double y_max, unsigned int depth) {
@@ -65,7 +67,8 @@ inline bool does_line_fit(Line* line, Quadtree* tree) {
 void insert_line(Line* l, Quadtree* tree) {
     // If we reached the maximum quadtree depth and have no more storage for lines,
     // then double the capacity by reallocating memory.
-    if (tree->depth == MAX_DEPTH && tree->num_lines == MAX_LINES) {
+    if (tree->depth == MAX_DEPTH && tree->num_lines == tree->capacity) {
+        printf("Needed reallocate\n");
         Line** tmp = (Line**)realloc(tree->lines, sizeof(Line*) * tree->capacity * 2);
         if (tmp == NULL) {
             free(tmp);
@@ -76,13 +79,17 @@ void insert_line(Line* l, Quadtree* tree) {
         }
     }
 
+    if (tree->children == NULL) {
+    }
     // If the tree has enough storage, then use it and add the line
-    if (tree->num_lines < MAX_LINES) {
+    if (tree->num_lines < tree->capacity && tree->children == NULL) {
         tree->lines[tree->num_lines++] = l;
         return;
     }
     // Else, we need to allocate the children of this quadtree
     else {
+        assert(tree->children == NULL);
+        printf("Allocated children at depth %u\n", tree->depth);
         tree->children = (Quadtree*)malloc(sizeof(Quadtree) * QUAD);
         // Make 2 loops of 2 to make four children, then we can compute the bounds more easily.
         for (unsigned int i = 0; i < 2; ++i) {
@@ -110,12 +117,7 @@ void insert_line(Line* l, Quadtree* tree) {
         // Empty the parent tree lines, as all lines are now distributed
         // free(tree->lines);
         tree->num_lines = 0;
-
-        // Now add the line to the right child
-        for (unsigned int j = 0; j < QUAD; j++) {
-            if (does_line_fit(l, tree->children + j))
-                insert_line(l, tree->children + j);
-        }
+        tree->capacity = 0;
     }
 }
 

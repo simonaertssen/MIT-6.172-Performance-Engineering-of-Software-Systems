@@ -133,38 +133,52 @@ void CollisionWorld_detectIntersection(CollisionWorld* collisionWorld) {
 
   // Here we need to use a quadtree to increase performance
   Quadtree* tree = make_quadtree(NULL, BOX_XMIN, BOX_YMIN, BOX_XMAX, BOX_YMAX, 0);
+
+  Line* line1 = (Line*)malloc(sizeof(Line));
+  line1->p1 = Vec_make(0.0, 0.0);
+  line1->p2 = Vec_make(1.0, 0.0);
+  line1->velocity = Vec_make(1.0, 0.0);
+  line1->len = 0.1;
+  line1->id = 0;
+
+  insert_line(line1, tree);
+  insert_line(line1, tree);
+
+  printf("num lines = %u \n", count_lines(tree));
   for (unsigned int i = 0; i < collisionWorld->numOfLines; i++) {
     insert_line(collisionWorld->lines[i], tree);
+    // printf("Num_lines = %u\n", tree->num_lines); //293
   }
+  printf("num lines = %u\n", count_lines(tree));
 
-  detect_collisions(tree, intersectionEventList, &collisionWorld->numLineLineCollisions);
-  assert(collisionWorld->numOfLines == count_lines(tree));
-  assert(collisionWorld->numLineLineCollisions > 0);
+  //detect_collisions(tree, intersectionEventList, &collisionWorld->numLineLineCollisions);
+  //assert(collisionWorld->numOfLines == count_lines(tree));
+  // assert(collisionWorld->numLineLineCollisions > 0);
 
   // Test all line - line pairs to see if they will intersect before the
   // next time step.
-  // for (unsigned int i = 0; i < collisionWorld->numOfLines; i++) {
-  //   Line* l1 = collisionWorld->lines[i];
+  for (unsigned int i = 0; i < collisionWorld->numOfLines; i++) {
+    Line* l1 = collisionWorld->lines[i];
 
-  //   for (unsigned int j = i + 1; j < collisionWorld->numOfLines; j++) {
-  //     Line* l2 = collisionWorld->lines[j];
+    for (unsigned int j = i + 1; j < collisionWorld->numOfLines; j++) {
+      Line* l2 = collisionWorld->lines[j];
 
-  //     // intersect expects compareLines(l1, l2) < 0 to be true.
-  //     // Swap l1 and l2, if necessary.
-  //     if (compareLines(l1, l2) >= 0) {
-  //       Line* temp = l1;
-  //       l1 = l2;
-  //       l2 = temp;
-  //     }
+      // intersect expects compareLines(l1, l2) < 0 to be true.
+      // Swap l1 and l2, if necessary.
+      if (compareLines(l1, l2) >= 0) {
+        Line* temp = l1;
+        l1 = l2;
+        l2 = temp;
+      }
 
-  //     IntersectionType intersectionType = intersect(l1, l2);
-  //     if (intersectionType != NO_INTERSECTION) {
-  //       IntersectionEventList_appendNode(&intersectionEventList, l1, l2,
-  //         intersectionType);
-  //       collisionWorld->numLineLineCollisions++;
-  //     }
-  //   }
-  // }
+      IntersectionType intersectionType = intersect(l1, l2);
+      if (intersectionType != NO_INTERSECTION) {
+        IntersectionEventList_appendNode(&intersectionEventList, l1, l2,
+          intersectionType);
+        collisionWorld->numLineLineCollisions++;
+      }
+    }
+  }
 
   // Sort the intersection event list.
   IntersectionEventNode* startNode = intersectionEventList.head;

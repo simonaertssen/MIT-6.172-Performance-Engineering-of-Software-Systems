@@ -19,15 +19,17 @@ struct Quadtree {
 
     // Pointer to array of lines
     Line** lines;
+
+    // vectors representing quadtree boundaries
+    Vec p1; // North-west point
+    Vec p2; // South-east point
+
     unsigned int num_lines; // Number of lines in the array
     unsigned int capacity; // Number of lines the array can hold
 
     // Depth of the quadtree
     unsigned int depth;
 
-    // vectors representing quadtree boundaries
-    Vec p1; // North-west point
-    Vec p2; // South-east point
 };
 
 // Initialise a quadtree structure

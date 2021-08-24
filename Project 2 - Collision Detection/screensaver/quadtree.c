@@ -65,30 +65,31 @@ inline bool does_line_fit(Line* line, Quadtree* tree) {
 
 // inserts a line into a quadtree
 void insert_line(Line* l, Quadtree* tree) {
-    // If we reached the maximum quadtree depth and have no more storage for lines,
-    // then double the capacity by reallocating memory.
-    if (tree->depth == MAX_DEPTH && tree->num_lines == tree->capacity) {
-        printf("Needed reallocate\n");
-        Line** tmp = (Line**)realloc(tree->lines, sizeof(Line*) * tree->capacity * 2);
-        if (tmp == NULL) {
-            free(tmp);
-        }
-        else {
-            tree->lines = tmp;
-            tree->capacity *= 2;
-        }
-    }
-
+    // If we have no children, then save the line in level of the quadtree.
     if (tree->children == NULL) {
+        // If we reached deep into the tree but there is no more space for a line, 
+        // allocate more memory by doubling the capacity.
+        if (tree->depth == MAX_DEPTH && tree->num_lines == tree->capacity) {
+            printf("Needed reallocate\n");
+            Line** tmp = (Line**)realloc(tree->lines, sizeof(Line*) * tree->capacity * 2);
+            if (tmp == NULL) free(tmp);
+            else {
+                tree->lines = tmp;
+                tree->capacity *= 2;
+            }
+        }
+
+        // Add the line if there is enough capacity
+        if (tree->num_lines < tree->capacity) {
+            tree->lines[tree->num_lines++] = l;
+        }
+
+        // If we reach this, then we have a problem
+        printf("Problems...\n");
+
     }
-    // If the tree has enough storage, then use it and add the line
-    if (tree->num_lines < tree->capacity && tree->children == NULL) {
-        tree->lines[tree->num_lines++] = l;
-        return;
-    }
-    // Else, we need to allocate the children of this quadtree
+    // If we do have children, then save the line in the correct child.
     else {
-        assert(tree->children == NULL);
         printf("Allocated children at depth %u\n", tree->depth);
         tree->children = (Quadtree*)malloc(sizeof(Quadtree) * QUAD);
         // Make 2 loops of 2 to make four children, then we can compute the bounds more easily.

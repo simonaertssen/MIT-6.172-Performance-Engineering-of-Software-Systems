@@ -90,27 +90,27 @@ void insert_line(Line* l, Quadtree* tree) {
         // so we need to allocate children of the tree.
         printf("all ch dept = %u for line id = %u\n", tree->depth, l->id);
         tree->children = (Quadtree*)malloc(sizeof(Quadtree) * QUAD);
-        // Make 2 loops of 2 to make four children, then we can compute the bounds more easily.
+        // With 2 loops of 2 to make four children, we can compute the bounds more easily.
+        // However, with one loop we can parallallise better later.
         // Compute half the distance between the bounds and either add or subtract that.
-        int i, j;
         double minx, maxx, miny, maxy, diffx, diffy;
-        for (i = 0; i < 2; ++i) {
-            for (j = 0; j < 2; ++j) {
-                diffx = 0.5 * (tree->p2.x - tree->p1.x);
-                minx = tree->p1.x + j * diffx;
-                maxx = tree->p2.x - (double)(!j) * diffx;
-                diffy = 0.5 * (tree->p2.y - tree->p1.y);
-                miny = tree->p1.y + i * diffy;
-                maxy = tree->p2.y - (double)(!i) * diffy;
-                // printf("Grid[%d,%d]: x = [%f, %f], y = [%f, %f]\n", i, j, minx, maxx, miny, maxy);
-                tree->children[i * 2 + j] = initialise_quadtree(tree, minx, maxx, miny, maxy, tree->depth + 1);
-            }
+        for (unsigned int i = 0; i < QUAD; ++i) {
+            // for (j = 0; j < 2; ++j) {
+            diffx = 0.5 * (tree->p2.x - tree->p1.x);
+            minx = tree->p1.x + (i / 2) * diffx;
+            maxx = tree->p2.x - (double)(!(i / 2)) * diffx;
+            diffy = 0.5 * (tree->p2.y - tree->p1.y);
+            miny = tree->p1.y + (i % 2) * diffy;
+            maxy = tree->p2.y - (double)(!(i % 2)) * diffy;
+            printf("Grid[%d,%d]: x = [%f, %f], y = [%f, %f]\n", (i / 2), (i % 2), minx, maxx, miny, maxy);
+            tree->children[i] = initialise_quadtree(tree, minx, maxx, miny, maxy, tree->depth + 1);
+            // }
         }
         // Now reassign lines in the parent tree to the children
-        for (i = 0; i < tree->num_lines; i++) {
+        for (unsigned int i = 0; i < tree->num_lines; i++) {
             // Use line position to find which child fits. Just try and fit for now,
             // an optimisation would be to compute the index of the quadrant.
-            for (j = 0; j < QUAD; j++) {
+            for (unsigned int j = 0; j < QUAD; j++) {
                 if (does_line_fit(tree->lines[i], tree->children + j)) {
                     insert_line(tree->lines[i], tree->children + j);
                     tree->lines[i] = NULL;

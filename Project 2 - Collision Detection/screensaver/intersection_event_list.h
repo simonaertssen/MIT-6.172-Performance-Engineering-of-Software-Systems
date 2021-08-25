@@ -40,15 +40,16 @@ typedef struct IntersectionEventNode IntersectionEventNode;
 //  0 <=> node1 ordered the same as node2
 //  1 <=> node1 ordered after node2
 int IntersectionEventNode_compareData(IntersectionEventNode* node1,
-                                      IntersectionEventNode* node2);
+  IntersectionEventNode* node2);
 
 // Swaps the node1's and node2's data (l1, l2, intersectionType).
 void IntersectionEventNode_swapData(IntersectionEventNode* node1,
-                                    IntersectionEventNode* node2);
+  IntersectionEventNode* node2);
 
 struct IntersectionEventList {
   IntersectionEventNode* head;
   IntersectionEventNode* tail;
+  unsigned int size;
 };
 typedef struct IntersectionEventList IntersectionEventList;
 
@@ -58,11 +59,11 @@ IntersectionEventList IntersectionEventList_make();
 // Appends a new node to the list with the data (l1, l2, intersectionType).
 // Precondition: compareLines(l1, l2) < 0 must be true.
 void IntersectionEventList_appendNode(
-    IntersectionEventList* intersectionEventList, Line* l1, Line* l2,
-    IntersectionType intersectionType);
+  IntersectionEventList* intersectionEventList, Line* l1, Line* l2,
+  IntersectionType intersectionType);
 
 // Deletes all the nodes in the list.
 void IntersectionEventList_deleteNodes(
-    IntersectionEventList* intersectionEventList);
+  IntersectionEventList* intersectionEventList);
 
 #endif  // INTERSECTIONEVENTLIST_H_

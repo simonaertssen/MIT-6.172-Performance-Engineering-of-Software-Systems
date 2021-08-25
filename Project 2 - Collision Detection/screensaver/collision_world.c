@@ -137,10 +137,15 @@ void CollisionWorld_detectIntersection(CollisionWorld* collisionWorld) {
   for (unsigned int i = 0; i < collisionWorld->numOfLines; i++) {
     insert_line(collisionWorld->lines[i], tree);
   }
+  assert(collisionWorld->numOfLines == count_lines(tree));
 
   detect_collisions(tree, &intersectionEventList, &collisionWorld->numLineLineCollisions);
-  // assert(collisionWorld->numOfLines == count_lines(tree));
-  // assert(collisionWorld->numLineLineCollisions > 0);
+  // printf("%u ?= %u\n", collisionWorld->numLineLineCollisions, intersectionEventList.size);
+  // assert(collisionWorld->numLineLineCollisions == intersectionEventList.size);
+  collisionWorld->numLineLineCollisions += intersectionEventList.size;
+  destroy_quadtree(tree);
+
+  // printf("Num collisions = %u", collisionWorld->numLineLineCollisions);
 
   // Test all line - line pairs to see if they will intersect before the
   // next time step.
@@ -192,9 +197,6 @@ void CollisionWorld_detectIntersection(CollisionWorld* collisionWorld) {
       curNode->intersectionType);
     curNode = curNode->next;
   }
-
-  // Free the quadtree 
-  destroy_quadtree(tree);
 
   IntersectionEventList_deleteNodes(&intersectionEventList);
 }

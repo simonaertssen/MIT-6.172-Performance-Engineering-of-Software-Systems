@@ -183,7 +183,6 @@ void register_collision(Line* l1, Line* l2, IntersectionEventList* intersectionE
     if (intersectionType != NO_INTERSECTION) {
         IntersectionEventList_appendNode(intersectionEventList, l1, l2, intersectionType);
         (*num_collisions)++;
-        printf("num_collisions: %u\n", *num_collisions);
     }
 }
 
@@ -202,9 +201,13 @@ void detect_collisions(Quadtree* tree, IntersectionEventList* intersectionEventL
             }
         }
         // Check all pairs in the current tree and its parents for collisions
-        Quadtree* parent = tree->parent;
+        Quadtree* parent = tree;
         // Go to all possible parents.
         for (unsigned int d = 0; d < tree->depth; d++) {
+            // Register the parents parent
+            parent = parent->parent;
+            assert(parent != NULL);
+
             // Mark all lines in this tree...
             for (unsigned int i = 0; i < tree->num_lines; i++) {
                 l1 = tree->lines[i];
@@ -214,10 +217,6 @@ void detect_collisions(Quadtree* tree, IntersectionEventList* intersectionEventL
                     register_collision(l1, l2, intersectionEventList, num_collisions);
                 }
             }
-
-            // Register the parents parent
-            parent = parent->parent;
-            if (parent == NULL) return;
         }
     }
     else {

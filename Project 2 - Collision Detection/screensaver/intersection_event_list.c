@@ -69,6 +69,7 @@ IntersectionEventList IntersectionEventList_make() {
   IntersectionEventList intersectionEventList;
   intersectionEventList.head = NULL;
   intersectionEventList.tail = NULL;
+  intersectionEventList.size = 0;
   return intersectionEventList;
 }
 
@@ -93,6 +94,7 @@ void IntersectionEventList_appendNode(
     intersectionEventList->tail->next = newNode;
   }
   intersectionEventList->tail = newNode;
+  intersectionEventList->size++;
 }
 
 void IntersectionEventList_deleteNodes(
@@ -106,4 +108,5 @@ void IntersectionEventList_deleteNodes(
   }
   intersectionEventList->head = NULL;
   intersectionEventList->tail = NULL;
+  intersectionEventList->size = 0;
 }

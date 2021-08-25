@@ -178,31 +178,52 @@ unsigned int count_lines(Quadtree* tree) {
 }
 
 
-void detect_collisions(Quadtree* tree, IntersectionEventList intersectionEventList, unsigned int* num_collisions) {
-    // If there is no tree, we have an issue
-    if (tree == NULL) return;
-    printf("%u, \n", count_lines(tree));
+void register_collision(Line* l1, Line* l2, IntersectionEventList intersectionEventList, unsigned int* num_collisions) {
+    if (compareLines(l1, l2) >= 0) {
+        Line* temp = l1;
+        l1 = l2;
+        l2 = temp;
+    }
 
+    IntersectionType intersectionType = intersect(l1, l2);
+    if (intersectionType != NO_INTERSECTION) {
+        IntersectionEventList_appendNode(&intersectionEventList, l1, l2,
+            intersectionType);
+        (*num_collisions)++;
+    }
+}
+
+
+void detect_collisions(Quadtree* tree, IntersectionEventList intersectionEventList, unsigned int* num_collisions) {
     // If there are no children, check this tree
     if (tree->children == NULL) {
+        Line* l1 = NULL;
+        Line* l2 = NULL;
+        // Check all pairs in the current tree for collisions
         for (unsigned int i = 0; i < tree->num_lines; i++) {
-            Line* l1 = tree->lines[i];
+            l1 = tree->lines[i];
             for (unsigned int j = i + 1; j < tree->num_lines; j++) {
-                Line* l2 = tree->lines[j];
-
-                if (compareLines(l1, l2) >= 0) {
-                    Line* temp = l1;
-                    l1 = l2;
-                    l2 = temp;
-                }
-
-                IntersectionType intersectionType = intersect(l1, l2);
-                if (intersectionType != NO_INTERSECTION) {
-                    IntersectionEventList_appendNode(&intersectionEventList, l1, l2,
-                        intersectionType);
-                    (*num_collisions)++;
+                l2 = tree->lines[j];
+                register_collision(l1, l2, intersectionEventList, num_collisions);
+            }
+        }
+        // Check all pairs in the current tree and its parents for collisions
+        Quadtree* parent = tree->parent;
+        // Go to all possible parents.
+        for (unsigned int d = 0; d < tree->depth; d++) {
+            // Mark all lines in this tree...
+            for (unsigned int i = 0; i < tree->num_lines; i++) {
+                l1 = tree->lines[i];
+                // ...versus all lines in the parent...
+                for (unsigned int j = 0; j < parent->num_lines; j++) {
+                    l2 = tree->lines[j];
+                    register_collision(l1, l2, intersectionEventList, num_collisions);
                 }
             }
+
+            // Register the parents parent
+            parent = parent->parent;
+            if (parent == NULL) return;
         }
     }
     else {

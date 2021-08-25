@@ -140,37 +140,8 @@ void CollisionWorld_detectIntersection(CollisionWorld* collisionWorld) {
   assert(collisionWorld->numOfLines == count_lines(tree));
 
   detect_collisions(tree, &intersectionEventList);
-  // printf("%u ?= %u\n", collisionWorld->numLineLineCollisions, intersectionEventList.size);
-  // assert(collisionWorld->numLineLineCollisions == intersectionEventList.size);
   collisionWorld->numLineLineCollisions += intersectionEventList.size;
   destroy_quadtree(tree);
-
-  // printf("Num collisions = %u", collisionWorld->numLineLineCollisions);
-
-  // Test all line - line pairs to see if they will intersect before the
-  // next time step.
-  // for (unsigned int i = 0; i < collisionWorld->numOfLines; i++) {
-  //   Line* l1 = collisionWorld->lines[i];
-
-  //   for (unsigned int j = i + 1; j < collisionWorld->numOfLines; j++) {
-  //     Line* l2 = collisionWorld->lines[j];
-
-  //     // intersect expects compareLines(l1, l2) < 0 to be true.
-  //     // Swap l1 and l2, if necessary.
-  //     if (compareLines(l1, l2) >= 0) {
-  //       Line* temp = l1;
-  //       l1 = l2;
-  //       l2 = temp;
-  //     }
-
-  //     IntersectionType intersectionType = intersect(l1, l2);
-  //     if (intersectionType != NO_INTERSECTION) {
-  //       IntersectionEventList_appendNode(&intersectionEventList, l1, l2,
-  //         intersectionType);
-  //       collisionWorld->numLineLineCollisions++;
-  //     }
-  //   }
-  // }
 
   // Sort the intersection event list.
   IntersectionEventNode* startNode = intersectionEventList.head;

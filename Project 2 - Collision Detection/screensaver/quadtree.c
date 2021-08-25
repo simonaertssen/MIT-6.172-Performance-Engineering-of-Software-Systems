@@ -171,9 +171,7 @@ unsigned int count_lines(Quadtree* tree) {
 
 
 void register_collision(Line* l1, Line* l2, IntersectionEventList* intersectionEventList) {
-    // printf("Comparing l=%u with l=%d\n", l1->id, l2->id);
     if (compareLines(l1, l2) >= 0) {
-        // printf("Switching l=%u with l=%d\n", l1->id, l2->id);
         Line* temp = l1;
         l1 = l2;
         l2 = temp;

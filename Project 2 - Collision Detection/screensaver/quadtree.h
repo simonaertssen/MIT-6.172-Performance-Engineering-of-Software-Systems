@@ -37,6 +37,8 @@ Quadtree initialise_quadtree(Quadtree* parent, double x_min, double y_min, doubl
 
 // Create a new quadtree
 Quadtree* make_quadtree(Quadtree* parent, double x_min, double y_min, double x_max, double y_max, unsigned int depth);
+void allocate_children(Quadtree* tree);
+void double_linebuffer(Quadtree* tree);
 void destroy_quadtree(Quadtree* tree);
 
 // Inserts a line into a quadtree

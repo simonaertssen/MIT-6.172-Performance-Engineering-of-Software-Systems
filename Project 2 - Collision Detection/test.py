@@ -69,9 +69,9 @@ def run_binary(binary, frames, input_file):
 
         # Process the output lines
         numbers = re.findall(r"[-+]?\d*\.?\d+", lines)
-        if len(numbers) > 4:
-            print("Found more than 4 integers in this output.")
-            numbers = numbers[0:4]
+        if len(numbers) > 3:
+            print("Found more than 3 numbers in this output.")
+            numbers = numbers[0:3]
         done_testing = True
     exc_time, l_w_coll, l_l_coll = numbers
     return float(exc_time), int(l_w_coll), int(l_l_coll)

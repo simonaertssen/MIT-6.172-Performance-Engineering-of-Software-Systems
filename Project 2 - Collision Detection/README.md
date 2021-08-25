@@ -72,4 +72,36 @@ We implement the quadtree as a doubly linked data structure, where each node in 
 
 Checking collisions starts at the tree root, where every line is compared to the other one. Then, we check the lines in each of the children, and each of those is compared to its parents as well. Hence, we can check all lines in the world.
 
+We need to better understand what is going wrong: what is the slowest part of our program? Let's take a look at pprof:
 
+    (base) MacBook-Pro-van-Simon:screensaver SimonAertssen$ CPUPROFILE=screensaver.prof ./screensaver 1000
+    Input file path is: input/mit.in
+    ---- RESULTS ----
+    Elapsed execution time: 10.981296s
+    170 Line-Wall Collisions
+    2097 Line-Line Collisions
+    ---- END RESULTS ----
+    PROFILE: interrupts/evictions/bytes = 843/45/50824
+    (base) MacBook-Pro-van-Simon:screensaver SimonAertssen$ pprof --text screensaver screensaver.prof
+    Using local file screensaver.
+    Using local file screensaver.prof.
+    Total: 843 samples
+     400  47.4%  47.4%      408  48.4% _Vec_makeFromLine
+     284  33.7%  81.1%      728  86.4% _intersect
+      51   6.0%  87.2%      838  99.4% _detect_collisions
+      41   4.9%  92.1%       41   4.9% _Vec_add
+      25   3.0%  95.0%       25   3.0% _Vec_subtract
+      23   2.7%  97.7%       23   2.7% _Vec_multiply
+      15   1.8%  99.5%       15   1.8% _intersectLines
+       3   0.4%  99.9%        4   0.5% _insert_line
+       1   0.1% 100.0%        1   0.1% 0x00007fff64425e24
+       0   0.0% 100.0%        2   0.2% 0x0000000100006119
+       ...
+       ProfileHandler::SignalHandler
+       0   0.0% 100.0%      843 100.0% _CollisionWorld_detectIntersection
+       0   0.0% 100.0%      843 100.0% _CollisionWorld_updateLines
+       0   0.0% 100.0%      843 100.0% _LineDemo_update
+       0   0.0% 100.0%      843 100.0% __mh_execute_header
+       0   0.0% 100.0%      843 100.0% _main
+
+So it's clear that the collision detection should be made faster!

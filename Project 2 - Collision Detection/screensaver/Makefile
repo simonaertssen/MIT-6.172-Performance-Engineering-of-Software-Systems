@@ -70,6 +70,10 @@ else
   CXXFLAGS += -O3 -DNDEBUG
 endif
 
+ifeq ($(PROFILE),1)
+	LDFLAGS := -g -lprofiler -Wl,-no_pie -fno-omit-frame-pointer -Wl,-export_dynamic $(LDFLAGS)
+endif
+
 
 # By default, make the product.
 all:		$(PRODUCT)

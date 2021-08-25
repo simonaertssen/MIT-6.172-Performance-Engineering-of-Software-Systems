@@ -151,7 +151,7 @@ void insert_line(Line* l, Quadtree* tree) {
                 return;
             }
             // If we reached this point we have a problem...
-            printf("Line id = %u did not fit\n", l->id);
+            assert(0);
         }
     }
 }
@@ -170,7 +170,7 @@ unsigned int count_lines(Quadtree* tree) {
 }
 
 
-void register_collision(Line* l1, Line* l2, IntersectionEventList* intersectionEventList, unsigned int* num_collisions) {
+void register_collision(Line* l1, Line* l2, IntersectionEventList* intersectionEventList) {
     // printf("Comparing l=%u with l=%d\n", l1->id, l2->id);
     if (compareLines(l1, l2) >= 0) {
         // printf("Switching l=%u with l=%d\n", l1->id, l2->id);
@@ -182,46 +182,45 @@ void register_collision(Line* l1, Line* l2, IntersectionEventList* intersectionE
     IntersectionType intersectionType = intersect(l1, l2);
     if (intersectionType != NO_INTERSECTION) {
         IntersectionEventList_appendNode(intersectionEventList, l1, l2, intersectionType);
-        (*num_collisions)++;
     }
 }
 
 
-void detect_collisions(Quadtree* tree, IntersectionEventList* intersectionEventList, unsigned int* num_collisions) {
-    // If there are no children, check this tree
-    if (tree->children == NULL) {
-        Line* l1 = NULL;
-        Line* l2 = NULL;
-        // Check all pairs in the current tree for collisions
+void detect_collisions(Quadtree* tree, IntersectionEventList* intersectionEventList) {
+    assert(tree != NULL);
+
+    Line* l1 = NULL;
+    Line* l2 = NULL;
+    // Check all pairs in the current tree for collisions
+    for (unsigned int i = 0; i < tree->num_lines; i++) {
+        l1 = tree->lines[i];
+        for (unsigned int j = i + 1; j < tree->num_lines; j++) {
+            l2 = tree->lines[j];
+            register_collision(l1, l2, intersectionEventList);
+        }
+    }
+    // Check all pairs in the current tree and its parents for collisions
+    Quadtree* parent = tree;
+    // Go to all possible parents.
+    for (unsigned int d = 0; d < tree->depth; d++) {
+        // Register the parents parent
+        parent = parent->parent;
+        assert(parent != NULL);
+
+        // Mark all lines in this tree...
         for (unsigned int i = 0; i < tree->num_lines; i++) {
             l1 = tree->lines[i];
-            for (unsigned int j = i + 1; j < tree->num_lines; j++) {
-                l2 = tree->lines[j];
-                register_collision(l1, l2, intersectionEventList, num_collisions);
-            }
-        }
-        // Check all pairs in the current tree and its parents for collisions
-        Quadtree* parent = tree;
-        // Go to all possible parents.
-        for (unsigned int d = 0; d < tree->depth; d++) {
-            // Register the parents parent
-            parent = parent->parent;
-            assert(parent != NULL);
-
-            // Mark all lines in this tree...
-            for (unsigned int i = 0; i < tree->num_lines; i++) {
-                l1 = tree->lines[i];
-                // ...versus all lines in the parent...
-                for (unsigned int j = 0; j < parent->num_lines; j++) {
-                    l2 = parent->lines[j];
-                    register_collision(l1, l2, intersectionEventList, num_collisions);
-                }
+            // ...versus all lines in the parent...
+            for (unsigned int j = 0; j < parent->num_lines; j++) {
+                l2 = parent->lines[j];
+                register_collision(l1, l2, intersectionEventList);
             }
         }
     }
-    else {
+    // If there are children, then also check them
+    if (tree->children != NULL) {
         for (unsigned int i = 0; i < QUAD; i++) {
-            detect_collisions(tree->children + i, intersectionEventList, num_collisions);
+            detect_collisions(tree->children + i, intersectionEventList);
         }
     }
 }

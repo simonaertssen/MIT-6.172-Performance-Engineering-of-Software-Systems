@@ -49,10 +49,8 @@ unsigned int count_lines(Quadtree* tree);
 inline bool does_line_fit(Line* line, Quadtree* tree) __attribute__((always_inline));
 
 // Once the tree is filled, compute the collisions
-void register_collision(Line* line1, Line* line2, IntersectionEventList* intersectionEventList,
-    unsigned int* num_collisions);
-void detect_collisions(Quadtree* tree, IntersectionEventList* intersectionEventList,
-    unsigned int* num_collisions);
+void register_collision(Line* line1, Line* line2, IntersectionEventList* intersectionEventList);
+void detect_collisions(Quadtree* tree, IntersectionEventList* intersectionEventList);
 
 
 #endif  // QUADTREE_H_

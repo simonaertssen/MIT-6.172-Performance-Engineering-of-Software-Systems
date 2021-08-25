@@ -139,7 +139,7 @@ void CollisionWorld_detectIntersection(CollisionWorld* collisionWorld) {
   }
   assert(collisionWorld->numOfLines == count_lines(tree));
 
-  detect_collisions(tree, &intersectionEventList, &collisionWorld->numLineLineCollisions);
+  detect_collisions(tree, &intersectionEventList);
   // printf("%u ?= %u\n", collisionWorld->numLineLineCollisions, intersectionEventList.size);
   // assert(collisionWorld->numLineLineCollisions == intersectionEventList.size);
   collisionWorld->numLineLineCollisions += intersectionEventList.size;

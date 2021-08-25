@@ -67,5 +67,9 @@ A simple innovation is to precompute the line lengths and store them in the `Lin
 ## Bounding boxes
 Before computing the line intersections, we should compute whether the bounding boxes of the two lines and their parallellograms overlap. If not, then they are too far away.
 
-
 ## The QuadTree
+We implement the quadtree as a doubly linked data structure, where each node in the tree points to its parent and (if allocated) an array of children. When populating the tree with lines, we first need to fit lines into the existing tree structure. When that buffer becomes too large, we need to create the children and redistribute the lines across the original tree (if that line is too large for one of the children) and the children. 
+
+Checking collisions starts at the tree root, where every line is compared to the other one. Then, we check the lines in each of the children, and each of those is compared to its parents as well. Hence, we can check all lines in the world.
+
+

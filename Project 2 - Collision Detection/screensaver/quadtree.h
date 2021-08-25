@@ -5,7 +5,7 @@
 #include "./intersection_event_list.h"
 
 #define QUAD 4
-#define MAX_DEPTH 4
+#define MAX_DEPTH 2
 #define MAX_LINES 32
 
 typedef struct Quadtree Quadtree;

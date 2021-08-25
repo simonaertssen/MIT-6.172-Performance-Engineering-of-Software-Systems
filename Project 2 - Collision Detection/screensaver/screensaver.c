@@ -94,7 +94,6 @@ int main(int argc, char* argv[]) {
   }
 
   numFrames = atoi(argv[1]);
-  printf("Number of frames = %u\n", numFrames);
 
   if (remaining_args > 1) {
     input_file_path = argv[2];

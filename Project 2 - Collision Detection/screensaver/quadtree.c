@@ -170,7 +170,7 @@ unsigned int count_lines(Quadtree* tree) {
 }
 
 
-void register_collision(Line* l1, Line* l2, IntersectionEventList intersectionEventList, unsigned int* num_collisions) {
+void register_collision(Line* l1, Line* l2, IntersectionEventList* intersectionEventList, unsigned int* num_collisions) {
     // printf("Comparing l=%u with l=%d\n", l1->id, l2->id);
     if (compareLines(l1, l2) >= 0) {
         // printf("Switching l=%u with l=%d\n", l1->id, l2->id);
@@ -181,14 +181,14 @@ void register_collision(Line* l1, Line* l2, IntersectionEventList intersectionEv
 
     IntersectionType intersectionType = intersect(l1, l2);
     if (intersectionType != NO_INTERSECTION) {
-        IntersectionEventList_appendNode(&intersectionEventList, l1, l2,
-            intersectionType);
+        IntersectionEventList_appendNode(intersectionEventList, l1, l2, intersectionType);
         (*num_collisions)++;
+        printf("num_collisions: %u\n", *num_collisions);
     }
 }
 
 
-void detect_collisions(Quadtree* tree, IntersectionEventList intersectionEventList, unsigned int* num_collisions) {
+void detect_collisions(Quadtree* tree, IntersectionEventList* intersectionEventList, unsigned int* num_collisions) {
     // If there are no children, check this tree
     if (tree->children == NULL) {
         Line* l1 = NULL;

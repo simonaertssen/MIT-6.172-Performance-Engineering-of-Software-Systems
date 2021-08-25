@@ -138,7 +138,7 @@ void CollisionWorld_detectIntersection(CollisionWorld* collisionWorld) {
     insert_line(collisionWorld->lines[i], tree);
   }
 
-  detect_collisions(tree, intersectionEventList, &collisionWorld->numLineLineCollisions);
+  detect_collisions(tree, &intersectionEventList, &collisionWorld->numLineLineCollisions);
   // assert(collisionWorld->numOfLines == count_lines(tree));
   // assert(collisionWorld->numLineLineCollisions > 0);
 

@@ -134,15 +134,12 @@ void CollisionWorld_detectIntersection(CollisionWorld* collisionWorld) {
   // Here we need to use a quadtree to increase performance
   Quadtree* tree = make_quadtree(NULL, BOX_XMIN, BOX_YMIN, BOX_XMAX, BOX_YMAX, 0);
 
-  // printf("num lines = %u \n", count_lines(tree));
   for (unsigned int i = 0; i < collisionWorld->numOfLines; i++) {
     insert_line(collisionWorld->lines[i], tree);
-    // printf("Num_lines = %u\n", tree->num_lines); //293
   }
-  // printf("num lines = %u\n", count_lines(tree));
 
   detect_collisions(tree, intersectionEventList, &collisionWorld->numLineLineCollisions);
-  assert(collisionWorld->numOfLines == count_lines(tree));
+  // assert(collisionWorld->numOfLines == count_lines(tree));
   // assert(collisionWorld->numLineLineCollisions > 0);
 
   // Test all line - line pairs to see if they will intersect before the

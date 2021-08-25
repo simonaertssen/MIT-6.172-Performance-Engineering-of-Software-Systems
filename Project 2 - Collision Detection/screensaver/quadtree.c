@@ -112,12 +112,6 @@ inline bool does_line_fit(Line* line, Quadtree* tree) {
         (fmax(line->p1.x, line->p2.x) + line->velocity.x * 0.5 < tree->p2.x) &&
         (fmin(line->p1.y, line->p2.y) + line->velocity.y * 0.5 >= tree->p1.y) &&
         (fmax(line->p1.y, line->p2.y) + line->velocity.y * 0.5 < tree->p2.y);
-
-    // printf("Testing if [%f,%f] in [%f,%f] and [%f,%f] in [%f,%f]: %s\n",
-    //     fmin(line->p1.x, line->p2.x), fmax(line->p1.x, line->p2.x), tree->p1.x, tree->p2.x,
-    //     fmin(line->p1.y, line->p2.y), fmax(line->p1.y, line->p2.y), tree->p1.y, tree->p2.y,
-    //     result ? "true" : "false");
-    // return result;
 }
 
 
@@ -133,7 +127,6 @@ void insert_line(Line* l, Quadtree* tree) {
         // Add the line if there is enough capacity
         if (tree->num_lines < tree->capacity) {
             tree->lines[tree->num_lines++] = l;
-            printf("Line insert id = %u\n", l->id);
             return;
         }
 
@@ -155,7 +148,6 @@ void insert_line(Line* l, Quadtree* tree) {
             // Add the line if there is enough capacity
             if (tree->num_lines < tree->capacity) {
                 tree->lines[tree->num_lines++] = l;
-                printf("Line insert id = %u\n", l->id);
                 return;
             }
             // If we reached this point we have a problem...
@@ -179,7 +171,9 @@ unsigned int count_lines(Quadtree* tree) {
 
 
 void register_collision(Line* l1, Line* l2, IntersectionEventList intersectionEventList, unsigned int* num_collisions) {
+    // printf("Comparing l=%u with l=%d\n", l1->id, l2->id);
     if (compareLines(l1, l2) >= 0) {
+        // printf("Switching l=%u with l=%d\n", l1->id, l2->id);
         Line* temp = l1;
         l1 = l2;
         l2 = temp;
@@ -216,7 +210,7 @@ void detect_collisions(Quadtree* tree, IntersectionEventList intersectionEventLi
                 l1 = tree->lines[i];
                 // ...versus all lines in the parent...
                 for (unsigned int j = 0; j < parent->num_lines; j++) {
-                    l2 = tree->lines[j];
+                    l2 = parent->lines[j];
                     register_collision(l1, l2, intersectionEventList, num_collisions);
                 }
             }

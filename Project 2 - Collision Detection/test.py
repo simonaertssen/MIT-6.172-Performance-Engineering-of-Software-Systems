@@ -73,7 +73,7 @@ def run_binary(binary, frames, input_file):
             print("Found more than 4 integers in this output.")
             numbers = numbers[0:4]
         done_testing = True
-    _, exc_time, l_w_coll, l_l_coll = numbers  # Drop the frame number
+    exc_time, l_w_coll, l_l_coll = numbers
     return float(exc_time), int(l_w_coll), int(l_l_coll)
 
 

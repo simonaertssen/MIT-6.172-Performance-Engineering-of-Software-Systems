@@ -21,6 +21,7 @@ Quadtree initialise_quadtree(Quadtree* parent, double x_min, double y_min, doubl
     return new_tree;
 }
 
+
 // Create a new quadtree
 Quadtree* make_quadtree(Quadtree* parent, double x_min, double y_min, double x_max, double y_max, unsigned int depth) {
     Quadtree* tree = (Quadtree*)malloc(sizeof(Quadtree));
@@ -48,11 +49,38 @@ void allocate_children(Quadtree* tree) {
         // printf("Grid[%d,%d]: x = [%f, %f], y = [%f, %f]\n", (i / 2), (i % 2), minx, maxx, miny, maxy);
         tree->children[i] = initialise_quadtree(tree, minx, miny, maxx, maxy, tree->depth + 1);
     }
+
+    // Now reassign lines in the parent tree to the children. Use line position to find which child fits. 
+    // If a line does not fit in the children, we need to put it back into the buffer of the parent.
+    unsigned int num_lines = tree->num_lines;
+    Line** all_lines = (Line**)malloc(sizeof(Line*) * num_lines);
+    for (unsigned int i = 0; i < num_lines; i++) {
+        all_lines[i] = tree->lines[i];
+        tree->lines[i] = NULL;
+    }
+    tree->num_lines = 0;
+
+    // Now insert the lines back into the tree and its children.
+    for (unsigned int i = 0; i < num_lines; i++) {
+        insert_line(all_lines[i], tree->children);
+    }
+    // Empty the parent tree lines, as all lines are now distributed
+    free(all_lines);
 }
 
-void double_linebuffer(Quadtree* tree) {
 
+void make_space_for_more_lines(Quadtree* tree) {
+    // If we reached deep into the tree but there is no more space for a line, 
+    // allocate more memory by doubling the capacity.
+    int times = 2;
+    Line** tmp = (Line**)realloc(tree->lines, sizeof(Line*) * tree->capacity * times);
+    if (tmp == NULL) free(tmp);
+    else {
+        tree->lines = tmp;
+        tree->capacity *= times;
+    }
 }
+
 
 void destroy_quadtree(Quadtree* tree) {
     // Check if children are allocated:
@@ -97,16 +125,10 @@ inline bool does_line_fit(Line* line, Quadtree* tree) {
 void insert_line(Line* l, Quadtree* tree) {
     // If we have no children, then save the line in level of the quadtree.
     if (tree->children == NULL) {
-        // If we reached deep into the tree but there is no more space for a line, 
-        // allocate more memory by doubling the capacity.
-        if (tree->depth == MAX_DEPTH && tree->num_lines >= tree->capacity) {
-            Line** tmp = (Line**)realloc(tree->lines, sizeof(Line*) * tree->capacity * 2);
-            if (tmp == NULL) free(tmp);
-            else {
-                tree->lines = tmp;
-                tree->capacity *= 2;
-            }
-        }
+
+        // Do we need some more space for lines?
+        if (tree->depth == MAX_DEPTH && tree->num_lines >= tree->capacity)
+            make_space_for_more_lines(tree);
 
         // Add the line if there is enough capacity
         if (tree->num_lines < tree->capacity) {
@@ -116,27 +138,11 @@ void insert_line(Line* l, Quadtree* tree) {
         }
 
         // If we reach this point, then we have are not at the maximum depth and there is no space for lines,
-        // so we need to allocate children of the tree.
+        // so we need to allocate children of the tree and fill them with lines.
         allocate_children(tree);
-        // Now reassign lines in the parent tree to the children. Use line position to find which child fits. 
-        // Just try and fit for now, an optimisation would be to compute the index of the quadrant.
-        for (unsigned int i = 0; i < tree->num_lines; i++) {
-            for (unsigned int j = 0; j < QUAD; j++) {
-                if (does_line_fit(tree->lines[i], tree->children + j)) {
-                    insert_line(tree->lines[i], tree->children + j);
-                    // tree->lines[i] = NULL;
-                    break;
-                }
-                if (j == QUAD - 1) printf("Line id = %u was not redistributed\n", tree->lines[i]->id);
-            }
-        }
-        // Empty the parent tree lines, as all lines are now distributed
-        // free(tree->lines);
-        tree->num_lines = 0;
-        tree->capacity = 0;
     }
 
-    // If we do have children, then save the line l in the correct child.
+    // If we do have children (perhaps they were just allocated), then save the line l in the correct child.
     if (tree->children != NULL) {
         // Now add the line to the right child
         for (unsigned int j = 0; j < QUAD; j++) {
@@ -144,10 +150,20 @@ void insert_line(Line* l, Quadtree* tree) {
                 insert_line(l, tree->children + j);
                 return;
             }
-            if (j == QUAD - 1)  printf("Line id = %u did not fit\n", l->id);
+            // The line does not fit any of the children. Do we need some more space for lines?
+            if (tree->num_lines >= tree->capacity) make_space_for_more_lines(tree);
+            // Add the line if there is enough capacity
+            if (tree->num_lines < tree->capacity) {
+                tree->lines[tree->num_lines++] = l;
+                printf("Line insert id = %u\n", l->id);
+                return;
+            }
+            // If we reached this point we have a problem...
+            printf("Line id = %u did not fit\n", l->id);
         }
     }
 }
+
 
 unsigned int count_lines(Quadtree* tree) {
     if (tree->children == NULL) {
@@ -158,7 +174,7 @@ unsigned int count_lines(Quadtree* tree) {
     for (unsigned int j = 0; j < QUAD; j++) {
         num_lines += count_lines(tree->children + j);
     }
-    return num_lines;
+    return num_lines + tree->num_lines;
 }
 
 

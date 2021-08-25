@@ -26,6 +26,7 @@
 
 #include "./line.h"
 #include "./intersection_detection.h"
+#include "./intersection_event_list.h"
 
 #define TIME_STEP 0.5
 
@@ -73,6 +74,8 @@ void CollisionWorld_lineWallCollision(CollisionWorld* collisionWorld);
 
 // Detect line-line intersection.
 void CollisionWorld_detectIntersection(CollisionWorld* collisionWorld);
+void detect_collisions_naive(CollisionWorld* collisionWorld, IntersectionEventList* intersectionEventList);
+void detect_collisions_quadtree(CollisionWorld* collisionWorld, IntersectionEventList* intersectionEventList);
 
 // Get total number of line-wall collisions.
 unsigned int CollisionWorld_getNumLineWallCollisions(

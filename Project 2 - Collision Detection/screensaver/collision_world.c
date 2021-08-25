@@ -130,18 +130,11 @@ void CollisionWorld_lineWallCollision(CollisionWorld* collisionWorld) {
 
 void CollisionWorld_detectIntersection(CollisionWorld* collisionWorld) {
   IntersectionEventList intersectionEventList = IntersectionEventList_make();
+  // Naive detection  
+  // detect_collisions_naive(collisionWorld, &intersectionEventList);
 
-  // Here we need to use a quadtree to increase performance
-  Quadtree* tree = make_quadtree(NULL, BOX_XMIN, BOX_YMIN, BOX_XMAX, BOX_YMAX, 0);
-
-  for (unsigned int i = 0; i < collisionWorld->numOfLines; i++) {
-    insert_line(collisionWorld->lines[i], tree);
-  }
-  assert(collisionWorld->numOfLines == count_lines(tree));
-
-  detect_collisions(tree, &intersectionEventList);
-  collisionWorld->numLineLineCollisions += intersectionEventList.size;
-  destroy_quadtree(tree);
+  // Fast quadtree detection
+  detect_collisions_quadtree(collisionWorld, &intersectionEventList);
 
   // Sort the intersection event list.
   IntersectionEventNode* startNode = intersectionEventList.head;
@@ -171,6 +164,48 @@ void CollisionWorld_detectIntersection(CollisionWorld* collisionWorld) {
 
   IntersectionEventList_deleteNodes(&intersectionEventList);
 }
+
+void detect_collisions_naive(CollisionWorld* collisionWorld, IntersectionEventList* intersectionEventList) {
+  // Test all line - line pairs to see if they will intersect before the
+  // next time step.
+  for (unsigned int i = 0; i < collisionWorld->numOfLines; i++) {
+    Line* l1 = collisionWorld->lines[i];
+
+    for (unsigned int j = i + 1; j < collisionWorld->numOfLines; j++) {
+      Line* l2 = collisionWorld->lines[j];
+
+      // intersect expects compareLines(l1, l2) < 0 to be true.
+      // Swap l1 and l2, if necessary.
+      if (compareLines(l1, l2) >= 0) {
+        Line* temp = l1;
+        l1 = l2;
+        l2 = temp;
+      }
+
+      IntersectionType intersectionType = intersect(l1, l2);
+      if (intersectionType != NO_INTERSECTION) {
+        IntersectionEventList_appendNode(intersectionEventList, l1, l2,
+          intersectionType);
+        collisionWorld->numLineLineCollisions++;
+      }
+    }
+  }
+}
+
+void detect_collisions_quadtree(CollisionWorld* collisionWorld, IntersectionEventList* intersectionEventList) {
+  // Here we need to use a quadtree to increase performance
+  Quadtree* tree = make_quadtree(NULL, BOX_XMIN, BOX_YMIN, BOX_XMAX, BOX_YMAX, 0);
+
+  for (unsigned int i = 0; i < collisionWorld->numOfLines; i++) {
+    insert_line(collisionWorld->lines[i], tree);
+  }
+  assert(collisionWorld->numOfLines == count_lines(tree));
+
+  detect_collisions(tree, intersectionEventList);
+  collisionWorld->numLineLineCollisions += intersectionEventList->size;
+  destroy_quadtree(tree);
+}
+
 
 unsigned int CollisionWorld_getNumLineWallCollisions(
   CollisionWorld* collisionWorld) {

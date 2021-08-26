@@ -192,6 +192,13 @@ void detect_collisions(Quadtree* restrict tree, IntersectionEventList* restrict 
         }
     }
 
+    // If there are children, then also check them
+    if (tree->children != NULL) {
+        for (uint8_t c = 0; c < QUAD; c++) {
+            detect_collisions(tree->children + c, intersectionEventList);
+        }
+    }
+
     // Check all pairs in the current tree and its parents for collisions
     Quadtree* parent = tree;
     // Go to all possible parents.
@@ -208,12 +215,6 @@ void detect_collisions(Quadtree* restrict tree, IntersectionEventList* restrict 
                 l2 = parent->lines[j];
                 register_collision(l1, l2, intersectionEventList);
             }
-        }
-    }
-    // If there are children, then also check them
-    if (tree->children != NULL) {
-        for (uint8_t c = 0; c < QUAD; c++) {
-            detect_collisions(tree->children + c, intersectionEventList);
         }
     }
 }

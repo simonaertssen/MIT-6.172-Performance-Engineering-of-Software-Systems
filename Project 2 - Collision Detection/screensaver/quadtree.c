@@ -45,41 +45,46 @@ Quadtree** make_quadtree(Quadtree* parent, double x, double y, float width, uint
 }
 
 
-void allocate_children(Quadtree* tree) {
-    tree->children = (Quadtree*)malloc(sizeof(Quadtree) * QUAD);
+void allocate_children(Quadtree* branch, Quadtree** tree, uint16_t* num_branches) {
+    branch->children = (Quadtree*)malloc(sizeof(Quadtree) * QUAD);
     // Compute half the distance between the bounds and either add or subtract that.
-    double x, y, width = tree->width * 0.5;
+    double x, y, width = branch->width * 0.5;
     uint8_t diffx, diffy;
+
+    Quadtree* child = NULL;
     for (uint8_t c = 0; c < QUAD; ++c) {
         diffx = c / 2 == 1 ? -1 : 1;
-        x = tree->center.x - diffx * width;
+        x = branch->center.x - diffx * width;
         diffy = c % 2 == 1 ? -1 : 1;
-        y = tree->center.y - diffy * width;
-        tree->children[c] = initialise_quadbranch(tree, x, y, width, tree->depth + 1);
+        y = branch->center.y - diffy * width;
+
+        child = make_quadbranch(branch, x, y, width, branch->depth + 1);
+        branch->children[c] = *child;
+        tree[(*num_branches)++] = child;
     }
 
     // Now reassign lines in the parent tree to the children. Use line position to find which child fits. 
     // If a line does not fit in the children, we need to put it back into the buffer of the parent.
-    uint16_t num_lines = tree->num_lines;
-    tree->num_lines = 0;
+    uint16_t num_lines = branch->num_lines;
+    branch->num_lines = 0;
 
     // Now insert the lines back into the tree and its children.
     for (uint16_t i = 0; i < num_lines; i++) {
-        insert_line(tree->lines[i], tree->children);
-        tree->lines[i] = NULL;
+        insert_line(branch->lines[i], branch->children, tree, num_branches);
+        branch->lines[i] = NULL;
     }
 }
 
 
-inline void make_space_for_more_lines(Quadtree* tree) {
+inline void make_space_for_more_lines(Quadtree* branch) {
     // If we reached deep into the tree but there is no more space for a line, 
     // allocate more memory by doubling the capacity.
     float times = 1.5;
-    Line** tmp = (Line**)realloc(tree->lines, sizeof(Line*) * (uint16_t)(tree->capacity * times));
+    Line** tmp = (Line**)realloc(branch->lines, sizeof(Line*) * (uint16_t)(branch->capacity * times));
     if (tmp == NULL) free(tmp);
     else {
-        tree->lines = tmp;
-        tree->capacity *= times;
+        branch->lines = tmp;
+        branch->capacity *= times;
     }
 }
 
@@ -103,17 +108,17 @@ void destroy_quadtree(Quadtree** tree, uint16_t* num_branches) {
 }
 
 
-inline bool does_line_fit(Line* restrict line, Quadtree* restrict tree) {
+inline bool does_line_fit(Line* restrict line, Quadtree* branch) {
     return
-        (fmin(line->p1.x, line->p2.x) >= tree->center.x - tree->width) &&
-        (fmax(line->p1.x, line->p2.x) < tree->center.x + tree->width) &&
-        (fmin(line->p1.y, line->p2.y) >= tree->center.y - tree->width) &&
-        (fmax(line->p1.y, line->p2.y) < tree->center.y + tree->width) &&
+        (fmin(line->p1.x, line->p2.x) >= branch->center.x - branch->width) &&
+        (fmax(line->p1.x, line->p2.x) < branch->center.x + branch->width) &&
+        (fmin(line->p1.y, line->p2.y) >= branch->center.y - branch->width) &&
+        (fmax(line->p1.y, line->p2.y) < branch->center.y + branch->width) &&
         // check line at end of time step of 0.5 (from collisionworld)
-        (fmin(line->p1.x, line->p2.x) + line->velocity.x * 0.5 >= tree->center.x - tree->width) &&
-        (fmax(line->p1.x, line->p2.x) + line->velocity.x * 0.5 < tree->center.x + tree->width) &&
-        (fmin(line->p1.y, line->p2.y) + line->velocity.y * 0.5 >= tree->center.y - tree->width) &&
-        (fmax(line->p1.y, line->p2.y) + line->velocity.y * 0.5 < tree->center.y + tree->width);
+        (fmin(line->p1.x, line->p2.x) + line->velocity.x * 0.5 >= branch->center.x - branch->width) &&
+        (fmax(line->p1.x, line->p2.x) + line->velocity.x * 0.5 < branch->center.x + branch->width) &&
+        (fmin(line->p1.y, line->p2.y) + line->velocity.y * 0.5 >= branch->center.y - branch->width) &&
+        (fmax(line->p1.y, line->p2.y) + line->velocity.y * 0.5 < branch->center.y + branch->width);
 }
 
 
@@ -128,7 +133,7 @@ void insert_line(Line* l, Quadtree* branch, Quadtree** tree, uint16_t* num_branc
     if (branch->children == NULL) {
 
         // Do we need some more space for lines?
-        if (trbranchee->depth == MAX_DEPTH && branch->num_lines >= branch->capacity)
+        if (branch->depth == MAX_DEPTH && branch->num_lines >= branch->capacity)
             make_space_for_more_lines(branch);
 
         // Add the line if there is enough capacity
@@ -139,15 +144,15 @@ void insert_line(Line* l, Quadtree* branch, Quadtree** tree, uint16_t* num_branc
 
         // If we reach this point, then we have are not at the maximum depth and there is no space for lines,
         // so we need to allocate children of the branch and fill them with lines.
-        allocate_children(branch);
+        allocate_children(branch, tree, num_branches);
     }
 
     // If we do have children (perhaps they were just allocated), then save the line l in the correct child.
     if (branch->children != NULL) {
         // Now add the line to the right child
         for (uint8_t j = 0; j < QUAD; j++) {
-            if (does_line_fit(l, branch->children[j])) {
-                insert_line(l, branch->children[j], tree, num_branches);
+            if (does_line_fit(l, branch->children + j)) {
+                insert_line(l, branch->children + j, tree, num_branches);
                 return;
             }
             // The line does not fit any of the children. Do we need some more space for lines?
@@ -197,40 +202,40 @@ inline void register_collision(Line* restrict l1, Line* restrict l2, Intersectio
 }
 
 
-void detect_collisions(Quadtree* restrict tree, IntersectionEventList* restrict intersectionEventList) {
-    assert(tree != NULL);
+void detect_collisions(Quadtree* branch, IntersectionEventList* restrict intersectionEventList) {
+    assert(branch != NULL);
 
     Line* l1 = NULL;
     Line* l2 = NULL;
 
     uint16_t d, i, j;
-    // Check all pairs in the current tree for collisions
-    for (i = 0; i < tree->num_lines; i++) {
-        l1 = tree->lines[i];
-        for (j = i + 1; j < tree->num_lines; j++) {
-            l2 = tree->lines[j];
+    // Check all pairs in the current branch for collisions
+    for (i = 0; i < branch->num_lines; i++) {
+        l1 = branch->lines[i];
+        for (j = i + 1; j < branch->num_lines; j++) {
+            l2 = branch->lines[j];
             register_collision(l1, l2, intersectionEventList);
         }
     }
 
     // If there are children, then also check them
-    if (tree->children != NULL) {
+    if (branch->children != NULL) {
         for (uint8_t c = 0; c < QUAD; c++) {
-            detect_collisions(tree->children + c, intersectionEventList);
+            detect_collisions(branch->children + c, intersectionEventList);
         }
     }
 
-    // Check all pairs in the current tree and its parents for collisions
-    Quadtree* parent = tree;
+    // Check all pairs in the current branch and its parents for collisions
+    Quadtree* parent = branch;
     // Go to all possible parents.
-    for (d = 0; d < tree->depth; d++) {
+    for (d = 0; d < branch->depth; d++) {
         // Register the parents parent
         parent = parent->parent;
         if (parent == NULL) return;
 
-        // Mark all lines in this tree...
-        for (i = 0; i < tree->num_lines; i++) {
-            l1 = tree->lines[i];
+        // Mark all lines in this branch...
+        for (i = 0; i < branch->num_lines; i++) {
+            l1 = branch->lines[i];
             // ...versus all lines in the parent...
             for (j = 0; j < parent->num_lines; j++) {
                 l2 = parent->lines[j];

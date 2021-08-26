@@ -40,8 +40,8 @@ Quadtree** make_quadtree(Quadtree* parent, double x, double y, float width, uint
 Quadtree initialise_quadbranch(Quadtree* parent, double x, double y, float width, uint8_t depth);
 Quadtree* make_quadbranch(Quadtree* parent, double x, double y, float width, uint8_t depth);
 
-static inline void allocate_children(Quadtree* tree) __attribute__((always_inline));
-static inline void make_space_for_more_lines(Quadtree* tree) __attribute__((always_inline));
+void allocate_children(Quadtree* branch, Quadtree** tree, uint16_t* num_branches);
+void make_space_for_more_lines(Quadtree* branch);
 void destroy_quadtree(Quadtree** tree, uint16_t* num_branches);
 
 // Inserts a line into a quadtree
@@ -49,11 +49,11 @@ void insert_line(Line* l, Quadtree* branch, Quadtree** tree, uint16_t* num_branc
 unsigned int count_lines(Quadtree** tree, uint16_t* num_branches);
 
 // Test if line fits the current quadtree
-static inline bool does_line_fit(Line* restrict line, Quadtree* tree) __attribute__((always_inline));
+static inline bool does_line_fit(Line* restrict line, Quadtree* branch) __attribute__((always_inline));
 
 // Once the tree is filled, compute the collisions
 static inline void register_collision(Line* restrict line1, Line* restrict line2, IntersectionEventList* intersectionEventList) __attribute__((always_inline));
-void detect_collisions(Quadtree* tree, IntersectionEventList* restrict intersectionEventList);
+void detect_collisions(Quadtree* branch, IntersectionEventList* restrict intersectionEventList);
 
 
 #endif  // QUADTREE_H_

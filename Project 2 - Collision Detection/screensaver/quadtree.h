@@ -4,8 +4,10 @@
 #include "./line.h"
 #include "./intersection_event_list.h"
 
+#include <stdint.h>
+
 #define QUAD 4
-#define MAX_DEPTH 4
+#define MAX_DEPTH 8
 #define MAX_LINES 16
 
 typedef struct Quadtree Quadtree;
@@ -24,25 +26,25 @@ struct Quadtree {
     Vec center;
     float width;
 
-    short num_lines; // Number of lines in the array
-    short capacity; // Number of lines the array can hold
+    uint16_t num_lines; // Number of lines in the array
+    uint16_t capacity; // Number of lines the array can hold
 
     // Depth of the quadtree
-    short depth;
+    uint8_t depth;
 };
 
 // Initialise a quadtree structure
-Quadtree initialise_quadtree(Quadtree* parent, double x, double y, float width, short depth);
+Quadtree initialise_quadtree(Quadtree* parent, double x, double y, float width, uint8_t depth);
 
 // Create a new quadtree
-Quadtree* make_quadtree(Quadtree* parent, double x, double y, float width, short depth);
+Quadtree* make_quadtree(Quadtree* parent, double x, double y, float width, uint8_t depth);
 static inline void allocate_children(Quadtree* restrict tree) __attribute__((always_inline));
 static inline void make_space_for_more_lines(Quadtree* restrict tree) __attribute__((always_inline));;
 void destroy_quadtree(Quadtree* restrict tree);
 
 // Inserts a line into a quadtree
 void insert_line(Line* restrict l, Quadtree* restrict tree);
-unsigned int count_lines(Quadtree* restrict tree);
+uint16_t count_lines(Quadtree* restrict tree);
 
 // Test if line fits the current quadtree
 static inline bool does_line_fit(Line* restrict line, Quadtree* restrict tree) __attribute__((always_inline));

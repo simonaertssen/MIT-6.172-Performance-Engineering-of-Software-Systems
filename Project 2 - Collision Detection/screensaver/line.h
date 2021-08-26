@@ -27,6 +27,8 @@
 #include "./graphic_stuff.h"
 #include "./vec.h"
 
+#include <stdint.h>
+
 // Lines' coordinates are stored in a box with these bounds
 // We choose box coordinates in [.5, 1) to simulate fixed
 // point floating point accuracy to mitigate issues with
@@ -60,7 +62,7 @@ struct Line {
 
   float len;  // The line length
 
-  unsigned int id;  // Unique line ID.
+  uint16_t id;  // Unique line ID.
 };
 typedef struct Line Line;
 

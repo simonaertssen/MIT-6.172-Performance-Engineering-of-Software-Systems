@@ -11,22 +11,28 @@
 
 
 // Initialise a quadtree structure
-Quadtree initialise_quadtree(Quadtree* parent, double x_min, double y_min, double x_max, double y_max, unsigned int depth) {
+Quadtree initialise_quadtree(double x_min, double y_min, double x_max, double y_max, unsigned int depth, unsigned int height) {
     Quadtree new_tree = {
-        .parent = parent, .children = NULL,
-        .lines = (Line**)malloc(sizeof(Line*) * MAX_LINES),
-        .num_lines = 0, .capacity = MAX_LINES, .depth = depth,
-        .p1 = {.x = x_min, .y = y_min }, .p2 = {.x = x_max, .y = y_max }
+        .children = NULL, .lines = (Line**)malloc(sizeof(Line*) * MAX_LINES),
+        .num_lines = 0, .capacity = MAX_LINES,
+        .p1 = {.x = x_min, .y = y_min }, .p2 = {.x = x_max, .y = y_max },
+        .depth = depth, .height = 0
     };
     return new_tree;
 }
 
+void print_quadtree(Quadtree* tree) {
+    printf("Tree: children = %s, num_lines = %u, capacity = %u, depth = %u, height = %u\n",
+        tree->children == NULL ? "true" : "false",
+        tree->num_lines, tree->capacity, tree->depth, tree->height);
+}
+
 
 // Create a new quadtree
-Quadtree* make_quadtree(Quadtree* parent, double x_min, double y_min, double x_max, double y_max, unsigned int depth) {
+Quadtree* make_quadtree(double x_min, double y_min, double x_max, double y_max, unsigned int depth, unsigned int height) {
     Quadtree* tree = (Quadtree*)malloc(sizeof(Quadtree));
     if (tree == NULL) return NULL;
-    *tree = initialise_quadtree(parent, x_min, y_min, x_max, y_max, depth);
+    *tree = initialise_quadtree(x_min, y_min, x_max, y_max, depth, height);
     return tree;
 }
 
@@ -48,7 +54,7 @@ void allocate_children(Quadtree* tree) {
         maxy = tree->p2.y - (double)(!row) * diffy;
 
         // printf("Grid[%d,%d]: x = [%f, %f], y = [%f, %f]\n", (i / 2), (i % 2), minx, maxx, miny, maxy);
-        tree->children[i] = initialise_quadtree(tree, minx, miny, maxx, maxy, tree->depth + 1);
+        tree->children[i] = initialise_quadtree(minx, miny, maxx, maxy, tree->depth + 1, tree->height - 1);
     }
 
     // Now reassign lines in the parent tree to the children. Use line position to find which child fits. 
@@ -182,7 +188,7 @@ void detect_collisions(Quadtree* restrict tree, IntersectionEventList* restrict 
     Line* l1 = NULL;
     Line* l2 = NULL;
 
-    unsigned c, i, j;
+    unsigned c, h, i, j;
     // Check all pairs in the current tree for collisions
     for (i = 0; i < tree->num_lines; i++) {
         l1 = tree->lines[i];
@@ -210,22 +216,51 @@ void detect_collisions(Quadtree* restrict tree, IntersectionEventList* restrict 
     //     }
     // }
 
+    printf("Height h = %d", tree->height);
+
     // If there are children, then also check them
-    if (tree->children != NULL) {
-        Quadtree* child = NULL;
+    if (tree->children == NULL) return;
+    Quadtree* parent = tree;
+    Quadtree* child = NULL;
+    // Go to all possible offspring.
+    for (h = 0; h < parent->height; h++) {
+        printf("Height h = %d", parent->height);
+        // Go to the four direct children of the parent.
         for (c = 0; c < QUAD; c++) {
-            child = tree->children + c;
-            // Mark all lines in this child...
+            child = parent->children + c;
+            // Mark all lines in this tree...
             for (i = 0; i < child->num_lines; i++) {
                 l1 = child->lines[i];
                 // ...versus all lines in the parent...
-                for (j = 0; j < tree->num_lines; j++) {
-                    l2 = tree->lines[j];
+                for (j = 0; j < parent->num_lines; j++) {
+                    l2 = parent->lines[j];
                     register_collision(l1, l2, intersectionEventList);
                 }
             }
             // Now check the child itself, and its own children
-            detect_collisions(tree->children + c, intersectionEventList);
+            detect_collisions(child, intersectionEventList);
         }
+        parent = parent->children;
+        if (parent == NULL) break;
     }
+
+    // If there are children, then also check them
+    // if (tree->children == NULL) return;
+    // Quadtree* child = NULL;
+
+    // for (c = 0; c < QUAD; c++) {
+    //     child = tree->children + c;
+    //     // Mark all lines in this child...
+    //     for (i = 0; i < child->num_lines; i++) {
+    //         l1 = child->lines[i];
+    //         // ...versus all lines in its parent...
+    //         for (j = 0; j < tree->num_lines; j++) {
+    //             l2 = tree->lines[j];
+    //             register_collision(l1, l2, intersectionEventList);
+    //         }
+    //     }
+    //     // Now check the child itself, and its own children
+    //     detect_collisions(child, intersectionEventList);
+    // }
+
 }

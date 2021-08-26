@@ -11,28 +11,28 @@
 
 
 // Initialise a quadtree structure
-Quadtree initialise_quadtree(double x_min, double y_min, double x_max, double y_max, unsigned int depth, unsigned int height) {
+Quadtree initialise_quadtree(double x_min, double y_min, double x_max, double y_max, unsigned int depth) {
     Quadtree new_tree = {
         .children = NULL, .lines = (Line**)malloc(sizeof(Line*) * MAX_LINES),
         .num_lines = 0, .capacity = MAX_LINES,
         .p1 = {.x = x_min, .y = y_min }, .p2 = {.x = x_max, .y = y_max },
-        .depth = depth, .height = 0
+        .depth = depth
     };
     return new_tree;
 }
 
 void print_quadtree(Quadtree* tree) {
-    printf("Tree: children = %s, num_lines = %u, capacity = %u, depth = %u, height = %u\n",
+    printf("Tree: children = %s, num_lines = %u, capacity = %u, depth = %u\n",
         tree->children == NULL ? "true" : "false",
-        tree->num_lines, tree->capacity, tree->depth, tree->height);
+        tree->num_lines, tree->capacity, tree->depth);
 }
 
 
 // Create a new quadtree
-Quadtree* make_quadtree(double x_min, double y_min, double x_max, double y_max, unsigned int depth, unsigned int height) {
+Quadtree* make_quadtree(double x_min, double y_min, double x_max, double y_max, unsigned int depth) {
     Quadtree* tree = (Quadtree*)malloc(sizeof(Quadtree));
     if (tree == NULL) return NULL;
-    *tree = initialise_quadtree(x_min, y_min, x_max, y_max, depth, height);
+    *tree = initialise_quadtree(x_min, y_min, x_max, y_max, depth);
     return tree;
 }
 
@@ -54,7 +54,7 @@ void allocate_children(Quadtree* tree) {
         maxy = tree->p2.y - (double)(!row) * diffy;
 
         // printf("Grid[%d,%d]: x = [%f, %f], y = [%f, %f]\n", (i / 2), (i % 2), minx, maxx, miny, maxy);
-        tree->children[i] = initialise_quadtree(minx, miny, maxx, maxy, tree->depth + 1, tree->height - 1);
+        tree->children[i] = initialise_quadtree(minx, miny, maxx, maxy, tree->depth + 1);
     }
 
     // Now reassign lines in the parent tree to the children. Use line position to find which child fits. 

@@ -10,6 +10,7 @@
 #include <assert.h>
 #include <stdint.h>
 
+#include "omp.h"
 
 // Initialise a quadtree structure
 Quadtree initialise_quadtree(Quadtree* parent, double x, double y, float width, uint8_t depth) {
@@ -39,7 +40,10 @@ void allocate_children(Quadtree* tree) {
     // Compute half the distance between the bounds and either add or subtract that.
     double x, y, width = tree->width * 0.5;
     uint8_t diffx, diffy;
-    for (uint8_t c = 0; c < QUAD; ++c) {
+
+    uint8_t c;
+    #pragma omp parallel for private(c) num_threads(QUAD) schedule(static)
+    for (c = 0; c < QUAD; ++c) {
         diffx = c / 2 == 1 ? -1 : 1;
         x = tree->center.x - diffx * width;
         diffy = c % 2 == 1 ? -1 : 1;
@@ -77,8 +81,10 @@ void destroy_quadtree(Quadtree* tree) {
     // Check if children are allocated:
     if (tree->children != NULL) {
         // Destroy recursively
-        for (uint8_t i = 0; i < QUAD; i++) {
-            destroy_quadtree(tree->children + i);
+        uint8_t c;
+        #pragma omp parallel for private(c) num_threads(QUAD) schedule(static)
+        for (c = 0; c < QUAD; c++) {
+            destroy_quadtree(tree->children + c);
         }
         // Free the tree
         free(tree->children);
@@ -155,8 +161,10 @@ uint16_t count_lines(Quadtree* tree) {
     }
 
     uint16_t num_lines = 0;
-    for (uint8_t j = 0; j < QUAD; j++) {
-        num_lines += count_lines(tree->children + j);
+    uint8_t c;
+    #pragma omp parallel for private(c) num_threads(QUAD) schedule(static)
+    for (c = 0; c < QUAD; c++) {
+        num_lines += count_lines(tree->children + c);
     }
     return num_lines + tree->num_lines;
 }
@@ -184,6 +192,7 @@ void detect_collisions(Quadtree* restrict tree, IntersectionEventList* restrict 
 
     uint16_t d, i, j;
     // Check all pairs in the current tree for collisions
+    // #pragma omp parallel for private(i) num_threads(QUAD)
     for (i = 0; i < tree->num_lines; i++) {
         l1 = tree->lines[i];
         for (j = i + 1; j < tree->num_lines; j++) {
@@ -194,7 +203,9 @@ void detect_collisions(Quadtree* restrict tree, IntersectionEventList* restrict 
 
     // If there are children, then also check them
     if (tree->children != NULL) {
-        for (uint8_t c = 0; c < QUAD; c++) {
+        uint8_t c;
+        #pragma omp parallel for private(c) num_threads(QUAD)
+        for (c = 0; c < QUAD; c++) {
             detect_collisions(tree->children + c, intersectionEventList);
         }
     }
@@ -202,10 +213,13 @@ void detect_collisions(Quadtree* restrict tree, IntersectionEventList* restrict 
     // Check all pairs in the current tree and its parents for collisions
     Quadtree* parent = tree;
     // Go to all possible parents.
+    #pragma omp parallel for private(d) num_threads(QUAD) schedule(static)
     for (d = 0; d < tree->depth; d++) {
         // Register the parents parent
         parent = parent->parent;
-        if (parent == NULL) return;
+        if (parent == NULL) {
+            #pragma omp cancel for
+        }
 
         // Mark all lines in this tree...
         for (i = 0; i < tree->num_lines; i++) {

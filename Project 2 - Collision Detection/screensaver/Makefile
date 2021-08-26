@@ -57,7 +57,7 @@ CXX = clang
 CXXFLAGS = -std=gnu99 -Wall -Wno-unused-variable #-ftapir
 LDFLAGS = -lm -flto #-lrt -lcilkrts -lto 
 
-include ./cilkutils.mk
+# include ./cilkutils.mk
 
 # Determine which profile--debug or release--we should build against, and set
 # CFLAGS appropriately.
@@ -74,6 +74,10 @@ ifeq ($(PROFILE),1)
 	LDFLAGS := -g -lprofiler -Wl,-no_pie -fno-omit-frame-pointer -Wl,-export_dynamic $(LDFLAGS)
 endif
 
+ifeq ($(PARALLEL), 1)
+	CXXFLAGS += -Xpreprocessor -fopenmp
+	LDFLAGS += -lomp
+endif
 
 # By default, make the product.
 all:		$(PRODUCT)

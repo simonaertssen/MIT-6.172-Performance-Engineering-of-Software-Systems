@@ -11,8 +11,8 @@
 #include <stdint.h>
 
 
-// Initialise a quadtree structure
-Quadtree initialise_quadtree(Quadtree* parent, double x, double y, float width, uint8_t depth) {
+// Initialise a branch structure
+Quadtree initialise_quadbranch(Quadtree* parent, double x, double y, float width, uint8_t depth) {
     Quadtree new_tree = {
         .parent = parent, .children = NULL,
         .lines = (Line**)malloc(sizeof(Line*) * MAX_LINES),
@@ -23,16 +23,27 @@ Quadtree initialise_quadtree(Quadtree* parent, double x, double y, float width, 
     return new_tree;
 }
 
+Quadtree* make_quadbranch(Quadtree* parent, double x, double y, float width, uint8_t depth) {
+    Quadtree* branch = (Quadtree*)malloc(sizeof(Quadtree));
+    if (branch == NULL) return NULL;
+    *branch = initialise_quadbranch(parent, x, y, width, depth);
+    return branch;
+}
+
 
 // Create a new quadtree
-Quadtree* make_quadtree(Quadtree* parent, double x, double y, float width, uint8_t depth) {
-    Quadtree* tree = (Quadtree*)malloc(sizeof(Quadtree));
+Quadtree** make_quadtree(Quadtree* parent, double x, double y, float width, uint8_t depth, uint16_t* num_quads) {
+    uint16_t capacity = 0;
+    for (uint8_t i = 0; i < MAX_DEPTH; i++) capacity += pow(4, i);
+
+    Quadtree** tree = (Quadtree**)malloc(sizeof(Quadtree*) * capacity);
     if (tree == NULL) return NULL;
-    *tree = initialise_quadtree(parent, x, y, width, depth);
-    // printf("%lu\n", sizeof(uint16_t));
-    // printf("%lu\n", sizeof(uint16_t));
+
+    Quadtree* branch = make_quadbranch(parent, x, y, width, depth);
+    tree[(*num_quads)++] = branch;
     return tree;
 }
+
 
 void allocate_children(Quadtree* tree) {
     tree->children = (Quadtree*)malloc(sizeof(Quadtree) * QUAD);
@@ -44,7 +55,7 @@ void allocate_children(Quadtree* tree) {
         x = tree->center.x - diffx * width;
         diffy = c % 2 == 1 ? -1 : 1;
         y = tree->center.y - diffy * width;
-        tree->children[c] = initialise_quadtree(tree, x, y, width, tree->depth + 1);
+        tree->children[c] = initialise_quadbranch(tree, x, y, width, tree->depth + 1);
     }
 
     // Now reassign lines in the parent tree to the children. Use line position to find which child fits. 
@@ -73,18 +84,25 @@ inline void make_space_for_more_lines(Quadtree* tree) {
 }
 
 
-void destroy_quadtree(Quadtree* tree) {
-    // Check if children are allocated:
-    if (tree->children != NULL) {
-        // Destroy recursively
-        for (uint8_t i = 0; i < QUAD; i++) {
-            destroy_quadtree(tree->children + i);
-        }
-        // Free the tree
-        free(tree->children);
+void destroy_quadtree(Quadtree** tree, uint16_t* num_quads) {
+    Quadtree* this_tree = NULL;
+    for (uint16_t i = 0; i < (*num_quads); i++) {
+        this_tree = tree[i];
+
+        free(this_tree->lines);
+        free(this_tree);
     }
-    free(tree->lines);
-    if (tree->depth == 0) free(tree);
+    // // Check if children are allocated:
+    // if (tree->children != NULL) {
+    //     // Destroy recursively
+    //     for (uint8_t i = 0; i < QUAD; i++) {
+    //         destroy_quadtree(tree->children + i);
+    //     }
+    //     // Free the tree
+    //     free(tree->children);
+    // }
+    // free(tree->lines);
+    // if (tree->depth == 0) free(tree);
 }
 
 
@@ -103,6 +121,8 @@ inline bool does_line_fit(Line* restrict line, Quadtree* restrict tree) {
 
 
 // inserts a line into a quadtree
+// void insert_line(Line* l, Quadtree* branch, Quadtree** tree, uint16_t* num_quads) {
+
 void insert_line(Line* l, Quadtree* tree) {
     if (tree->num_lines < tree->capacity) {
         tree->lines[tree->num_lines++] = l;
@@ -149,16 +169,22 @@ void insert_line(Line* l, Quadtree* tree) {
 }
 
 
-uint16_t count_lines(Quadtree* tree) {
-    if (tree->children == NULL) {
-        return tree->num_lines;
-    }
+unsigned int count_lines(Quadtree** tree, uint16_t* num_quads) {
+    // if (tree->children == NULL) {
+    //     return tree->num_lines;
+    // }
 
-    uint16_t num_lines = 0;
-    for (uint8_t j = 0; j < QUAD; j++) {
-        num_lines += count_lines(tree->children + j);
+    // uint16_t num_lines = 0;
+    // for (uint8_t j = 0; j < QUAD; j++) {
+    //     num_lines += count_lines(tree->children + j);
+    // }
+    // return num_lines + tree->num_lines;
+
+    unsigned int num_lines = 0;
+    for (uint16_t i = 0; i < (*num_quads); i++) {
+        num_lines += tree[i]->num_lines;
     }
-    return num_lines + tree->num_lines;
+    return num_lines;
 }
 
 

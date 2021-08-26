@@ -33,18 +33,15 @@
 IntersectionType intersect(Line* l1, Line* l2) {
   assert(compareLines(l1, l2) < 0);
 
-  Vec velocity;
-  Vec p1;
-  Vec p2;
   Vec v1 = Vec_makeFromLine(*l1);
   Vec v2 = Vec_makeFromLine(*l2);
 
   // Get relative velocity.
-  velocity = Vec_subtract(l2->velocity, l1->velocity);
+  Vec velocity = Vec_subtract(l2->velocity, l1->velocity);
 
   // Get the parallelogram.
-  p1 = Vec_add(l2->p1, Vec_multiply(velocity, TIME_STEP));
-  p2 = Vec_add(l2->p2, Vec_multiply(velocity, TIME_STEP));
+  Vec p1 = Vec_add(l2->p1, Vec_multiply(velocity, TIME_STEP));
+  Vec p2 = Vec_add(l2->p2, Vec_multiply(velocity, TIME_STEP));
 
   // Quick test: check if lines are within each other's bounding box
   // If not, then just return NO_INTERSECTION

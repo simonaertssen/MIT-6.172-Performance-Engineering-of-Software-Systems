@@ -58,7 +58,7 @@ struct Line {
 
   //Color color;  // The line's color.
 
-  double len;  // The line length
+  float len;  // The line length
 
   unsigned int id;  // Unique line ID.
 };

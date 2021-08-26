@@ -20,9 +20,7 @@ struct Quadtree {
     // Pointer to array of lines
     Line** lines;
 
-    // vectors representing quadtree boundaries
-    // Vec p1; // North-west point
-    // Vec p2; // South-east point
+    // Vector representing quadtree center and its width
     Vec center;
     float width;
 

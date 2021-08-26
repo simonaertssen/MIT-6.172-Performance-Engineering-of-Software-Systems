@@ -36,13 +36,12 @@ void allocate_children(Quadtree* tree) {
     // Compute half the distance between the bounds and either add or subtract that.
     double x, y, width = tree->width * 0.5;
     short diffx, diffy;
-    unsigned int i;
-    for (i = 0; i < QUAD; ++i) {
-        diffx = i / 2 == 1 ? -1 : 1;
+    for (short c = 0; c < QUAD; ++c) {
+        diffx = c / 2 == 1 ? -1 : 1;
         x = tree->center.x - diffx * width;
-        diffy = i % 2 == 1 ? -1 : 1;
+        diffy = c % 2 == 1 ? -1 : 1;
         y = tree->center.y - diffy * width;
-        tree->children[i] = initialise_quadtree(tree, x, y, width, tree->depth + 1);
+        tree->children[c] = initialise_quadtree(tree, x, y, width, tree->depth + 1);
     }
 
     // Now reassign lines in the parent tree to the children. Use line position to find which child fits. 
@@ -51,7 +50,7 @@ void allocate_children(Quadtree* tree) {
     tree->num_lines = 0;
 
     // Now insert the lines back into the tree and its children.
-    for (i = 0; i < num_lines; i++) {
+    for (unsigned int i = 0; i < num_lines; i++) {
         insert_line(tree->lines[i], tree->children);
         tree->lines[i] = NULL;
     }
@@ -75,7 +74,7 @@ void destroy_quadtree(Quadtree* tree) {
     // Check if children are allocated:
     if (tree->children != NULL) {
         // Destroy recursively
-        for (unsigned int i = 0; i < QUAD; i++) {
+        for (short i = 0; i < QUAD; i++) {
             destroy_quadtree(tree->children + i);
         }
         // Free the tree
@@ -102,6 +101,11 @@ inline bool does_line_fit(Line* restrict line, Quadtree* restrict tree) {
 
 // inserts a line into a quadtree
 void insert_line(Line* l, Quadtree* tree) {
+    if (tree->num_lines < tree->capacity) {
+        tree->lines[tree->num_lines++] = l;
+        return;
+    }
+
     // If we have no children, then save the line in level of the quadtree.
     if (tree->children == NULL) {
 
@@ -123,7 +127,7 @@ void insert_line(Line* l, Quadtree* tree) {
     // If we do have children (perhaps they were just allocated), then save the line l in the correct child.
     if (tree->children != NULL) {
         // Now add the line to the right child
-        for (unsigned int j = 0; j < QUAD; j++) {
+        for (short j = 0; j < QUAD; j++) {
             if (does_line_fit(l, tree->children + j)) {
                 insert_line(l, tree->children + j);
                 return;
@@ -148,7 +152,7 @@ unsigned int count_lines(Quadtree* tree) {
     }
 
     unsigned int num_lines = 0;
-    for (unsigned int j = 0; j < QUAD; j++) {
+    for (short j = 0; j < QUAD; j++) {
         num_lines += count_lines(tree->children + j);
     }
     return num_lines + tree->num_lines;
@@ -175,7 +179,7 @@ void detect_collisions(Quadtree* restrict tree, IntersectionEventList* restrict 
     Line* l1 = NULL;
     Line* l2 = NULL;
 
-    unsigned int d, c, i, j;
+    unsigned int d, i, j;
     // Check all pairs in the current tree for collisions
     for (i = 0; i < tree->num_lines; i++) {
         l1 = tree->lines[i];
@@ -205,8 +209,8 @@ void detect_collisions(Quadtree* restrict tree, IntersectionEventList* restrict 
     }
     // If there are children, then also check them
     if (tree->children != NULL) {
-        for (i = 0; i < QUAD; i++) {
-            detect_collisions(tree->children + i, intersectionEventList);
+        for (short c = 0; c < QUAD; c++) {
+            detect_collisions(tree->children + c, intersectionEventList);
         }
     }
 }

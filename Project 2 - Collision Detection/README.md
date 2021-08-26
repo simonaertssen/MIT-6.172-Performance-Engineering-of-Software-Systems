@@ -13,8 +13,7 @@ Here, the performance and speedup is given per adjustment.
 | Precompute line lengths | 449.35 | x 1 | x 1 |
 | Check bounding boxes | 241.50 | x 1.86 | x 1.86 |
 | Inline vec.h | 241.50 | x 1 | x 1.86 |
-| Quadtree | | | |
-| Quadtree with maximum depth | | | |
+| Quadtree | 230.90 | x 1.05 | x 1.95 |
 | Update Quadtree without destroying it | | | |
 | More efficient way of checking intersections | | | |
 

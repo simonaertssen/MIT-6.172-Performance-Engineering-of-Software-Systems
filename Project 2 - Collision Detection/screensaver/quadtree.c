@@ -188,7 +188,7 @@ void detect_collisions(Quadtree* restrict tree, IntersectionEventList* restrict 
     Line* l1 = NULL;
     Line* l2 = NULL;
 
-    unsigned c, h, i, j;
+    unsigned int d, c, i, j;
     // Check all pairs in the current tree for collisions
     for (i = 0; i < tree->num_lines; i++) {
         l1 = tree->lines[i];
@@ -197,6 +197,7 @@ void detect_collisions(Quadtree* restrict tree, IntersectionEventList* restrict 
             register_collision(l1, l2, intersectionEventList);
         }
     }
+
     // Check all pairs in the current tree and its parents for collisions
     // Quadtree* parent = tree;
     // // Go to all possible parents.
@@ -216,33 +217,30 @@ void detect_collisions(Quadtree* restrict tree, IntersectionEventList* restrict 
     //     }
     // }
 
-    printf("Height h = %d", tree->height);
-
     // If there are children, then also check them
     if (tree->children == NULL) return;
-    Quadtree* parent = tree;
-    Quadtree* child = NULL;
+    Quadtree* child = tree->children;
+
     // Go to all possible offspring.
-    for (h = 0; h < parent->height; h++) {
-        printf("Height h = %d", parent->height);
+    while (child != NULL) {
         // Go to the four direct children of the parent.
         for (c = 0; c < QUAD; c++) {
-            child = parent->children + c;
+            child = tree->children + c;
             // Mark all lines in this tree...
             for (i = 0; i < child->num_lines; i++) {
                 l1 = child->lines[i];
                 // ...versus all lines in the parent...
-                for (j = 0; j < parent->num_lines; j++) {
-                    l2 = parent->lines[j];
+                for (j = 0; j < tree->num_lines; j++) {
+                    l2 = tree->lines[j];
                     register_collision(l1, l2, intersectionEventList);
                 }
             }
             // Now check the child itself, and its own children
             detect_collisions(child, intersectionEventList);
         }
-        parent = parent->children;
-        if (parent == NULL) break;
+        child = child->children;
     }
+
 
     // If there are children, then also check them
     // if (tree->children == NULL) return;

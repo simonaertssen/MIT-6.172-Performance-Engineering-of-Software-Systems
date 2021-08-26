@@ -34,7 +34,7 @@ struct Quadtree {
 };
 
 // Create a new quadtree
-Quadtree** make_quadtree(Quadtree* parent, double x, double y, float width, uint8_t depth, uint16_t* num_quads);
+Quadtree** make_quadtree(Quadtree* parent, double x, double y, float width, uint8_t depth, uint16_t* num_branches);
 
 // Initialise a quadtree structure
 Quadtree initialise_quadbranch(Quadtree* parent, double x, double y, float width, uint8_t depth);
@@ -42,12 +42,11 @@ Quadtree* make_quadbranch(Quadtree* parent, double x, double y, float width, uin
 
 static inline void allocate_children(Quadtree* tree) __attribute__((always_inline));
 static inline void make_space_for_more_lines(Quadtree* tree) __attribute__((always_inline));
-void destroy_quadtree(Quadtree** tree, uint16_t* num_quads);
+void destroy_quadtree(Quadtree** tree, uint16_t* num_branches);
 
 // Inserts a line into a quadtree
-// void insert_line(Line* restrict l, Quadtree** tree, uint16_t* num_quads);
-void insert_line(Line* restrict l, Quadtree* tree);
-unsigned int count_lines(Quadtree** tree, uint16_t* num_quads);
+void insert_line(Line* l, Quadtree* branch, Quadtree** tree, uint16_t* num_branches);
+unsigned int count_lines(Quadtree** tree, uint16_t* num_branches);
 
 // Test if line fits the current quadtree
 static inline bool does_line_fit(Line* restrict line, Quadtree* tree) __attribute__((always_inline));

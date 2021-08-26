@@ -32,7 +32,7 @@ Quadtree* make_quadbranch(Quadtree* parent, double x, double y, float width, uin
 
 
 // Create a new quadtree
-Quadtree** make_quadtree(Quadtree* parent, double x, double y, float width, uint8_t depth, uint16_t* num_quads) {
+Quadtree** make_quadtree(Quadtree* parent, double x, double y, float width, uint8_t depth, uint16_t* num_branches) {
     uint16_t capacity = 0;
     for (uint8_t i = 0; i < MAX_DEPTH; i++) capacity += pow(4, i);
 
@@ -40,7 +40,7 @@ Quadtree** make_quadtree(Quadtree* parent, double x, double y, float width, uint
     if (tree == NULL) return NULL;
 
     Quadtree* branch = make_quadbranch(parent, x, y, width, depth);
-    tree[(*num_quads)++] = branch;
+    tree[(*num_branches)++] = branch;
     return tree;
 }
 
@@ -84,13 +84,10 @@ inline void make_space_for_more_lines(Quadtree* tree) {
 }
 
 
-void destroy_quadtree(Quadtree** tree, uint16_t* num_quads) {
-    Quadtree* this_tree = NULL;
-    for (uint16_t i = 0; i < (*num_quads); i++) {
-        this_tree = tree[i];
-
-        free(this_tree->lines);
-        free(this_tree);
+void destroy_quadtree(Quadtree** tree, uint16_t* num_branches) {
+    for (uint16_t i = 0; i < (*num_branches); i++) {
+        free(tree[i]->lines);
+        free(tree[i]);
     }
     // // Check if children are allocated:
     // if (tree->children != NULL) {
@@ -121,45 +118,43 @@ inline bool does_line_fit(Line* restrict line, Quadtree* restrict tree) {
 
 
 // inserts a line into a quadtree
-// void insert_line(Line* l, Quadtree* branch, Quadtree** tree, uint16_t* num_quads) {
-
-void insert_line(Line* l, Quadtree* tree) {
-    if (tree->num_lines < tree->capacity) {
-        tree->lines[tree->num_lines++] = l;
+void insert_line(Line* l, Quadtree* branch, Quadtree** tree, uint16_t* num_branches) {
+    if (branch->num_lines < branch->capacity) {
+        branch->lines[branch->num_lines++] = l;
         return;
     }
 
     // If we have no children, then save the line in level of the quadtree.
-    if (tree->children == NULL) {
+    if (branch->children == NULL) {
 
         // Do we need some more space for lines?
-        if (tree->depth == MAX_DEPTH && tree->num_lines >= tree->capacity)
-            make_space_for_more_lines(tree);
+        if (trbranchee->depth == MAX_DEPTH && branch->num_lines >= branch->capacity)
+            make_space_for_more_lines(branch);
 
         // Add the line if there is enough capacity
-        if (tree->num_lines < tree->capacity) {
-            tree->lines[tree->num_lines++] = l;
+        if (branch->num_lines < branch->capacity) {
+            branch->lines[branch->num_lines++] = l;
             return;
         }
 
         // If we reach this point, then we have are not at the maximum depth and there is no space for lines,
-        // so we need to allocate children of the tree and fill them with lines.
-        allocate_children(tree);
+        // so we need to allocate children of the branch and fill them with lines.
+        allocate_children(branch);
     }
 
     // If we do have children (perhaps they were just allocated), then save the line l in the correct child.
-    if (tree->children != NULL) {
+    if (branch->children != NULL) {
         // Now add the line to the right child
         for (uint8_t j = 0; j < QUAD; j++) {
-            if (does_line_fit(l, tree->children + j)) {
-                insert_line(l, tree->children + j);
+            if (does_line_fit(l, branch->children[j])) {
+                insert_line(l, branch->children[j], tree, num_branches);
                 return;
             }
             // The line does not fit any of the children. Do we need some more space for lines?
-            if (tree->num_lines >= tree->capacity) make_space_for_more_lines(tree);
+            if (branch->num_lines >= branch->capacity) make_space_for_more_lines(branch);
             // Add the line if there is enough capacity
-            if (tree->num_lines < tree->capacity) {
-                tree->lines[tree->num_lines++] = l;
+            if (branch->num_lines < branch->capacity) {
+                branch->lines[branch->num_lines++] = l;
                 return;
             }
             // If we reached this point we have a problem...
@@ -169,7 +164,7 @@ void insert_line(Line* l, Quadtree* tree) {
 }
 
 
-unsigned int count_lines(Quadtree** tree, uint16_t* num_quads) {
+unsigned int count_lines(Quadtree** tree, uint16_t* num_branches) {
     // if (tree->children == NULL) {
     //     return tree->num_lines;
     // }
@@ -181,7 +176,7 @@ unsigned int count_lines(Quadtree** tree, uint16_t* num_quads) {
     // return num_lines + tree->num_lines;
 
     unsigned int num_lines = 0;
-    for (uint16_t i = 0; i < (*num_quads); i++) {
+    for (uint16_t i = 0; i < (*num_branches); i++) {
         num_lines += tree[i]->num_lines;
     }
     return num_lines;

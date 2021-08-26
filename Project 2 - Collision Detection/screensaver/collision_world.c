@@ -194,7 +194,7 @@ void detect_collisions_naive(CollisionWorld* collisionWorld, IntersectionEventLi
 
 void detect_collisions_quadtree(CollisionWorld* collisionWorld, IntersectionEventList* intersectionEventList) {
   // Here we need to use a quadtree to increase performance
-  Quadtree* tree = make_quadtree(BOX_XMIN, BOX_YMIN, BOX_XMAX, BOX_YMAX, 0);
+  Quadtree* tree = make_quadtree(NULL, BOX_XMIN, BOX_YMIN, BOX_XMAX, BOX_YMAX, 0);
 
   for (unsigned int i = 0; i < collisionWorld->numOfLines; i++) {
     insert_line(collisionWorld->lines[i], tree);

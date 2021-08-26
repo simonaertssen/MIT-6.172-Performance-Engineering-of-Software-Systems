@@ -21,8 +21,10 @@ struct Quadtree {
     Line** lines;
 
     // vectors representing quadtree boundaries
-    Vec p1; // North-west point
-    Vec p2; // South-east point
+    // Vec p1; // North-west point
+    // Vec p2; // South-east point
+    Vec center;
+    float width;
 
     short num_lines; // Number of lines in the array
     short capacity; // Number of lines the array can hold
@@ -32,10 +34,10 @@ struct Quadtree {
 };
 
 // Initialise a quadtree structure
-Quadtree initialise_quadtree(Quadtree* parent, double x_min, double y_min, double x_max, double y_max, unsigned int depth);
+Quadtree initialise_quadtree(Quadtree* parent, double x, double y, float width, short depth);
 
 // Create a new quadtree
-Quadtree* make_quadtree(Quadtree* parent, double x_min, double y_min, double x_max, double y_max, unsigned int depth);
+Quadtree* make_quadtree(Quadtree* parent, double x, double y, float width, short depth);
 static inline void allocate_children(Quadtree* restrict tree) __attribute__((always_inline));
 static inline void make_space_for_more_lines(Quadtree* restrict tree) __attribute__((always_inline));;
 void destroy_quadtree(Quadtree* restrict tree);

@@ -11,12 +11,12 @@
 
 
 // Initialise a quadtree structure
-Quadtree initialise_quadtree(Quadtree* parent, double x_min, double y_min, double x_max, double y_max, unsigned int depth) {
+Quadtree initialise_quadtree(Quadtree* parent, double x, double y, float width, short depth) {
     Quadtree new_tree = {
         .parent = parent, .children = NULL,
         .lines = (Line**)malloc(sizeof(Line*) * MAX_LINES),
         .num_lines = 0, .capacity = MAX_LINES,
-        .p1 = {.x = x_min, .y = y_min }, .p2 = {.x = x_max, .y = y_max },
+        .center = {.x = x, .y = y }, .width = width,
         .depth = depth
     };
     return new_tree;
@@ -24,35 +24,25 @@ Quadtree initialise_quadtree(Quadtree* parent, double x_min, double y_min, doubl
 
 
 // Create a new quadtree
-Quadtree* make_quadtree(Quadtree* parent, double x_min, double y_min, double x_max, double y_max, unsigned int depth) {
+Quadtree* make_quadtree(Quadtree* parent, double x, double y, float width, short depth) {
     Quadtree* tree = (Quadtree*)malloc(sizeof(Quadtree));
     if (tree == NULL) return NULL;
-    *tree = initialise_quadtree(parent, x_min, y_min, x_max, y_max, depth);
+    *tree = initialise_quadtree(parent, x, y, width, depth);
     return tree;
 }
 
 void allocate_children(Quadtree* tree) {
-    assert(tree->depth > 0);
-    assert(tree->children == NULL);
-
     tree->children = (Quadtree*)malloc(sizeof(Quadtree) * QUAD);
     // Compute half the distance between the bounds and either add or subtract that.
-    double col, row, minx, maxx, miny, maxy, diffx, diffy;
+    double x, y, width = tree->width * 0.5;
+    short diffx, diffy;
     unsigned int i;
     for (i = 0; i < QUAD; ++i) {
-        col = (i / 2);
-        row = i % 2;
-
-        diffx = 0.5 * (tree->p2.x - tree->p1.x);
-        minx = tree->p1.x + col * diffx;
-        maxx = tree->p2.x - (double)(!col) * diffx;
-
-        diffy = 0.5 * (tree->p2.y - tree->p1.y);
-        miny = tree->p1.y + row * diffy;
-        maxy = tree->p2.y - (double)(!row) * diffy;
-
-        // printf("Grid[%d,%d]: x = [%f, %f], y = [%f, %f]\n", (i / 2), (i % 2), minx, maxx, miny, maxy);
-        tree->children[i] = initialise_quadtree(tree, minx, miny, maxx, maxy, tree->depth + 1);
+        diffx = i / 2 == 1 ? -1 : 1;
+        x = tree->center.x - diffx * width;
+        diffy = i % 2 == 1 ? -1 : 1;
+        y = tree->center.y - diffy * width;
+        tree->children[i] = initialise_quadtree(tree, x, y, width, tree->depth + 1);
     }
 
     // Now reassign lines in the parent tree to the children. Use line position to find which child fits. 
@@ -96,18 +86,17 @@ void destroy_quadtree(Quadtree* tree) {
 }
 
 
-// Check if line can fit inside a given Quadtree's boundaries
 inline bool does_line_fit(Line* restrict line, Quadtree* restrict tree) {
     return
-        (fmin(line->p1.x, line->p2.x) >= tree->p1.x) &&
-        (fmax(line->p1.x, line->p2.x) < tree->p2.x) &&
-        (fmin(line->p1.y, line->p2.y) >= tree->p1.y) &&
-        (fmax(line->p1.y, line->p2.y) < tree->p2.y) &&
+        (fmin(line->p1.x, line->p2.x) >= tree->center.x - tree->width) &&
+        (fmax(line->p1.x, line->p2.x) < tree->center.x + tree->width) &&
+        (fmin(line->p1.y, line->p2.y) >= tree->center.y - tree->width) &&
+        (fmax(line->p1.y, line->p2.y) < tree->center.y + tree->width) &&
         // check line at end of time step of 0.5 (from collisionworld)
-        (fmin(line->p1.x, line->p2.x) + line->velocity.x * 0.5 >= tree->p1.x) &&
-        (fmax(line->p1.x, line->p2.x) + line->velocity.x * 0.5 < tree->p2.x) &&
-        (fmin(line->p1.y, line->p2.y) + line->velocity.y * 0.5 >= tree->p1.y) &&
-        (fmax(line->p1.y, line->p2.y) + line->velocity.y * 0.5 < tree->p2.y);
+        (fmin(line->p1.x, line->p2.x) + line->velocity.x * 0.5 >= tree->center.x - tree->width) &&
+        (fmax(line->p1.x, line->p2.x) + line->velocity.x * 0.5 < tree->center.x + tree->width) &&
+        (fmin(line->p1.y, line->p2.y) + line->velocity.y * 0.5 >= tree->center.y - tree->width) &&
+        (fmax(line->p1.y, line->p2.y) + line->velocity.y * 0.5 < tree->center.y + tree->width);
 }
 
 
